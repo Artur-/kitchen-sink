@@ -151,6 +151,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
+        section.addClassNames(LumoUtility.Margin.Top.MEDIUM);
         section.add(new H2(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);

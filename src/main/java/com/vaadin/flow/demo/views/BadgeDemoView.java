@@ -15,11 +15,12 @@
  */
 package com.vaadin.flow.demo.views;
 
+import com.vaadin.flow.component.badge.Badge;
+import com.vaadin.flow.component.badge.BadgeVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -28,7 +29,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 /**
- * Demo view for Badge component using Lumo theme utility classes.
+ * Demo view for Badge component.
  */
 @Route(value = "badge", layout = MainLayout.class)
 @PageTitle("Badge | Vaadin Kitchen Sink")
@@ -45,54 +46,76 @@ public class BadgeDemoView extends VerticalLayout {
         HorizontalLayout basic = new HorizontalLayout();
         basic.setSpacing(true);
         basic.add(
-            createBadge("Default", "badge"),
-            createBadge("Primary", "badge primary"),
-            createBadge("Success", "badge success"),
-            createBadge("Error", "badge error"),
-            createBadge("Contrast", "badge contrast")
+            new Badge("Default"),
+            createBadge("Success", BadgeVariant.SUCCESS),
+            createBadge("Error", BadgeVariant.ERROR),
+            createBadge("Warning", BadgeVariant.WARNING),
+            createBadge("Contrast", BadgeVariant.CONTRAST)
         );
         addSection("Basic Badges", basic);
 
-        // Small badges
-        HorizontalLayout small = new HorizontalLayout();
-        small.setSpacing(true);
-        small.add(
-            createBadge("Small", "badge small"),
-            createBadge("Small Primary", "badge small primary"),
-            createBadge("Small Success", "badge small success")
+        // Filled badges
+        HorizontalLayout filled = new HorizontalLayout();
+        filled.setSpacing(true);
+        filled.add(
+            createBadge("Filled", BadgeVariant.FILLED),
+            createBadge("Filled Success", BadgeVariant.FILLED, BadgeVariant.SUCCESS),
+            createBadge("Filled Error", BadgeVariant.FILLED, BadgeVariant.ERROR),
+            createBadge("Filled Warning", BadgeVariant.FILLED, BadgeVariant.WARNING),
+            createBadge("Filled Contrast", BadgeVariant.FILLED, BadgeVariant.CONTRAST)
         );
-        addSection("Small Badges", small);
-
-        // Pill badges
-        HorizontalLayout pill = new HorizontalLayout();
-        pill.setSpacing(true);
-        pill.add(
-            createBadge("Pill", "badge pill"),
-            createBadge("Pill Primary", "badge pill primary"),
-            createBadge("Pill Success", "badge pill success")
-        );
-        addSection("Pill Badges", pill);
+        addSection("Filled Badges", filled);
 
         // With icons
         HorizontalLayout withIcons = new HorizontalLayout();
         withIcons.setSpacing(true);
-        withIcons.add(
-            createBadgeWithIcon(VaadinIcon.CHECK, "Approved", "badge success"),
-            createBadgeWithIcon(VaadinIcon.CLOSE, "Rejected", "badge error"),
-            createBadgeWithIcon(VaadinIcon.CLOCK, "Pending", "badge"),
-            createBadgeWithIcon(VaadinIcon.INFO, "Info", "badge primary")
-        );
+        Badge approved = new Badge("Approved", VaadinIcon.CHECK.create());
+        approved.addThemeVariants(BadgeVariant.SUCCESS);
+        Badge rejected = new Badge("Rejected", VaadinIcon.CLOSE.create());
+        rejected.addThemeVariants(BadgeVariant.ERROR);
+        Badge pending = new Badge("Pending", VaadinIcon.CLOCK.create());
+        Badge info = new Badge("Info", VaadinIcon.INFO.create());
+        info.addThemeVariants(BadgeVariant.CONTRAST);
+        withIcons.add(approved, rejected, pending, info);
         addSection("Badges with Icons", withIcons);
 
-        // Count badges
-        HorizontalLayout counts = new HorizontalLayout();
-        counts.setSpacing(true);
-        counts.add(
-            createBadge("5", "badge pill small"),
-            createBadge("12", "badge pill small primary"),
-            createBadge("99+", "badge pill small error")
-        );
-        addSection("Count Badges", counts);
+        // Number badges
+        HorizontalLayout numbers = new HorizontalLayout();
+        numbers.setSpacing(true);
+        Badge num1 = new Badge("messages", 5);
+        Badge num2 = new Badge("alerts", 12);
+        num2.addThemeVariants(BadgeVariant.ERROR);
+        Badge num3 = new Badge("updates", 99);
+        num3.addThemeVariants(BadgeVariant.SUCCESS);
+        numbers.add(num1, num2, num3);
+        addSection("Number Badges", numbers);
+
+        // Number-only badges
+        HorizontalLayout numberOnly = new HorizontalLayout();
+        numberOnly.setSpacing(true);
+        Badge no1 = new Badge("messages", 5);
+        no1.addThemeVariants(BadgeVariant.NUMBER_ONLY);
+        Badge no2 = new Badge("alerts", 12);
+        no2.addThemeVariants(BadgeVariant.NUMBER_ONLY, BadgeVariant.ERROR);
+        Badge no3 = new Badge("updates", 99);
+        no3.addThemeVariants(BadgeVariant.NUMBER_ONLY, BadgeVariant.SUCCESS);
+        numberOnly.add(no1, no2, no3);
+        addSection("Number-Only Badges", numberOnly);
+
+        // Dot badges
+        HorizontalLayout dots = new HorizontalLayout();
+        dots.setSpacing(true);
+        dots.setAlignItems(Alignment.CENTER);
+        Badge dot1 = new Badge();
+        dot1.addThemeVariants(BadgeVariant.DOT);
+        Badge dot2 = new Badge();
+        dot2.addThemeVariants(BadgeVariant.DOT, BadgeVariant.SUCCESS);
+        Badge dot3 = new Badge();
+        dot3.addThemeVariants(BadgeVariant.DOT, BadgeVariant.ERROR);
+        Badge dot4 = new Badge();
+        dot4.addThemeVariants(BadgeVariant.DOT, BadgeVariant.WARNING);
+        dots.add(dot1, dot2, dot3, dot4);
+        addSection("Dot Badges", dots);
 
         // Status badges example
         VerticalLayout statusExamples = new VerticalLayout();
@@ -101,31 +124,27 @@ public class BadgeDemoView extends VerticalLayout {
 
         HorizontalLayout status1 = new HorizontalLayout();
         status1.setAlignItems(Alignment.CENTER);
-        status1.add(new Span("Order #1234"), createBadge("Shipped", "badge success"));
+        Badge shipped = new Badge("Shipped");
+        shipped.addThemeVariants(BadgeVariant.SUCCESS);
+        status1.add(new Span("Order #1234"), shipped);
 
         HorizontalLayout status2 = new HorizontalLayout();
         status2.setAlignItems(Alignment.CENTER);
-        status2.add(new Span("Order #1235"), createBadge("Processing", "badge"));
+        status2.add(new Span("Order #1235"), new Badge("Processing"));
 
         HorizontalLayout status3 = new HorizontalLayout();
         status3.setAlignItems(Alignment.CENTER);
-        status3.add(new Span("Order #1236"), createBadge("Cancelled", "badge error"));
+        Badge cancelled = new Badge("Cancelled");
+        cancelled.addThemeVariants(BadgeVariant.ERROR);
+        status3.add(new Span("Order #1236"), cancelled);
 
         statusExamples.add(status1, status2, status3);
         addSection("Status Badge Examples", statusExamples);
     }
 
-    private Span createBadge(String text, String themeNames) {
-        Span badge = new Span(text);
-        badge.getElement().getThemeList().add(themeNames);
-        return badge;
-    }
-
-    private Span createBadgeWithIcon(VaadinIcon icon, String text, String themeNames) {
-        Icon iconComponent = icon.create();
-        iconComponent.getStyle().set("padding", "var(--lumo-space-xs)");
-        Span badge = new Span(iconComponent, new Span(text));
-        badge.getElement().getThemeList().add(themeNames);
+    private Badge createBadge(String text, BadgeVariant... variants) {
+        Badge badge = new Badge(text);
+        badge.addThemeVariants(variants);
         return badge;
     }
 
