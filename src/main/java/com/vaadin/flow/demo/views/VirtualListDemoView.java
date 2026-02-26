@@ -47,33 +47,32 @@ public class VirtualListDemoView extends VerticalLayout {
 
         // Basic virtual list
         VirtualList<String> basic = new VirtualList<>();
-        basic.setItems(generateItems(100));
         basic.setRenderer(new ComponentRenderer<>(item -> {
             Div div = new Div();
             div.setText(item);
             div.addClassNames(LumoUtility.Padding.MEDIUM, LumoUtility.BorderRadius.MEDIUM);
             return div;
         }));
+        basic.setItems(generateItems(100));
         basic.setHeight("300px");
         basic.setWidthFull();
         addSection("Basic Virtual List (100 items)", basic);
 
         // Large list
         VirtualList<String> large = new VirtualList<>();
-        large.setItems(generateItems(10000));
         large.setRenderer(new ComponentRenderer<>(item -> {
             Div div = new Div();
             div.setText(item);
             div.addClassNames(LumoUtility.Padding.SMALL);
             return div;
         }));
+        large.setItems(generateItems(500));
         large.setHeight("300px");
         large.setWidthFull();
-        addSection("Large Virtual List (10,000 items)", large);
+        addSection("Large Virtual List (500 items)", large);
 
         // With custom renderer
         VirtualList<Person> customRenderer = new VirtualList<>();
-        customRenderer.setItems(generatePeople(50));
         customRenderer.setRenderer(new ComponentRenderer<>(person -> {
             HorizontalLayout row = new HorizontalLayout();
             row.setAlignItems(Alignment.CENTER);
@@ -101,6 +100,7 @@ public class VirtualListDemoView extends VerticalLayout {
             row.add(avatar, info);
             return row;
         }));
+        customRenderer.setItems(generatePeople(50));
         customRenderer.setHeight("350px");
         customRenderer.setWidthFull();
         addSection("With Custom Renderer", customRenderer);
