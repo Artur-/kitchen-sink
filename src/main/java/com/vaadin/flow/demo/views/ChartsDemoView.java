@@ -18,7 +18,8 @@ package com.vaadin.flow.demo.views;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
@@ -35,8 +36,9 @@ public class ChartsDemoView extends VerticalLayout {
     public ChartsDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Charts Component"));
+        add(new H1("Charts Component"));
         add(new Paragraph("Charts provides powerful data visualization capabilities."));
 
         // Line chart
@@ -133,7 +135,7 @@ public class ChartsDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

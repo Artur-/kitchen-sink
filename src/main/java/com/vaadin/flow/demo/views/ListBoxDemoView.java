@@ -16,7 +16,8 @@
 package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
@@ -36,8 +37,9 @@ public class ListBoxDemoView extends VerticalLayout {
     public ListBoxDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("List Box Component"));
+        add(new H1("List Box Component"));
         add(new Paragraph("ListBox displays a list of selectable items."));
 
         // Basic list box
@@ -89,7 +91,7 @@ public class ListBoxDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

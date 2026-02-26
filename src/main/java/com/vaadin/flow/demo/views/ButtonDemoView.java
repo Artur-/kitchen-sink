@@ -18,7 +18,8 @@ package com.vaadin.flow.demo.views;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -39,8 +40,9 @@ public class ButtonDemoView extends VerticalLayout {
     public ButtonDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Button Component"));
+        add(new H1("Button Component"));
         add(new Paragraph("The Button component is used to trigger actions."));
 
         // Basic buttons
@@ -93,15 +95,16 @@ public class ButtonDemoView extends VerticalLayout {
         // Disable on click
         Button disableOnClick = new Button("Click to disable", e -> {
             Notification.show("Button will be disabled for 2 seconds");
-            e.getSource().setEnabled(false);
-            e.getSource().getUI().ifPresent(ui ->
-                ui.access(() -> {
+            e.getSource().getUI().ifPresent(ui -> {
+                new Thread(() -> {
                     try {
                         Thread.sleep(2000);
-                    } catch (InterruptedException ignored) {}
-                    e.getSource().setEnabled(true);
-                })
-            );
+                    } catch (InterruptedException ignored) {
+                        Thread.currentThread().interrupt();
+                    }
+                    ui.access(() -> e.getSource().setEnabled(true));
+                }).start();
+            });
         });
         disableOnClick.setDisableOnClick(true);
 
@@ -116,10 +119,11 @@ public class ButtonDemoView extends VerticalLayout {
 
     private void addSection(String title, Button... buttons) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         HorizontalLayout layout = new HorizontalLayout(buttons);
         layout.setSpacing(true);
         layout.setAlignItems(Alignment.CENTER);
+        layout.getStyle().set("flex-wrap", "wrap");
         section.add(layout);
         add(section);
     }

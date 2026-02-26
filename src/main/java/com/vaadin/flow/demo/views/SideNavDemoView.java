@@ -17,7 +17,8 @@ package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -39,8 +40,9 @@ public class SideNavDemoView extends VerticalLayout {
     public SideNavDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Side Nav Component"));
+        add(new H1("Side Nav Component"));
         add(new Paragraph("SideNav provides hierarchical navigation typically used in sidebars."));
 
         HorizontalLayout examples = new HorizontalLayout();
@@ -162,7 +164,7 @@ public class SideNavDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

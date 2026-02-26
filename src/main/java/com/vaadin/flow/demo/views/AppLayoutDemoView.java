@@ -19,7 +19,6 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -38,8 +37,9 @@ public class AppLayoutDemoView extends VerticalLayout {
     public AppLayoutDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("App Layout Component"));
+        add(new H1("App Layout Component"));
         add(new Paragraph("AppLayout provides a responsive layout with a header, sidebar drawer, and main content area."));
         add(new Paragraph("Note: This demo app itself uses AppLayout as its main layout. The examples below show the component's features."));
 

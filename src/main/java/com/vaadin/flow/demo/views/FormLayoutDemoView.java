@@ -18,7 +18,8 @@ package com.vaadin.flow.demo.views;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -39,8 +40,9 @@ public class FormLayoutDemoView extends VerticalLayout {
     public FormLayoutDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Form Layout Component"));
+        add(new H1("Form Layout Component"));
         add(new Paragraph("FormLayout arranges form fields with configurable columns and responsive behavior."));
 
         // Basic form layout
@@ -105,24 +107,24 @@ public class FormLayoutDemoView extends VerticalLayout {
 
         TextField firstName = new TextField();
         firstName.setRequired(true);
-        registration.addFormItem(firstName, "First Name *");
+        registration.addFormItem(firstName, "First Name");
 
         TextField lastName = new TextField();
         lastName.setRequired(true);
-        registration.addFormItem(lastName, "Last Name *");
+        registration.addFormItem(lastName, "Last Name");
 
         EmailField regEmail = new EmailField();
         regEmail.setRequired(true);
-        FormLayout.FormItem regEmailItem = registration.addFormItem(regEmail, "Email *");
+        FormLayout.FormItem regEmailItem = registration.addFormItem(regEmail, "Email");
         registration.setColspan(regEmailItem, 2);
 
         PasswordField password = new PasswordField();
         password.setRequired(true);
-        registration.addFormItem(password, "Password *");
+        registration.addFormItem(password, "Password");
 
         PasswordField confirmPassword = new PasswordField();
         confirmPassword.setRequired(true);
-        registration.addFormItem(confirmPassword, "Confirm Password *");
+        registration.addFormItem(confirmPassword, "Confirm Password");
 
         addSection("Registration Form Example", registration);
 
@@ -147,7 +149,7 @@ public class FormLayoutDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

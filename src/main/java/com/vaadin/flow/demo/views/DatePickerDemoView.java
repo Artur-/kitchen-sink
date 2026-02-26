@@ -21,7 +21,8 @@ import java.util.Locale;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datepicker.DatePickerVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -39,8 +40,9 @@ public class DatePickerDemoView extends VerticalLayout {
     public DatePickerDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Date Picker Component"));
+        add(new H1("Date Picker Component"));
         add(new Paragraph("The DatePicker allows users to select a date from a calendar."));
 
         // Basic date picker
@@ -121,7 +123,7 @@ public class DatePickerDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

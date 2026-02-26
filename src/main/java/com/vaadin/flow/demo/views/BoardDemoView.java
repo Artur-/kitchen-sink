@@ -18,7 +18,7 @@ package com.vaadin.flow.demo.views;
 import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -38,8 +38,9 @@ public class BoardDemoView extends VerticalLayout {
     public BoardDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Board Component"));
+        add(new H1("Board Component"));
         add(new Paragraph("Board provides a responsive grid layout for dashboard-style interfaces."));
 
         // Basic board with equal columns
@@ -160,7 +161,7 @@ public class BoardDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

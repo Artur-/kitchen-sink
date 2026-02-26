@@ -17,7 +17,7 @@ package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -38,8 +38,9 @@ public class PopoverDemoView extends VerticalLayout {
     public PopoverDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Popover Component"));
+        add(new H1("Popover Component"));
         add(new Paragraph("Popover displays floating content anchored to a trigger element."));
 
         // Basic popover
@@ -146,7 +147,7 @@ public class PopoverDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

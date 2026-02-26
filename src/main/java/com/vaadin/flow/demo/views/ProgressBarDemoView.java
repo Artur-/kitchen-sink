@@ -16,8 +16,10 @@
 package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.progressbar.ProgressBarVariant;
@@ -35,41 +37,23 @@ public class ProgressBarDemoView extends VerticalLayout {
     public ProgressBarDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Progress Bar Component"));
+        add(new H1("Progress Bar Component"));
         add(new Paragraph("ProgressBar displays the progress of a task."));
 
-        // Basic progress bar
-        ProgressBar basic = new ProgressBar();
-        basic.setValue(0.5);
-        basic.setWidthFull();
-        addSection("Basic Progress Bar (50%)", basic);
-
-        // Various progress levels
-        ProgressBar empty = new ProgressBar();
-        empty.setValue(0);
-        empty.setWidthFull();
-        addSection("Empty (0%)", empty);
-
-        ProgressBar quarter = new ProgressBar();
-        quarter.setValue(0.25);
-        quarter.setWidthFull();
-        addSection("25% Complete", quarter);
-
-        ProgressBar half = new ProgressBar();
-        half.setValue(0.5);
-        half.setWidthFull();
-        addSection("50% Complete", half);
-
-        ProgressBar threeQuarter = new ProgressBar();
-        threeQuarter.setValue(0.75);
-        threeQuarter.setWidthFull();
-        addSection("75% Complete", threeQuarter);
-
-        ProgressBar complete = new ProgressBar();
-        complete.setValue(1.0);
-        complete.setWidthFull();
-        addSection("Complete (100%)", complete);
+        // Progress levels
+        VerticalLayout levels = new VerticalLayout();
+        levels.setPadding(false);
+        levels.setSpacing(true);
+        for (double[] level : new double[][]{{0, 0}, {0.25, 25}, {0.5, 50}, {0.75, 75}, {1.0, 100}}) {
+            ProgressBar bar = new ProgressBar();
+            bar.setValue(level[0]);
+            bar.setWidthFull();
+            Span label = new Span((int) level[1] + "%");
+            levels.add(label, bar);
+        }
+        addSection("Progress Levels", levels);
 
         // Indeterminate progress bar
         ProgressBar indeterminate = new ProgressBar();
@@ -126,7 +110,7 @@ public class ProgressBarDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

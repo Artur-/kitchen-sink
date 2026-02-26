@@ -16,7 +16,8 @@
 package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -39,8 +40,9 @@ public class TextFieldDemoView extends VerticalLayout {
     public TextFieldDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Text Field Component"));
+        add(new H1("Text Field Component"));
         add(new Paragraph("The TextField component is used for single-line text input."));
 
         // Basic text field
@@ -133,7 +135,7 @@ public class TextFieldDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

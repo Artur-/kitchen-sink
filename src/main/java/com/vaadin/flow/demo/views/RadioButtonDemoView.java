@@ -16,7 +16,8 @@
 package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -36,8 +37,9 @@ public class RadioButtonDemoView extends VerticalLayout {
     public RadioButtonDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Radio Button Group Component"));
+        add(new H1("Radio Button Group Component"));
         add(new Paragraph("Radio buttons allow users to select exactly one option from a group."));
 
         // Basic radio group
@@ -111,7 +113,7 @@ public class RadioButtonDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

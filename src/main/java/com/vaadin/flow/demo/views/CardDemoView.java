@@ -19,7 +19,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.card.Card;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -42,8 +42,9 @@ public class CardDemoView extends VerticalLayout {
     public CardDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Card Component"));
+        add(new H1("Card Component"));
         add(new Paragraph("Card provides a container with visual hierarchy for grouping related content."));
 
         // Basic card
@@ -111,10 +112,13 @@ public class CardDemoView extends VerticalLayout {
         HorizontalLayout statsGrid = new HorizontalLayout();
         statsGrid.setSpacing(true);
         statsGrid.setWidthFull();
+        statsGrid.getStyle().set("flex-wrap", "wrap");
 
-        statsGrid.add(createStatCard("Users", "1,234", "+12%"));
-        statsGrid.add(createStatCard("Revenue", "$45,678", "+8%"));
-        statsGrid.add(createStatCard("Orders", "567", "+23%"));
+        Card statsCard1 = createStatCard("Users", "1,234", "+12%");
+        Card statsCard2 = createStatCard("Revenue", "$45,678", "+8%");
+        Card statsCard3 = createStatCard("Orders", "567", "+23%");
+        statsGrid.add(statsCard1, statsCard2, statsCard3);
+        statsGrid.setFlexGrow(1, statsCard1, statsCard2, statsCard3);
 
         addSection("Stats Cards", statsGrid);
 
@@ -164,13 +168,13 @@ public class CardDemoView extends VerticalLayout {
         changeSpan.addClassNames(LumoUtility.TextColor.SUCCESS, LumoUtility.FontSize.SMALL);
 
         card.add(titleSpan, valueSpan, changeSpan);
-        card.setWidth("200px");
+        card.setMinWidth("150px");
         return card;
     }
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

@@ -15,6 +15,7 @@
  */
 package com.vaadin.flow.demo.views;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -23,6 +24,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 /**
@@ -35,6 +37,7 @@ public class HomeView extends VerticalLayout {
     public HomeView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("1200px");
 
         H1 title = new H1("Vaadin Kitchen Sink Demo");
         title.addClassNames(LumoUtility.Margin.Bottom.MEDIUM);
@@ -53,25 +56,33 @@ public class HomeView extends VerticalLayout {
 
         categories.add(
             createCategoryCard("Input Components",
-                "Buttons, text fields, checkboxes, select boxes, date/time pickers, and more."),
+                "Buttons, text fields, checkboxes, select boxes, date/time pickers, and more.",
+                ButtonDemoView.class),
             createCategoryCard("Layout Components",
-                "Vertical/horizontal layouts, form layouts, split layouts, tabs, accordion, and cards."),
+                "Vertical/horizontal layouts, form layouts, split layouts, tabs, accordion, and cards.",
+                VerticalLayoutDemoView.class),
             createCategoryCard("Data Components",
-                "Grid, Grid Pro, Virtual List, List Box, and CRUD components for displaying data."),
+                "Grid, Grid Pro, Virtual List, List Box, and CRUD components for displaying data.",
+                GridDemoView.class),
             createCategoryCard("Visualization",
-                "Avatars, badges, icons, progress bars, and charts for visual representation."),
+                "Avatars, badges, icons, progress bars, and charts for visual representation.",
+                AvatarDemoView.class),
             createCategoryCard("Interaction",
-                "Dialogs, notifications, context menus, menu bars, popovers, and login forms."),
+                "Dialogs, notifications, context menus, menu bars, popovers, and login forms.",
+                DialogDemoView.class),
             createCategoryCard("Navigation",
-                "Side navigation and related navigation components."),
+                "Side navigation and related navigation components.",
+                SideNavDemoView.class),
             createCategoryCard("Advanced",
-                "Rich text editor, markdown, messages, board, dashboard, and master-detail layouts.")
+                "Rich text editor, markdown, messages, board, dashboard, and master-detail layouts.",
+                RichTextEditorDemoView.class)
         );
 
         add(title, intro, categoriesTitle, categories);
     }
 
-    private Div createCategoryCard(String title, String description) {
+    private RouterLink createCategoryCard(String title, String description,
+            Class<? extends Component> target) {
         Div card = new Div();
         card.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.BorderRadius.MEDIUM,
                 LumoUtility.Padding.MEDIUM);
@@ -84,6 +95,11 @@ public class HomeView extends VerticalLayout {
         cardDesc.addClassNames(LumoUtility.Margin.NONE, LumoUtility.TextColor.SECONDARY);
 
         card.add(cardTitle, cardDesc);
-        return card;
+
+        RouterLink link = new RouterLink(target);
+        link.add(card);
+        link.getStyle().set("text-decoration", "none").set("color", "inherit")
+                .set("cursor", "pointer");
+        return link;
     }
 }

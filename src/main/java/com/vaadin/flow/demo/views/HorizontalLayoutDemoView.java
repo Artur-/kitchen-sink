@@ -16,7 +16,8 @@
 package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -36,14 +37,15 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
     public HorizontalLayoutDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Horizontal Layout Component"));
+        add(new H1("Horizontal Layout Component"));
         add(new Paragraph("HorizontalLayout arranges components in a horizontal row."));
 
         // Basic horizontal layout
         HorizontalLayout basic = new HorizontalLayout();
         basic.add(createBox("Item 1"), createBox("Item 2"), createBox("Item 3"));
-        basic.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        basic.addClassNames(LumoUtility.Border.ALL);
         basic.setWidthFull();
         addSection("Basic Horizontal Layout", basic);
 
@@ -51,16 +53,17 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         HorizontalLayout withSpacing = new HorizontalLayout();
         withSpacing.setSpacing(true);
         withSpacing.add(createBox("Spaced 1"), createBox("Spaced 2"), createBox("Spaced 3"));
-        withSpacing.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        withSpacing.addClassNames(LumoUtility.Border.ALL);
         withSpacing.setWidthFull();
         addSection("With Spacing", withSpacing);
 
         // With padding
         HorizontalLayout withPadding = new HorizontalLayout();
         withPadding.setPadding(true);
+        setMaxWidth("900px");
         withPadding.setSpacing(true);
         withPadding.add(createBox("Padded 1"), createBox("Padded 2"), createBox("Padded 3"));
-        withPadding.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        withPadding.addClassNames(LumoUtility.Border.ALL);
         withPadding.setWidthFull();
         addSection("With Padding", withPadding);
 
@@ -69,7 +72,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         alignStart.setAlignItems(FlexComponent.Alignment.START);
         alignStart.add(createBox("Top"), createTallBox("Tall"), createBox("Aligned"));
         alignStart.setHeight("150px");
-        alignStart.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        alignStart.addClassNames(LumoUtility.Border.ALL);
         alignStart.setWidthFull();
         addSection("Align Items: Start (Top)", alignStart);
 
@@ -78,7 +81,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         alignCenter.setAlignItems(FlexComponent.Alignment.CENTER);
         alignCenter.add(createBox("Center"), createTallBox("Tall"), createBox("Aligned"));
         alignCenter.setHeight("150px");
-        alignCenter.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        alignCenter.addClassNames(LumoUtility.Border.ALL);
         alignCenter.setWidthFull();
         addSection("Align Items: Center", alignCenter);
 
@@ -87,7 +90,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         alignEnd.setAlignItems(FlexComponent.Alignment.END);
         alignEnd.add(createBox("Bottom"), createTallBox("Tall"), createBox("Aligned"));
         alignEnd.setHeight("150px");
-        alignEnd.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        alignEnd.addClassNames(LumoUtility.Border.ALL);
         alignEnd.setWidthFull();
         addSection("Align Items: End (Bottom)", alignEnd);
 
@@ -95,7 +98,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         HorizontalLayout justifyEnd = new HorizontalLayout();
         justifyEnd.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
         justifyEnd.add(createBox("End 1"), createBox("End 2"), createBox("End 3"));
-        justifyEnd.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        justifyEnd.addClassNames(LumoUtility.Border.ALL);
         justifyEnd.setWidthFull();
         addSection("Justify Content: End", justifyEnd);
 
@@ -103,7 +106,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         HorizontalLayout justifyBetween = new HorizontalLayout();
         justifyBetween.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         justifyBetween.add(createBox("Left"), createBox("Center"), createBox("Right"));
-        justifyBetween.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        justifyBetween.addClassNames(LumoUtility.Border.ALL);
         justifyBetween.setWidthFull();
         addSection("Justify Content: Space Between", justifyBetween);
 
@@ -111,7 +114,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         HorizontalLayout justifyAround = new HorizontalLayout();
         justifyAround.setJustifyContentMode(FlexComponent.JustifyContentMode.AROUND);
         justifyAround.add(createBox("Around 1"), createBox("Around 2"), createBox("Around 3"));
-        justifyAround.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        justifyAround.addClassNames(LumoUtility.Border.ALL);
         justifyAround.setWidthFull();
         addSection("Justify Content: Space Around", justifyAround);
 
@@ -120,7 +123,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         Div expandItem = createBox("Expanded");
         withExpand.setFlexGrow(1, expandItem);
         withExpand.add(createBox("Fixed"), expandItem, createBox("Fixed"));
-        withExpand.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        withExpand.addClassNames(LumoUtility.Border.ALL);
         withExpand.setWidthFull();
         addSection("With Expand", withExpand);
 
@@ -130,7 +133,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
         for (int i = 1; i <= 10; i++) {
             wrapping.add(createBox("Item " + i));
         }
-        wrapping.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        wrapping.addClassNames(LumoUtility.Border.ALL);
         wrapping.setWidthFull();
         addSection("Wrapping (flex-wrap)", wrapping);
     }
@@ -152,7 +155,7 @@ public class HorizontalLayoutDemoView extends VerticalLayout {
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
         section.addClassNames(LumoUtility.Margin.Top.MEDIUM);
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

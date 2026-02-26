@@ -18,7 +18,8 @@ package com.vaadin.flow.demo.views;
 import com.vaadin.flow.component.badge.Badge;
 import com.vaadin.flow.component.badge.BadgeVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -38,13 +39,15 @@ public class BadgeDemoView extends VerticalLayout {
     public BadgeDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Badge Component"));
+        add(new H1("Badge Component"));
         add(new Paragraph("Badges are used to highlight status information or counts."));
 
         // Basic badges
         HorizontalLayout basic = new HorizontalLayout();
         basic.setSpacing(true);
+        basic.getStyle().set("flex-wrap", "wrap");
         basic.add(
             new Badge("Default"),
             createBadge("Success", BadgeVariant.SUCCESS),
@@ -57,6 +60,7 @@ public class BadgeDemoView extends VerticalLayout {
         // Filled badges
         HorizontalLayout filled = new HorizontalLayout();
         filled.setSpacing(true);
+        filled.getStyle().set("flex-wrap", "wrap");
         filled.add(
             createBadge("Filled", BadgeVariant.FILLED),
             createBadge("Filled Success", BadgeVariant.FILLED, BadgeVariant.SUCCESS),
@@ -69,6 +73,7 @@ public class BadgeDemoView extends VerticalLayout {
         // With icons
         HorizontalLayout withIcons = new HorizontalLayout();
         withIcons.setSpacing(true);
+        withIcons.getStyle().set("flex-wrap", "wrap");
         Badge approved = new Badge("Approved", VaadinIcon.CHECK.create());
         approved.addThemeVariants(BadgeVariant.SUCCESS);
         Badge rejected = new Badge("Rejected", VaadinIcon.CLOSE.create());
@@ -82,6 +87,7 @@ public class BadgeDemoView extends VerticalLayout {
         // Number badges
         HorizontalLayout numbers = new HorizontalLayout();
         numbers.setSpacing(true);
+        numbers.getStyle().set("flex-wrap", "wrap");
         Badge num1 = new Badge("messages", 5);
         Badge num2 = new Badge("alerts", 12);
         num2.addThemeVariants(BadgeVariant.ERROR);
@@ -93,6 +99,7 @@ public class BadgeDemoView extends VerticalLayout {
         // Number-only badges
         HorizontalLayout numberOnly = new HorizontalLayout();
         numberOnly.setSpacing(true);
+        numberOnly.getStyle().set("flex-wrap", "wrap");
         Badge no1 = new Badge("messages", 5);
         no1.addThemeVariants(BadgeVariant.NUMBER_ONLY);
         Badge no2 = new Badge("alerts", 12);
@@ -105,6 +112,7 @@ public class BadgeDemoView extends VerticalLayout {
         // Dot badges
         HorizontalLayout dots = new HorizontalLayout();
         dots.setSpacing(true);
+        dots.getStyle().set("flex-wrap", "wrap");
         dots.setAlignItems(Alignment.CENTER);
         Badge dot1 = new Badge();
         dot1.addThemeVariants(BadgeVariant.DOT);
@@ -150,7 +158,7 @@ public class BadgeDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

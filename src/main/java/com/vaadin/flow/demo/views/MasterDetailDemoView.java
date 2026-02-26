@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.masterdetaillayout.MasterDetailLayout;
@@ -40,8 +40,9 @@ public class MasterDetailDemoView extends VerticalLayout {
     public MasterDetailDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Master Detail Layout Component"));
+        add(new H1("Master Detail Layout Component"));
         add(new Paragraph("MasterDetailLayout provides a responsive master-detail pattern for data browsing."));
 
         // Basic master-detail layout
@@ -181,7 +182,7 @@ public class MasterDetailDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

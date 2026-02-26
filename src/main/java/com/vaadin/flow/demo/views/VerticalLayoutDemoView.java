@@ -16,7 +16,8 @@
 package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -35,29 +36,31 @@ public class VerticalLayoutDemoView extends VerticalLayout {
     public VerticalLayoutDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Vertical Layout Component"));
+        add(new H1("Vertical Layout Component"));
         add(new Paragraph("VerticalLayout arranges components in a vertical column."));
 
         // Basic vertical layout
         VerticalLayout basic = new VerticalLayout();
         basic.add(createBox("Item 1"), createBox("Item 2"), createBox("Item 3"));
-        basic.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        basic.addClassNames(LumoUtility.Border.ALL);
         addSection("Basic Vertical Layout", basic);
 
         // With spacing
         VerticalLayout withSpacing = new VerticalLayout();
         withSpacing.setSpacing(true);
         withSpacing.add(createBox("Spaced 1"), createBox("Spaced 2"), createBox("Spaced 3"));
-        withSpacing.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        withSpacing.addClassNames(LumoUtility.Border.ALL);
         addSection("With Spacing", withSpacing);
 
         // With padding
         VerticalLayout withPadding = new VerticalLayout();
         withPadding.setPadding(true);
+        setMaxWidth("900px");
         withPadding.setSpacing(true);
         withPadding.add(createBox("Padded 1"), createBox("Padded 2"), createBox("Padded 3"));
-        withPadding.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        withPadding.addClassNames(LumoUtility.Border.ALL);
         addSection("With Padding", withPadding);
 
         // Alignment start
@@ -65,7 +68,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         alignStart.setAlignItems(FlexComponent.Alignment.START);
         alignStart.add(createBox("Start"), createBox("Align"), createBox("Left"));
         alignStart.setHeight("200px");
-        alignStart.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        alignStart.addClassNames(LumoUtility.Border.ALL);
         addSection("Align Items: Start", alignStart);
 
         // Alignment center
@@ -73,7 +76,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         alignCenter.setAlignItems(FlexComponent.Alignment.CENTER);
         alignCenter.add(createBox("Center"), createBox("Aligned"), createBox("Items"));
         alignCenter.setHeight("200px");
-        alignCenter.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        alignCenter.addClassNames(LumoUtility.Border.ALL);
         addSection("Align Items: Center", alignCenter);
 
         // Alignment end
@@ -81,7 +84,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         alignEnd.setAlignItems(FlexComponent.Alignment.END);
         alignEnd.add(createBox("End"), createBox("Align"), createBox("Right"));
         alignEnd.setHeight("200px");
-        alignEnd.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        alignEnd.addClassNames(LumoUtility.Border.ALL);
         addSection("Align Items: End", alignEnd);
 
         // Justify content center
@@ -89,7 +92,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         justifyCenter.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         justifyCenter.add(createBox("Centered"), createBox("Vertically"));
         justifyCenter.setHeight("300px");
-        justifyCenter.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        justifyCenter.addClassNames(LumoUtility.Border.ALL);
         addSection("Justify Content: Center", justifyCenter);
 
         // Justify content between
@@ -97,7 +100,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         justifyBetween.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         justifyBetween.add(createBox("Top"), createBox("Middle"), createBox("Bottom"));
         justifyBetween.setHeight("300px");
-        justifyBetween.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        justifyBetween.addClassNames(LumoUtility.Border.ALL);
         addSection("Justify Content: Space Between", justifyBetween);
 
         // Individual alignment
@@ -109,7 +112,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         individualAlign.setAlignSelf(FlexComponent.Alignment.END, selfEnd);
         individualAlign.add(createBox("Default (Start)"), selfCenter, selfEnd);
         individualAlign.setHeight("200px");
-        individualAlign.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        individualAlign.addClassNames(LumoUtility.Border.ALL);
         addSection("Individual Alignment", individualAlign);
 
         // Expand
@@ -118,7 +121,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         withExpand.setFlexGrow(1, expandItem);
         withExpand.add(createBox("Normal"), expandItem, createBox("Normal"));
         withExpand.setHeight("300px");
-        withExpand.getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+        withExpand.addClassNames(LumoUtility.Border.ALL);
         addSection("With Expand", withExpand);
     }
 
@@ -132,7 +135,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);

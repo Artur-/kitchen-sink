@@ -18,7 +18,8 @@ package com.vaadin.flow.demo.views;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -42,8 +43,9 @@ public class NotificationDemoView extends VerticalLayout {
     public NotificationDemoView() {
         setSpacing(true);
         setPadding(true);
+        setMaxWidth("900px");
 
-        add(new H2("Notification Component"));
+        add(new H1("Notification Component"));
         add(new Paragraph("Notifications display brief messages to the user."));
 
         // Basic notification
@@ -86,6 +88,7 @@ public class NotificationDemoView extends VerticalLayout {
 
         // Positions
         HorizontalLayout positions = new HorizontalLayout();
+        positions.getStyle().set("flex-wrap", "wrap");
 
         Button topStart = new Button("Top Start", e ->
             Notification.show("Top Start", 2000, Position.TOP_START));
@@ -104,6 +107,7 @@ public class NotificationDemoView extends VerticalLayout {
         addSection("Middle Position", middlePositions);
 
         HorizontalLayout bottomPositions = new HorizontalLayout();
+        bottomPositions.getStyle().set("flex-wrap", "wrap");
         Button bottomStart = new Button("Bottom Start", e ->
             Notification.show("Bottom Start", 2000, Position.BOTTOM_START));
         Button bottomCenter = new Button("Bottom Center", e ->
@@ -178,7 +182,7 @@ public class NotificationDemoView extends VerticalLayout {
 
     private void addSection(String title, com.vaadin.flow.component.Component... components) {
         Div section = new Div();
-        section.add(new H2(title));
+        section.add(new H3(title));
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
