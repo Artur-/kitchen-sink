@@ -15,6 +15,9 @@
  */
 package com.vaadin.flow.demo;
 
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
@@ -22,10 +25,14 @@ import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.demo.views.*;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.shared.Registration;
+import com.vaadin.flow.theme.aura.Aura;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 /**
@@ -39,13 +46,48 @@ public class MainLayout extends AppLayout {
         createDrawer();
     }
 
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        UI ui = attachEvent.getUI();
+        if (ComponentUtil.getData(ui, Registration.class) == null) {
+            Registration reg = ui.getPage().addStyleSheet(Aura.STYLESHEET);
+            ComponentUtil.setData(ui, Registration.class, reg);
+        }
+    }
+
+    private void switchTheme(UI ui, String styleSheet) {
+        Registration reg = ComponentUtil.getData(ui, Registration.class);
+        if (reg != null) {
+            reg.remove();
+        }
+        reg = ui.getPage().addStyleSheet(styleSheet);
+        ComponentUtil.setData(ui, Registration.class, reg);
+    }
+
     private void createHeader() {
         H1 title = new H1("Vaadin Kitchen Sink");
         title.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-        Header header = new Header(new DrawerToggle(), title);
-        header.addClassNames(LumoUtility.AlignItems.CENTER, LumoUtility.Display.FLEX,
-                LumoUtility.Gap.MEDIUM, LumoUtility.Padding.MEDIUM);
+        Select<String> themeSelect = new Select<>();
+        themeSelect.setItems("Aura", "Lumo");
+        themeSelect.setValue("Aura");
+        themeSelect.setWidth("120px");
+        themeSelect.addValueChangeListener(e -> {
+            String stylesheet = "Lumo".equals(e.getValue())
+                    ? Lumo.STYLESHEET : Aura.STYLESHEET;
+            switchTheme(e.getSource().getUI().orElse(UI.getCurrent()),
+                    stylesheet);
+        });
+
+        Span spacer = new Span();
+        spacer.getStyle().set("flex-grow", "1");
+
+        Header header = new Header(new DrawerToggle(), title, spacer,
+                themeSelect);
+        header.addClassNames(LumoUtility.AlignItems.CENTER,
+                LumoUtility.Display.FLEX, LumoUtility.Gap.MEDIUM,
+                LumoUtility.Padding.MEDIUM);
 
         addToNavbar(header);
     }
