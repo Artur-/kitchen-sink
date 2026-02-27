@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import java.util.List;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -45,8 +43,7 @@ public class PasswordFieldDemoView extends VerticalLayout {
         add(new Paragraph("The PasswordField is used for password input with masking."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new PasswordField("Password"))
+        Playground<PasswordField> playground = new Playground<>(new PasswordField("Password"))
                 .withCheckbox("Enabled", true,
                         PasswordField::setEnabled)
                 .withCheckbox("Read-only", false,
@@ -72,24 +69,24 @@ public class PasswordFieldDemoView extends VerticalLayout {
                                 pf.addThemeVariants(
                                         TextFieldVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic password field
         PasswordField basic = new PasswordField("Password");
         basic.setPlaceholder("Enter your password");
-        addSection("Basic Password Field", basic);
+        playground.addExample("Basic Password Field", basic);
 
         // With reveal button
         PasswordField withReveal = new PasswordField("Account Password");
         withReveal.setRevealButtonVisible(true);
         withReveal.setHelperText("Click the eye icon to reveal password");
-        addSection("With Reveal Button", withReveal);
+        playground.addExample("With Reveal Button", withReveal);
 
         // Required field
         PasswordField required = new PasswordField("Required Password");
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Field", required);
+        playground.addExample("Required Field", required);
 
         // With validation
         PasswordField validation = new PasswordField("Password with Validation");
@@ -104,35 +101,26 @@ public class PasswordFieldDemoView extends VerticalLayout {
                 validation.setInvalid(false);
             }
         });
-        addSection("With Validation", validation);
+        playground.addExample("With Validation", validation);
 
         // Clear button
         PasswordField clearButton = new PasswordField("With Clear Button");
         clearButton.setClearButtonVisible(true);
         clearButton.setValue("secret123");
-        addSection("Clear Button", clearButton);
+        playground.addExample("Clear Button", clearButton);
 
         // Read-only (though unusual for passwords)
         PasswordField readonly = new PasswordField("Read-only Password");
         readonly.setValue("readonly-password");
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         PasswordField disabled = new PasswordField("Disabled Password");
         disabled.setValue("disabled");
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
-    }
+        playground.addExample("Disabled", disabled);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

@@ -18,7 +18,6 @@ package com.vaadin.flow.demo.views;
 import java.util.List;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -49,8 +48,7 @@ public class TextFieldDemoView extends VerticalLayout {
         add(new Paragraph("The TextField component is used for single-line text input."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new TextField("Label"))
+        Playground<TextField> playground = new Playground<>(new TextField("Label"))
                 .withCheckbox("Enabled", true, TextField::setEnabled)
                 .withCheckbox("Read-only", false, TextField::setReadOnly)
                 .withCheckbox("Required", false, (tf, val) -> {
@@ -76,23 +74,23 @@ public class TextFieldDemoView extends VerticalLayout {
                             case "Align right" -> tf.addThemeVariants(
                                     TextFieldVariant.LUMO_ALIGN_RIGHT);
                             }
-                        }));
+                        });
 
         // Basic text field
         TextField basic = new TextField("Full Name");
         basic.setPlaceholder("Enter text here");
-        addSection("Basic Text Field", basic);
+        playground.addExample("Basic Text Field", basic);
 
         // With helper text
         TextField withHelper = new TextField("Username");
         withHelper.setHelperText("This is helper text providing additional context");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Required field
         TextField required = new TextField("Company Name");
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Field", required);
+        playground.addExample("Required Field", required);
 
         // With prefix and suffix
         TextField withPrefix = new TextField("Price");
@@ -103,13 +101,13 @@ public class TextFieldDemoView extends VerticalLayout {
 
         TextField withIcon = new TextField("Search");
         withIcon.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
-        addSection("With Prefix/Suffix", withPrefix, withSuffix, withIcon);
+        playground.addExample("With Prefix/Suffix", withPrefix, withSuffix, withIcon);
 
         // Clear button
         TextField clearButton = new TextField("With Clear Button");
         clearButton.setClearButtonVisible(true);
         clearButton.setValue("Clear me!");
-        addSection("Clear Button", clearButton);
+        playground.addExample("Clear Button", clearButton);
 
         // Character counter
         TextField charCounter = new TextField("With Character Counter");
@@ -117,14 +115,14 @@ public class TextFieldDemoView extends VerticalLayout {
         charCounter.setHelperText("0/20");
         charCounter.addValueChangeListener(e ->
             charCounter.setHelperText(e.getValue().length() + "/20"));
-        addSection("Character Counter", charCounter);
+        playground.addExample("Character Counter", charCounter);
 
         // Pattern validation
         TextField pattern = new TextField("Phone Number");
         pattern.setPattern("[0-9]{3}-[0-9]{3}-[0-9]{4}");
         pattern.setHelperText("Format: 123-456-7890");
         pattern.setAllowedCharPattern("[0-9-]");
-        addSection("Pattern Validation", pattern);
+        playground.addExample("Pattern Validation", pattern);
 
         // Theme variants
         TextField small = new TextField("Small Variant");
@@ -137,7 +135,7 @@ public class TextFieldDemoView extends VerticalLayout {
         TextField alignRight = new TextField("Right Aligned");
         alignRight.addThemeVariants(TextFieldVariant.LUMO_ALIGN_RIGHT);
         alignRight.setValue("Right");
-        addSection("Theme Variants", small, alignCenter, alignRight);
+        playground.addExample("Theme Variants", small, alignCenter, alignRight);
 
         // Value change modes
         Div output = new Div();
@@ -147,7 +145,7 @@ public class TextFieldDemoView extends VerticalLayout {
         eager.setValueChangeMode(ValueChangeMode.EAGER);
         eager.addValueChangeListener(e ->
             output.setText("Eager value: " + e.getValue()));
-        addSection("Value Change Mode (Eager)", eager, output);
+        playground.addExample("Value Change Mode (Eager)", eager, output);
 
         // Readonly and disabled
         TextField readonly = new TextField("Read-only Field");
@@ -157,23 +155,14 @@ public class TextFieldDemoView extends VerticalLayout {
         TextField disabled = new TextField("Disabled Field");
         disabled.setValue("This is disabled");
         disabled.setEnabled(false);
-        addSection("Read-only and Disabled", readonly, disabled);
+        playground.addExample("Read-only and Disabled", readonly, disabled);
 
         // Invalid state
         TextField invalid = new TextField("Invalid Field");
         invalid.setInvalid(true);
         invalid.setErrorMessage("This field has an error");
-        addSection("Invalid State", invalid);
-    }
+        playground.addExample("Invalid State", invalid);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

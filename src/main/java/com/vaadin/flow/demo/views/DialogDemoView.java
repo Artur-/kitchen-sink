@@ -21,8 +21,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -51,7 +49,6 @@ public class DialogDemoView extends VerticalLayout {
         add(new Paragraph("Dialog displays modal content overlaying the main view."));
 
         // Interactive playground
-        add(new H3("Playground"));
         AtomicBoolean modal = new AtomicBoolean(true);
         AtomicBoolean draggable = new AtomicBoolean(false);
         AtomicBoolean resizable = new AtomicBoolean(false);
@@ -77,7 +74,7 @@ public class DialogDemoView extends VerticalLayout {
             dialog.open();
         });
 
-        add(new Playground<>(openBtn)
+        Playground<Button> playground = new Playground<>(openBtn)
                 .withTextField("Header title", "Dialog Title",
                         (btn, val) -> title.set(val))
                 .withCheckbox("Modal", true,
@@ -89,7 +86,7 @@ public class DialogDemoView extends VerticalLayout {
                 .withCheckbox("Close on Esc", true,
                         (btn, val) -> closeOnEsc.set(val))
                 .withCheckbox("Close on outside click", false,
-                        (btn, val) -> closeOnOutside.set(val)));
+                        (btn, val) -> closeOnOutside.set(val));
 
         // Basic dialog
         Button basicBtn = new Button("Open Basic Dialog", e -> {
@@ -98,7 +95,7 @@ public class DialogDemoView extends VerticalLayout {
             dialog.add(new Button("Close", event -> dialog.close()));
             dialog.open();
         });
-        addSection("Basic Dialog", basicBtn);
+        playground.addExample("Basic Dialog", basicBtn);
 
         // Dialog with header and footer
         Button headerFooterBtn = new Button("Dialog with Header/Footer", e -> {
@@ -116,7 +113,7 @@ public class DialogDemoView extends VerticalLayout {
 
             dialog.open();
         });
-        addSection("With Header and Footer", headerFooterBtn);
+        playground.addExample("With Header and Footer", headerFooterBtn);
 
         // Form dialog
         Button formBtn = new Button("Open Form Dialog", e -> {
@@ -142,7 +139,7 @@ public class DialogDemoView extends VerticalLayout {
 
             dialog.open();
         });
-        addSection("Form Dialog", formBtn);
+        playground.addExample("Form Dialog", formBtn);
 
         // Confirmation dialog
         Button confirmBtn = new Button("Delete Item", e -> {
@@ -160,7 +157,7 @@ public class DialogDemoView extends VerticalLayout {
 
             dialog.open();
         });
-        addSection("Confirmation Dialog", confirmBtn);
+        playground.addExample("Confirmation Dialog", confirmBtn);
 
         // Non-modal dialog
         Button nonModalBtn = new Button("Open Non-Modal Dialog", e -> {
@@ -172,7 +169,7 @@ public class DialogDemoView extends VerticalLayout {
             dialog.add(new Button("Close", event -> dialog.close()));
             dialog.open();
         });
-        addSection("Non-Modal Draggable Dialog", nonModalBtn);
+        playground.addExample("Non-Modal Draggable Dialog", nonModalBtn);
 
         // Resizable dialog
         Button resizableBtn = new Button("Open Resizable Dialog", e -> {
@@ -186,7 +183,7 @@ public class DialogDemoView extends VerticalLayout {
             dialog.add(new Button("Close", event -> dialog.close()));
             dialog.open();
         });
-        addSection("Resizable Dialog", resizableBtn);
+        playground.addExample("Resizable Dialog", resizableBtn);
 
         // Dialog that closes on outside click
         Button outsideClickBtn = new Button("Click Outside to Close", e -> {
@@ -196,7 +193,7 @@ public class DialogDemoView extends VerticalLayout {
             dialog.add(new Paragraph("Click anywhere outside this dialog to close it."));
             dialog.open();
         });
-        addSection("Close on Outside Click", outsideClickBtn);
+        playground.addExample("Close on Outside Click", outsideClickBtn);
 
         // Dialog that closes on Escape
         Button escapeBtn = new Button("Press Escape to Close", e -> {
@@ -206,17 +203,8 @@ public class DialogDemoView extends VerticalLayout {
             dialog.add(new Paragraph("Press the Escape key to close this dialog."));
             dialog.open();
         });
-        addSection("Close on Escape Key", escapeBtn);
-    }
+        playground.addExample("Close on Escape Key", escapeBtn);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

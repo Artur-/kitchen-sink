@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import java.util.List;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -47,8 +45,7 @@ public class NumberFieldDemoView extends VerticalLayout {
         add(new Paragraph("Number fields are used for numeric input."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new NumberField("Amount"))
+        Playground<NumberField> playground = new Playground<>(new NumberField("Amount"))
                 .withCheckbox("Enabled", true, NumberField::setEnabled)
                 .withCheckbox("Read-only", false, NumberField::setReadOnly)
                 .withCheckbox("Step buttons", false,
@@ -67,19 +64,19 @@ public class NumberFieldDemoView extends VerticalLayout {
                                 nf.addThemeVariants(
                                         TextFieldVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic number field
         NumberField basic = new NumberField("Amount");
         basic.setPlaceholder("Enter a number");
-        addSection("Basic Number Field", basic);
+        playground.addExample("Basic Number Field", basic);
 
         // With step controls
         NumberField withControls = new NumberField("Quantity");
         withControls.setStepButtonsVisible(true);
         withControls.setStep(0.5);
         withControls.setValue(5.0);
-        addSection("With Step Controls", withControls);
+        playground.addExample("With Step Controls", withControls);
 
         // Min/Max values
         NumberField minMax = new NumberField("Min/Max Range (0-100)");
@@ -87,7 +84,7 @@ public class NumberFieldDemoView extends VerticalLayout {
         minMax.setMax(100);
         minMax.setStepButtonsVisible(true);
         minMax.setHelperText("Value must be between 0 and 100");
-        addSection("Min/Max Values", minMax);
+        playground.addExample("Min/Max Values", minMax);
 
         // With prefix/suffix
         NumberField price = new NumberField("Price");
@@ -99,14 +96,14 @@ public class NumberFieldDemoView extends VerticalLayout {
         percentage.setMin(0);
         percentage.setMax(100);
         percentage.setValue(50.0);
-        addSection("With Prefix/Suffix", price, percentage);
+        playground.addExample("With Prefix/Suffix", price, percentage);
 
         // Integer field
         IntegerField intField = new IntegerField("Integer Field");
         intField.setStepButtonsVisible(true);
         intField.setStep(1);
         intField.setValue(10);
-        addSection("Integer Field", intField);
+        playground.addExample("Integer Field", intField);
 
         // Integer field with min/max
         IntegerField quantity = new IntegerField("Quantity (1-99)");
@@ -115,35 +112,26 @@ public class NumberFieldDemoView extends VerticalLayout {
         quantity.setStepButtonsVisible(true);
         quantity.setValue(1);
         quantity.setHelperText("Select quantity");
-        addSection("Integer Field with Range", quantity);
+        playground.addExample("Integer Field with Range", quantity);
 
         // Clear button
         NumberField clearButton = new NumberField("With Clear Button");
         clearButton.setClearButtonVisible(true);
         clearButton.setValue(42.0);
-        addSection("Clear Button", clearButton);
+        playground.addExample("Clear Button", clearButton);
 
         // Read-only
         NumberField readonly = new NumberField("Read-only Field");
         readonly.setValue(123.45);
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         NumberField disabled = new NumberField("Disabled Field");
         disabled.setValue(100.0);
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
-    }
+        playground.addExample("Disabled", disabled);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

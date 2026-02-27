@@ -21,8 +21,6 @@ import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.avatar.AvatarGroup;
 import com.vaadin.flow.component.avatar.AvatarGroupVariant;
 import com.vaadin.flow.component.avatar.AvatarVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -48,8 +46,7 @@ public class AvatarDemoView extends VerticalLayout {
         add(new Paragraph("Avatar displays user profile images or initials."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new Avatar("John Doe"))
+        Playground<Avatar> playground = new Playground<>(new Avatar("John Doe"))
                 .withTextField("Name", "John Doe", Avatar::setName)
                 .withTextField("Abbreviation", "",
                         Avatar::setAbbreviation)
@@ -74,11 +71,11 @@ public class AvatarDemoView extends VerticalLayout {
                             case "XLarge" -> a.addThemeVariants(
                                     AvatarVariant.LUMO_XLARGE);
                             }
-                        }));
+                        });
 
         // Basic avatar with name
         Avatar basic = new Avatar("John Doe");
-        addSection("Basic Avatar (Initials)", basic);
+        playground.addExample("Basic Avatar (Initials)", basic);
 
         // Size variants
         HorizontalLayout sizes = new HorizontalLayout();
@@ -99,13 +96,13 @@ public class AvatarDemoView extends VerticalLayout {
         xsmall.addThemeVariants(AvatarVariant.LUMO_XSMALL);
 
         sizes.add(xlarge, large, medium, small, xsmall);
-        addSection("Size Variants", sizes);
+        playground.addExample("Size Variants", sizes);
 
         // With abbreviation
         Avatar abbr = new Avatar();
         abbr.setName("Jane Smith");
         abbr.setAbbreviation("JS");
-        addSection("Custom Abbreviation", abbr);
+        playground.addExample("Custom Abbreviation", abbr);
 
         // Different color indices
         HorizontalLayout colors = new HorizontalLayout();
@@ -115,7 +112,7 @@ public class AvatarDemoView extends VerticalLayout {
             colorAvatar.setColorIndex(i);
             colors.add(colorAvatar);
         }
-        addSection("Color Variations", colors);
+        playground.addExample("Color Variations", colors);
 
         // Avatar Group
         AvatarGroup group = new AvatarGroup();
@@ -126,7 +123,7 @@ public class AvatarDemoView extends VerticalLayout {
             new AvatarGroup.AvatarGroupItem("Alice Williams"),
             new AvatarGroup.AvatarGroupItem("Charlie Brown")
         );
-        addSection("Avatar Group", group);
+        playground.addExample("Avatar Group", group);
 
         // Avatar Group with max items
         AvatarGroup limitedGroup = new AvatarGroup();
@@ -139,7 +136,7 @@ public class AvatarDemoView extends VerticalLayout {
             new AvatarGroup.AvatarGroupItem("Person 5"),
             new AvatarGroup.AvatarGroupItem("Person 6")
         );
-        addSection("Avatar Group (Max 3 Visible)", limitedGroup);
+        playground.addExample("Avatar Group (Max 3 Visible)", limitedGroup);
 
         // Small Avatar Group
         AvatarGroup smallGroup = new AvatarGroup();
@@ -149,7 +146,7 @@ public class AvatarDemoView extends VerticalLayout {
             new AvatarGroup.AvatarGroupItem("Bob"),
             new AvatarGroup.AvatarGroupItem("Charlie")
         );
-        addSection("Small Avatar Group", smallGroup);
+        playground.addExample("Small Avatar Group", smallGroup);
 
         // Large Avatar Group
         AvatarGroup largeGroup = new AvatarGroup();
@@ -159,17 +156,8 @@ public class AvatarDemoView extends VerticalLayout {
             new AvatarGroup.AvatarGroupItem("Edward"),
             new AvatarGroup.AvatarGroupItem("Fiona")
         );
-        addSection("Large Avatar Group", largeGroup);
-    }
+        playground.addExample("Large Avatar Group", largeGroup);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

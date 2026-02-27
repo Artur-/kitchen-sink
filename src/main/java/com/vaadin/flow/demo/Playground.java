@@ -22,14 +22,18 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 /**
- * A reusable builder that creates a side-by-side layout: live preview (left) +
- * controls panel (right), for interactively exploring component properties.
+ * A reusable builder that creates a tabbed layout with two tabs: an interactive
+ * "Playground" tab (live preview + controls) and an "Examples" tab for static
+ * demo sections.
  *
  * @param <T> the type of component being demonstrated
  */
@@ -38,14 +42,10 @@ public class Playground<T extends Component> extends Div {
     private final T target;
     private final Div previewArea;
     private final FormLayout controlsPanel;
+    private final VerticalLayout examplesContent;
 
     public Playground(T target) {
         this.target = target;
-
-        // Outer container: flex row, wrapping on narrow screens
-        getStyle().set("display", "flex");
-        getStyle().set("flex-wrap", "wrap");
-        getStyle().set("gap", "var(--lumo-space-m)");
         setWidthFull();
 
         // Preview area
@@ -66,12 +66,30 @@ public class Playground<T extends Component> extends Div {
         controlsPanel.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1));
         controlsPanel.getStyle().set("flex", "0 0 280px");
-        controlsPanel.addClassNames(
-                LumoUtility.Background.CONTRAST_5,
-                LumoUtility.BorderRadius.MEDIUM,
-                LumoUtility.Padding.MEDIUM);
 
-        add(previewArea, controlsPanel);
+        // Playground tab content: flex row, wrapping on narrow screens
+        Div playgroundContent = new Div();
+        playgroundContent.getStyle().set("display", "flex");
+        playgroundContent.getStyle().set("flex-wrap", "wrap");
+        playgroundContent.getStyle().set("gap", "var(--lumo-space-m)");
+        playgroundContent.getStyle().set("padding",
+                "var(--lumo-space-m) 0");
+        playgroundContent.setWidthFull();
+        playgroundContent.add(previewArea, controlsPanel);
+
+        // Examples tab content
+        examplesContent = new VerticalLayout();
+        examplesContent.setSpacing(true);
+        examplesContent.setPadding(false);
+        examplesContent.setWidthFull();
+
+        // TabSheet
+        TabSheet tabSheet = new TabSheet();
+        tabSheet.setWidthFull();
+        tabSheet.add("Playground", playgroundContent);
+        tabSheet.add("Examples", examplesContent);
+
+        add(tabSheet);
     }
 
     /**
@@ -87,6 +105,21 @@ public class Playground<T extends Component> extends Div {
      */
     public Div getPreviewArea() {
         return previewArea;
+    }
+
+    /**
+     * Adds an example section to the "Examples" tab.
+     */
+    public void addExample(String title,
+            Component... components) {
+        Div section = new Div();
+        section.add(new H3(title));
+        VerticalLayout layout = new VerticalLayout(components);
+        layout.setSpacing(true);
+        layout.setPadding(false);
+        layout.setWidthFull();
+        section.add(layout);
+        examplesContent.add(section);
     }
 
     /**

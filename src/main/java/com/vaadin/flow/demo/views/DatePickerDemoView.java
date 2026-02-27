@@ -21,8 +21,6 @@ import java.util.Locale;
 
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datepicker.DatePickerVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -48,8 +46,7 @@ public class DatePickerDemoView extends VerticalLayout {
         add(new Paragraph("The DatePicker allows users to select a date from a calendar."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new DatePicker("Date"))
+        Playground<DatePicker> playground = new Playground<>(new DatePicker("Date"))
                 .withCheckbox("Enabled", true, DatePicker::setEnabled)
                 .withCheckbox("Read-only", false,
                         DatePicker::setReadOnly)
@@ -69,92 +66,83 @@ public class DatePickerDemoView extends VerticalLayout {
                                 dp.addThemeVariants(
                                         DatePickerVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic date picker
         DatePicker basic = new DatePicker("Birth Date");
         basic.setPlaceholder("Pick a date");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
-        addSection("Basic Date Picker", basic);
+        playground.addExample("Basic Date Picker", basic);
 
         // Pre-selected value
         DatePicker preSelected = new DatePicker("Today's date");
         preSelected.setValue(LocalDate.now());
-        addSection("Pre-selected Value", preSelected);
+        playground.addExample("Pre-selected Value", preSelected);
 
         // With clear button
         DatePicker clearable = new DatePicker("Clearable");
         clearable.setValue(LocalDate.now());
         clearable.setClearButtonVisible(true);
-        addSection("With Clear Button", clearable);
+        playground.addExample("With Clear Button", clearable);
 
         // Min and max dates
         DatePicker minMax = new DatePicker("Date range");
         minMax.setMin(LocalDate.now());
         minMax.setMax(LocalDate.now().plusMonths(3));
         minMax.setHelperText("Select a date within the next 3 months");
-        addSection("Min/Max Date Range", minMax);
+        playground.addExample("Min/Max Date Range", minMax);
 
         // With helper text
         DatePicker withHelper = new DatePicker("Appointment date");
         withHelper.setHelperText("Select your preferred appointment date");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Initial position
         DatePicker initialPosition = new DatePicker("Start from next month");
         initialPosition.setInitialPosition(LocalDate.now().plusMonths(1));
-        addSection("Initial Position", initialPosition);
+        playground.addExample("Initial Position", initialPosition);
 
         // Required
         DatePicker required = new DatePicker("Required date");
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Field", required);
+        playground.addExample("Required Field", required);
 
         // Small variant
         DatePicker small = new DatePicker("Small variant");
         small.addThemeVariants(DatePickerVariant.LUMO_SMALL);
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // With locale
         DatePicker german = new DatePicker("German locale");
         german.setLocale(Locale.GERMANY);
         german.setValue(LocalDate.now());
-        addSection("German Locale", german);
+        playground.addExample("German Locale", german);
 
         // Auto-open disabled
         DatePicker noAutoOpen = new DatePicker("Auto-open disabled");
         noAutoOpen.setAutoOpen(false);
         noAutoOpen.setHelperText("Calendar won't open on focus");
-        addSection("Auto-open Disabled", noAutoOpen);
+        playground.addExample("Auto-open Disabled", noAutoOpen);
 
         // Read-only
         DatePicker readonly = new DatePicker("Read-only");
         readonly.setValue(LocalDate.now());
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         DatePicker disabled = new DatePicker("Disabled");
         disabled.setValue(LocalDate.now());
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
+        playground.addExample("Disabled", disabled);
 
         // Invalid state
         DatePicker invalid = new DatePicker("Invalid");
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please select a valid date");
-        addSection("Invalid State", invalid);
-    }
+        playground.addExample("Invalid State", invalid);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

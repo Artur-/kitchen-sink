@@ -21,8 +21,6 @@ import java.util.List;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -48,7 +46,6 @@ public class GridDemoView extends VerticalLayout {
         add(new Paragraph("Grid displays tabular data with sorting, filtering, and selection capabilities."));
 
         // Interactive playground
-        add(new H3("Playground"));
         Grid<Person> playgroundGrid = new Grid<>(Person.class, false);
         playgroundGrid.addColumn(Person::getFirstName)
                 .setHeader("First Name").setSortable(true);
@@ -61,7 +58,7 @@ public class GridDemoView extends VerticalLayout {
         playgroundGrid.setItems(getSampleData());
         playgroundGrid.setHeight("300px");
         playgroundGrid.setWidthFull();
-        add(new Playground<>(playgroundGrid)
+        Playground<Grid<Person>> playground = new Playground<>(playgroundGrid)
                 .withCheckbox("Row stripes", false, (g, val) -> {
                     if (val) {
                         g.addThemeVariants(
@@ -101,7 +98,7 @@ public class GridDemoView extends VerticalLayout {
                             case "Multi" -> g.setSelectionMode(
                                     Grid.SelectionMode.MULTI);
                             }
-                        }));
+                        });
 
         // Basic grid
         Grid<Person> basic = new Grid<>(Person.class, false);
@@ -111,7 +108,7 @@ public class GridDemoView extends VerticalLayout {
         basic.setItems(getSampleData());
         basic.setHeight("300px");
         basic.setWidthFull();
-        addSection("Basic Grid", basic);
+        playground.addExample("Basic Grid", basic);
 
         // Sortable grid
         Grid<Person> sortable = new Grid<>(Person.class, false);
@@ -122,7 +119,7 @@ public class GridDemoView extends VerticalLayout {
         sortable.setItems(getSampleData());
         sortable.setHeight("300px");
         sortable.setWidthFull();
-        addSection("Sortable Columns", sortable);
+        playground.addExample("Sortable Columns", sortable);
 
         // With selection
         Grid<Person> selectable = new Grid<>(Person.class, false);
@@ -136,7 +133,7 @@ public class GridDemoView extends VerticalLayout {
                 Notification.show("Selected: " + p.getFirstName() + " " + p.getLastName())));
         selectable.setHeight("300px");
         selectable.setWidthFull();
-        addSection("Single Selection", selectable);
+        playground.addExample("Single Selection", selectable);
 
         // Multi-select
         Grid<Person> multiSelect = new Grid<>(Person.class, false);
@@ -149,7 +146,7 @@ public class GridDemoView extends VerticalLayout {
             Notification.show("Selected: " + event.getAllSelectedItems().size() + " items"));
         multiSelect.setHeight("300px");
         multiSelect.setWidthFull();
-        addSection("Multi Selection", multiSelect);
+        playground.addExample("Multi Selection", multiSelect);
 
         // With row stripes
         Grid<Person> striped = new Grid<>(Person.class, false);
@@ -161,7 +158,7 @@ public class GridDemoView extends VerticalLayout {
         striped.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
         striped.setHeight("300px");
         striped.setWidthFull();
-        addSection("Row Stripes", striped);
+        playground.addExample("Row Stripes", striped);
 
         // Compact variant
         Grid<Person> compact = new Grid<>(Person.class, false);
@@ -172,7 +169,7 @@ public class GridDemoView extends VerticalLayout {
         compact.addThemeVariants(GridVariant.LUMO_COMPACT);
         compact.setHeight("300px");
         compact.setWidthFull();
-        addSection("Compact Variant", compact);
+        playground.addExample("Compact Variant", compact);
 
         // No border variant
         Grid<Person> noBorder = new Grid<>(Person.class, false);
@@ -183,7 +180,7 @@ public class GridDemoView extends VerticalLayout {
         noBorder.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         noBorder.setHeight("300px");
         noBorder.setWidthFull();
-        addSection("No Border Variant", noBorder);
+        playground.addExample("No Border Variant", noBorder);
 
         // With column resizing
         Grid<Person> resizable = new Grid<>(Person.class, false);
@@ -195,7 +192,7 @@ public class GridDemoView extends VerticalLayout {
         resizable.setColumnReorderingAllowed(true);
         resizable.setHeight("300px");
         resizable.setWidthFull();
-        addSection("Resizable and Reorderable Columns", resizable);
+        playground.addExample("Resizable and Reorderable Columns", resizable);
 
         // With component column
         Grid<Person> withActions = new Grid<>(Person.class, false);
@@ -210,7 +207,7 @@ public class GridDemoView extends VerticalLayout {
         withActions.setItems(getSampleData());
         withActions.setHeight("300px");
         withActions.setWidthFull();
-        addSection("With Component Column", withActions);
+        playground.addExample("With Component Column", withActions);
 
         // Frozen columns
         Grid<Person> frozen = new Grid<>(Person.class, false);
@@ -223,7 +220,9 @@ public class GridDemoView extends VerticalLayout {
         frozen.setItems(getSampleData());
         frozen.setHeight("300px");
         frozen.setWidthFull();
-        addSection("Frozen First Column", frozen);
+        playground.addExample("Frozen First Column", frozen);
+
+        add(playground);
     }
 
     private List<Person> getSampleData() {
@@ -237,17 +236,6 @@ public class GridDemoView extends VerticalLayout {
         people.add(new Person("Edward", "Davis", "edward.d@example.com", 38, "Toronto", "Canada"));
         people.add(new Person("Fiona", "Garcia", "fiona.g@example.com", 26, "Madrid", "Spain"));
         return people;
-    }
-
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
     }
 
     public static class Person {

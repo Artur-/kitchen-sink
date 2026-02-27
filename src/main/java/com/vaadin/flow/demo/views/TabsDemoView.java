@@ -18,7 +18,6 @@ package com.vaadin.flow.demo.views;
 import java.util.List;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
@@ -51,11 +50,10 @@ public class TabsDemoView extends VerticalLayout {
         add(new Paragraph("Tabs organize content into separate views."));
 
         // Interactive playground
-        add(new H3("Playground"));
         Tabs playgroundTabs = new Tabs(
                 new Tab("Tab 1"), new Tab("Tab 2"),
                 new Tab("Tab 3"), new Tab("Tab 4"));
-        add(new Playground<>(playgroundTabs)
+        Playground<Tabs> playground = new Playground<>(playgroundTabs)
                 .withSelect("Orientation", "Horizontal",
                         List.of("Horizontal", "Vertical"),
                         (tabs, val) -> tabs.setOrientation(
@@ -91,7 +89,7 @@ public class TabsDemoView extends VerticalLayout {
                                         TabsVariant.LUMO_EQUAL_WIDTH_TABS);
                                 tabs.setWidth(null);
                             }
-                        }));
+                        });
 
         // Basic tabs with content panel
         Div basicContent = new Div();
@@ -108,14 +106,14 @@ public class TabsDemoView extends VerticalLayout {
             String label = event.getSelectedTab().getLabel();
             basicContent.setText(label + " content — viewing the " + label.toLowerCase() + " section.");
         });
-        addSection("Basic Tabs", basic, basicContent);
+        playground.addExample("Basic Tabs", basic, basicContent);
 
         // Tabs with icons
         Tab homeTab = new Tab(VaadinIcon.HOME.create(), new Paragraph("Home"));
         Tab settingsTab = new Tab(VaadinIcon.COG.create(), new Paragraph("Settings"));
         Tab userTab = new Tab(VaadinIcon.USER.create(), new Paragraph("Profile"));
         Tabs withIcons = new Tabs(homeTab, settingsTab, userTab);
-        addSection("Tabs with Icons", withIcons);
+        playground.addExample("Tabs with Icons", withIcons);
 
         // Icon-only tabs
         Tabs iconOnly = new Tabs(
@@ -124,7 +122,7 @@ public class TabsDemoView extends VerticalLayout {
             createIconTab(VaadinIcon.BELL, "Notifications"),
             createIconTab(VaadinIcon.COG, "Settings")
         );
-        addSection("Icon-only Tabs", iconOnly);
+        playground.addExample("Icon-only Tabs", iconOnly);
 
         // Small variant
         Tabs small = new Tabs(
@@ -133,7 +131,7 @@ public class TabsDemoView extends VerticalLayout {
             new Tab("Tab 3")
         );
         small.addThemeVariants(TabsVariant.LUMO_SMALL);
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // Centered tabs
         Tabs centered = new Tabs(
@@ -142,7 +140,7 @@ public class TabsDemoView extends VerticalLayout {
             new Tab("Third")
         );
         centered.addThemeVariants(TabsVariant.LUMO_CENTERED);
-        addSection("Centered Tabs", centered);
+        playground.addExample("Centered Tabs", centered);
 
         // Equal width tabs
         Tabs equalWidth = new Tabs(
@@ -152,7 +150,7 @@ public class TabsDemoView extends VerticalLayout {
         );
         equalWidth.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
         equalWidth.setWidthFull();
-        addSection("Equal Width Tabs", equalWidth);
+        playground.addExample("Equal Width Tabs", equalWidth);
 
         // Vertical tabs
         Tabs vertical = new Tabs(
@@ -163,7 +161,7 @@ public class TabsDemoView extends VerticalLayout {
         );
         vertical.setOrientation(Tabs.Orientation.VERTICAL);
         vertical.setHeight("200px");
-        addSection("Vertical Tabs", vertical);
+        playground.addExample("Vertical Tabs", vertical);
 
         // With disabled tab
         Tab enabledTab1 = new Tab("Enabled");
@@ -171,7 +169,7 @@ public class TabsDemoView extends VerticalLayout {
         disabledTab.setEnabled(false);
         Tab enabledTab2 = new Tab("Also Enabled");
         Tabs withDisabled = new Tabs(enabledTab1, disabledTab, enabledTab2);
-        addSection("With Disabled Tab", withDisabled);
+        playground.addExample("With Disabled Tab", withDisabled);
 
         // With event listener
         Tabs withEvent = new Tabs(
@@ -181,7 +179,7 @@ public class TabsDemoView extends VerticalLayout {
         );
         withEvent.addSelectedChangeListener(event ->
             Notification.show("Selected: " + event.getSelectedTab().getLabel()));
-        addSection("With Event Listener", withEvent);
+        playground.addExample("With Event Listener", withEvent);
 
         // TabSheet (tabs with content)
         TabSheet tabSheet = new TabSheet();
@@ -190,7 +188,7 @@ public class TabsDemoView extends VerticalLayout {
         tabSheet.add("Customers", createContent("Customer list and details."));
         tabSheet.add("Reports", createContent("Sales and analytics reports."));
         tabSheet.setWidthFull();
-        addSection("TabSheet (Tabs with Content)", tabSheet);
+        playground.addExample("TabSheet (Tabs with Content)", tabSheet);
 
         // TabSheet with prefix/suffix
         TabSheet richTabSheet = new TabSheet();
@@ -207,7 +205,9 @@ public class TabsDemoView extends VerticalLayout {
         richTabSheet.add(tab3, createContent("Application settings."));
 
         richTabSheet.setWidthFull();
-        addSection("TabSheet with Icons", richTabSheet);
+        playground.addExample("TabSheet with Icons", richTabSheet);
+
+        add(playground);
     }
 
     private Tab createIconTab(VaadinIcon icon, String ariaLabel) {
@@ -225,14 +225,4 @@ public class TabsDemoView extends VerticalLayout {
         return content;
     }
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
-    }
 }

@@ -15,8 +15,6 @@
  */
 package com.vaadin.flow.demo.views;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -44,18 +42,17 @@ public class SliderDemoView extends VerticalLayout {
         add(new Paragraph("The Slider allows users to select a value within a range."));
 
         // Interactive playground
-        add(new H3("Playground"));
         Slider playgroundSlider = new Slider("Volume");
         playgroundSlider.setMin(0);
         playgroundSlider.setMax(100);
         playgroundSlider.setValue(50.0);
         playgroundSlider.setWidthFull();
-        add(new Playground<>(playgroundSlider)
+        Playground<Slider> playground = new Playground<>(playgroundSlider)
                 .withCheckbox("Enabled", true, Slider::setEnabled)
                 .withCheckbox("Read-only", false,
                         Slider::setReadOnly)
                 .withTextField("Label", "Volume",
-                        Slider::setLabel));
+                        Slider::setLabel);
 
         // Basic slider
         Slider basic = new Slider("Volume");
@@ -65,7 +62,7 @@ public class SliderDemoView extends VerticalLayout {
         basic.setWidthFull();
         basic.addValueChangeListener(e ->
             Notification.show("Value: " + e.getValue()));
-        addSection("Basic Slider", basic);
+        playground.addExample("Basic Slider", basic);
 
         // With value display
         Span valueDisplay = new Span("50");
@@ -76,7 +73,7 @@ public class SliderDemoView extends VerticalLayout {
         withDisplay.setWidthFull();
         withDisplay.addValueChangeListener(e ->
             valueDisplay.setText(String.valueOf(e.getValue().intValue())));
-        addSection("With Value Display", withDisplay, valueDisplay);
+        playground.addExample("With Value Display", withDisplay, valueDisplay);
 
         // Custom range
         Slider customRange = new Slider("Temperature (10-30)");
@@ -84,7 +81,7 @@ public class SliderDemoView extends VerticalLayout {
         customRange.setMax(30);
         customRange.setValue(20.0);
         customRange.setWidthFull();
-        addSection("Custom Range", customRange);
+        playground.addExample("Custom Range", customRange);
 
         // With step
         Slider withStep = new Slider("Rating (1-5)");
@@ -93,7 +90,7 @@ public class SliderDemoView extends VerticalLayout {
         withStep.setStep(1);
         withStep.setValue(3.0);
         withStep.setWidthFull();
-        addSection("With Step", withStep);
+        playground.addExample("With Step", withStep);
 
         // Decimal step
         Slider decimalStep = new Slider("Percentage");
@@ -102,7 +99,7 @@ public class SliderDemoView extends VerticalLayout {
         decimalStep.setStep(0.1);
         decimalStep.setValue(0.5);
         decimalStep.setWidthFull();
-        addSection("Decimal Step (0.1)", decimalStep);
+        playground.addExample("Decimal Step (0.1)", decimalStep);
 
         // With helper text
         Slider withHelper = new Slider("Font Size");
@@ -111,7 +108,7 @@ public class SliderDemoView extends VerticalLayout {
         withHelper.setValue(16.0);
         withHelper.setWidthFull();
         withHelper.setHelperText("Select font size between 8 and 72 points");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Read-only
         Slider readonly = new Slider("Read-only");
@@ -120,7 +117,7 @@ public class SliderDemoView extends VerticalLayout {
         readonly.setValue(75.0);
         readonly.setReadOnly(true);
         readonly.setWidthFull();
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         Slider disabled = new Slider("Disabled");
@@ -129,17 +126,8 @@ public class SliderDemoView extends VerticalLayout {
         disabled.setValue(25.0);
         disabled.setEnabled(false);
         disabled.setWidthFull();
-        addSection("Disabled", disabled);
-    }
+        playground.addExample("Disabled", disabled);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

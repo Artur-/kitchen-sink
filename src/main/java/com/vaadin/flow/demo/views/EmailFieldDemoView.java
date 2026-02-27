@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import java.util.List;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
@@ -47,8 +45,7 @@ public class EmailFieldDemoView extends VerticalLayout {
         add(new Paragraph("The EmailField provides built-in email validation."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new EmailField("Email Address"))
+        Playground<EmailField> playground = new Playground<>(new EmailField("Email Address"))
                 .withCheckbox("Enabled", true, EmailField::setEnabled)
                 .withCheckbox("Read-only", false,
                         EmailField::setReadOnly)
@@ -73,72 +70,63 @@ public class EmailFieldDemoView extends VerticalLayout {
                                 ef.addThemeVariants(
                                         TextFieldVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic email field
         EmailField basic = new EmailField("Email Address");
         basic.setPlaceholder("user@example.com");
-        addSection("Basic Email Field", basic);
+        playground.addExample("Basic Email Field", basic);
 
         // With icon
         EmailField withIcon = new EmailField("Email with Icon");
         withIcon.setPrefixComponent(new Icon(VaadinIcon.ENVELOPE));
         withIcon.setPlaceholder("Enter your email");
-        addSection("With Icon", withIcon);
+        playground.addExample("With Icon", withIcon);
 
         // Required field
         EmailField required = new EmailField("Required Email");
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Field", required);
+        playground.addExample("Required Field", required);
 
         // With helper text
         EmailField withHelper = new EmailField("Work Email");
         withHelper.setHelperText("Please use your company email address");
         withHelper.setPlaceholder("name@company.com");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Clear button
         EmailField clearButton = new EmailField("With Clear Button");
         clearButton.setClearButtonVisible(true);
         clearButton.setValue("user@example.com");
-        addSection("Clear Button", clearButton);
+        playground.addExample("Clear Button", clearButton);
 
         // Pattern validation
         EmailField pattern = new EmailField("Company Email Only");
         pattern.setPattern(".+@company\\.com");
         pattern.setHelperText("Must be a @company.com email");
         pattern.setErrorMessage("Please use your company email");
-        addSection("Pattern Validation", pattern);
+        playground.addExample("Pattern Validation", pattern);
 
         // Read-only
         EmailField readonly = new EmailField("Read-only Email");
         readonly.setValue("readonly@example.com");
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         EmailField disabled = new EmailField("Disabled Email");
         disabled.setValue("disabled@example.com");
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
+        playground.addExample("Disabled", disabled);
 
         // Invalid state
         EmailField invalid = new EmailField("Invalid Email");
         invalid.setValue("invalid-email");
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please enter a valid email address");
-        addSection("Invalid State", invalid);
-    }
+        playground.addExample("Invalid State", invalid);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

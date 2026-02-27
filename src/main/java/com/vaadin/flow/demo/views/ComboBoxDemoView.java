@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.combobox.ComboBoxVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -52,11 +50,10 @@ public class ComboBoxDemoView extends VerticalLayout {
         add(new Paragraph("The ComboBox allows filtering and selecting from a list of options."));
 
         // Interactive playground
-        add(new H3("Playground"));
         ComboBox<String> playgroundCombo = new ComboBox<>("Country");
         playgroundCombo.setItems(COUNTRIES);
         playgroundCombo.setPlaceholder("Select or search");
-        add(new Playground<>(playgroundCombo)
+        Playground<ComboBox<String>> playground = new Playground<>(playgroundCombo)
                 .withCheckbox("Enabled", true, ComboBox::setEnabled)
                 .withCheckbox("Read-only", false, ComboBox::setReadOnly)
                 .withCheckbox("Required", false, (cb, val) -> {
@@ -78,7 +75,7 @@ public class ComboBoxDemoView extends VerticalLayout {
                                 cb.addThemeVariants(
                                         ComboBoxVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic combo box
         ComboBox<String> basic = new ComboBox<>("Country");
@@ -86,32 +83,32 @@ public class ComboBoxDemoView extends VerticalLayout {
         basic.setPlaceholder("Select or search");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
-        addSection("Basic Combo Box", basic);
+        playground.addExample("Basic Combo Box", basic);
 
         // Pre-selected value
         ComboBox<String> preSelected = new ComboBox<>("Default country");
         preSelected.setItems(COUNTRIES);
         preSelected.setValue("United States");
-        addSection("Pre-selected Value", preSelected);
+        playground.addExample("Pre-selected Value", preSelected);
 
         // With clear button
         ComboBox<String> clearable = new ComboBox<>("Clearable");
         clearable.setItems(COUNTRIES);
         clearable.setClearButtonVisible(true);
         clearable.setValue("Germany");
-        addSection("With Clear Button", clearable);
+        playground.addExample("With Clear Button", clearable);
 
         // With helper text
         ComboBox<String> withHelper = new ComboBox<>("Shipping destination");
         withHelper.setItems(COUNTRIES);
         withHelper.setHelperText("Type to filter countries");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Custom filtering
         ComboBox<String> customFilter = new ComboBox<>("Custom filtering");
         customFilter.setItems(COUNTRIES);
         customFilter.setItemLabelGenerator(String::toUpperCase);
-        addSection("Custom Label Generator", customFilter);
+        playground.addExample("Custom Label Generator", customFilter);
 
         // Allow custom value
         ComboBox<String> allowCustom = new ComboBox<>("Allow custom value");
@@ -122,58 +119,49 @@ public class ComboBoxDemoView extends VerticalLayout {
             Notification.show("Custom value: " + customValue);
         });
         allowCustom.setHelperText("You can enter a custom country name");
-        addSection("Allow Custom Value", allowCustom);
+        playground.addExample("Allow Custom Value", allowCustom);
 
         // Required
         ComboBox<String> required = new ComboBox<>("Required selection");
         required.setItems(COUNTRIES);
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Field", required);
+        playground.addExample("Required Field", required);
 
         // Small variant
         ComboBox<String> small = new ComboBox<>("Small variant");
         small.setItems(COUNTRIES);
         small.addThemeVariants(ComboBoxVariant.LUMO_SMALL);
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // Read-only
         ComboBox<String> readonly = new ComboBox<>("Read-only");
         readonly.setItems(COUNTRIES);
         readonly.setValue("France");
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         ComboBox<String> disabled = new ComboBox<>("Disabled");
         disabled.setItems(COUNTRIES);
         disabled.setValue("Italy");
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
+        playground.addExample("Disabled", disabled);
 
         // Invalid state
         ComboBox<String> invalid = new ComboBox<>("Invalid");
         invalid.setItems(COUNTRIES);
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please select a valid country");
-        addSection("Invalid State", invalid);
+        playground.addExample("Invalid State", invalid);
 
         // Auto-open disabled
         ComboBox<String> noAutoOpen = new ComboBox<>("Auto-open disabled");
         noAutoOpen.setItems(COUNTRIES);
         noAutoOpen.setAutoOpen(false);
         noAutoOpen.setHelperText("Dropdown won't open on focus");
-        addSection("Auto-open Disabled", noAutoOpen);
-    }
+        playground.addExample("Auto-open Disabled", noAutoOpen);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

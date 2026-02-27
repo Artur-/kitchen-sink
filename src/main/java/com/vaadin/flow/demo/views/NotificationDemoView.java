@@ -21,8 +21,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -54,7 +52,6 @@ public class NotificationDemoView extends VerticalLayout {
         add(new Paragraph("Notifications display brief messages to the user."));
 
         // Interactive playground
-        add(new H3("Playground"));
         AtomicReference<String> notifMessage = new AtomicReference<>(
                 "Hello from playground!");
         AtomicReference<Position> notifPosition = new AtomicReference<>(
@@ -74,7 +71,7 @@ public class NotificationDemoView extends VerticalLayout {
             }
         });
 
-        Playground<Button> notifPlayground = new Playground<>(showBtn)
+        Playground<Button> playground = new Playground<>(showBtn)
                 .withTextField("Message", "Hello from playground!",
                         (btn, val) -> notifMessage.set(val))
                 .withSelect("Position", "Bottom start",
@@ -117,45 +114,44 @@ public class NotificationDemoView extends VerticalLayout {
                         })
                 .withSlider("Duration (ms)", 1000, 10000, 3000,
                         (btn, val) -> notifDuration.set(val));
-        add(notifPlayground);
 
         // Basic notification
         Button basicBtn = new Button("Show Basic Notification", e ->
             Notification.show("This is a basic notification"));
-        addSection("Basic Notification", basicBtn);
+        playground.addExample("Basic Notification", basicBtn);
 
         // Notification with duration
         Button durationBtn = new Button("5 Second Notification", e ->
             Notification.show("This notification lasts 5 seconds", 5000, Position.MIDDLE));
-        addSection("Custom Duration", durationBtn);
+        playground.addExample("Custom Duration", durationBtn);
 
         // Success notification
         Button successBtn = new Button("Show Success", e -> {
             Notification notification = Notification.show("Operation completed successfully!");
             notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         });
-        addSection("Success Notification", successBtn);
+        playground.addExample("Success Notification", successBtn);
 
         // Error notification
         Button errorBtn = new Button("Show Error", e -> {
             Notification notification = Notification.show("An error occurred!");
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         });
-        addSection("Error Notification", errorBtn);
+        playground.addExample("Error Notification", errorBtn);
 
         // Primary notification
         Button primaryBtn = new Button("Show Primary", e -> {
             Notification notification = Notification.show("Important information");
             notification.addThemeVariants(NotificationVariant.LUMO_PRIMARY);
         });
-        addSection("Primary Notification", primaryBtn);
+        playground.addExample("Primary Notification", primaryBtn);
 
         // Contrast notification
         Button contrastBtn = new Button("Show Contrast", e -> {
             Notification notification = Notification.show("Contrast notification");
             notification.addThemeVariants(NotificationVariant.LUMO_CONTRAST);
         });
-        addSection("Contrast Notification", contrastBtn);
+        playground.addExample("Contrast Notification", contrastBtn);
 
         // Positions
         HorizontalLayout positions = new HorizontalLayout();
@@ -169,13 +165,13 @@ public class NotificationDemoView extends VerticalLayout {
             Notification.show("Top End", 2000, Position.TOP_END));
 
         positions.add(topStart, topCenter, topEnd);
-        addSection("Top Positions", positions);
+        playground.addExample("Top Positions", positions);
 
         HorizontalLayout middlePositions = new HorizontalLayout();
         Button middle = new Button("Middle", e ->
             Notification.show("Middle", 2000, Position.MIDDLE));
         middlePositions.add(middle);
-        addSection("Middle Position", middlePositions);
+        playground.addExample("Middle Position", middlePositions);
 
         HorizontalLayout bottomPositions = new HorizontalLayout();
         bottomPositions.getStyle().set("flex-wrap", "wrap");
@@ -186,7 +182,7 @@ public class NotificationDemoView extends VerticalLayout {
         Button bottomEnd = new Button("Bottom End", e ->
             Notification.show("Bottom End", 2000, Position.BOTTOM_END));
         bottomPositions.add(bottomStart, bottomCenter, bottomEnd);
-        addSection("Bottom Positions", bottomPositions);
+        playground.addExample("Bottom Positions", bottomPositions);
 
         // Rich content notification
         Button richBtn = new Button("Rich Content", e -> {
@@ -209,7 +205,7 @@ public class NotificationDemoView extends VerticalLayout {
             notification.setDuration(5000);
             notification.open();
         });
-        addSection("Rich Content Notification", richBtn);
+        playground.addExample("Rich Content Notification", richBtn);
 
         // Closable notification
         Button closableBtn = new Button("Closable Notification", e -> {
@@ -228,7 +224,7 @@ public class NotificationDemoView extends VerticalLayout {
             notification.add(layout);
             notification.open();
         });
-        addSection("Closable (Manual Close)", closableBtn);
+        playground.addExample("Closable (Manual Close)", closableBtn);
 
         // Notification with action
         Button actionBtn = new Button("With Action", e -> {
@@ -248,17 +244,8 @@ public class NotificationDemoView extends VerticalLayout {
             notification.setDuration(5000);
             notification.open();
         });
-        addSection("With Action Button", actionBtn);
-    }
+        playground.addExample("With Action Button", actionBtn);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

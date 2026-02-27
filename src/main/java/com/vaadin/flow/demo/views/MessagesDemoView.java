@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.messages.MessageInput;
@@ -51,21 +50,20 @@ public class MessagesDemoView extends VerticalLayout {
         add(new Paragraph("Messages components provide chat/messaging interfaces."));
 
         // Interactive playground
-        add(new H3("Playground"));
         MessageInput playgroundInput = new MessageInput();
         playgroundInput.setWidthFull();
         playgroundInput.addSubmitListener(e ->
                 Notification.show("Sent: " + e.getValue()));
-        add(new Playground<>(playgroundInput)
+        Playground<MessageInput> playground = new Playground<>(playgroundInput)
                 .withCheckbox("Enabled", true,
-                        MessageInput::setEnabled));
+                        MessageInput::setEnabled);
 
         // Basic message list
         MessageList basicList = new MessageList();
         basicList.setItems(createBasicMessages());
         basicList.setWidthFull();
         basicList.setHeight("300px");
-        addSection("Basic Message List", basicList);
+        playground.addExample("Basic Message List", basicList);
 
         // Message input
         MessageInput basicInput = new MessageInput();
@@ -73,7 +71,7 @@ public class MessagesDemoView extends VerticalLayout {
             // Would normally add the message to a list
         });
         basicInput.setWidthFull();
-        addSection("Message Input", basicInput);
+        playground.addExample("Message Input", basicInput);
 
         // Interactive chat
         List<MessageListItem> chatMessages = new ArrayList<>();
@@ -100,7 +98,7 @@ public class MessagesDemoView extends VerticalLayout {
         chatContainer.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.BorderRadius.MEDIUM,
                 LumoUtility.Padding.MEDIUM);
         chatContainer.add(chatList, chatInput);
-        addSection("Interactive Chat Demo", chatContainer);
+        playground.addExample("Interactive Chat Demo", chatContainer);
 
         // Team discussion example
         MessageList teamList = new MessageList();
@@ -145,7 +143,7 @@ public class MessagesDemoView extends VerticalLayout {
         teamList.setItems(teamMessages);
         teamList.setWidthFull();
         teamList.setHeight("350px");
-        addSection("Team Discussion Example", teamList);
+        playground.addExample("Team Discussion Example", teamList);
 
         // With images (avatars shown via color index)
         MessageList withAvatars = new MessageList();
@@ -170,7 +168,9 @@ public class MessagesDemoView extends VerticalLayout {
         withAvatars.setItems(avatarMessages);
         withAvatars.setWidthFull();
         withAvatars.setHeight("200px");
-        addSection("With User Abbreviations", withAvatars);
+        playground.addExample("With User Abbreviations", withAvatars);
+
+        add(playground);
     }
 
     private List<MessageListItem> createBasicMessages() {
@@ -209,16 +209,5 @@ public class MessagesDemoView extends VerticalLayout {
         messages.add(m4);
 
         return messages;
-    }
-
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
     }
 }

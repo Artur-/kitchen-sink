@@ -15,8 +15,6 @@
  */
 package com.vaadin.flow.demo.views;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.listbox.ListBox;
@@ -44,71 +42,61 @@ public class ListBoxDemoView extends VerticalLayout {
         add(new Paragraph("ListBox displays a list of selectable items."));
 
         // Interactive playground
-        add(new H3("Playground"));
         ListBox<String> playgroundList = new ListBox<>();
         playgroundList.setItems("Option 1", "Option 2", "Option 3",
                 "Option 4", "Option 5");
-        add(new Playground<>(playgroundList)
+        Playground<ListBox<String>> playground = new Playground<>(playgroundList)
                 .withCheckbox("Enabled", true,
                         ListBox::setEnabled)
                 .withCheckbox("Read-only", false,
-                        ListBox::setReadOnly));
+                        ListBox::setReadOnly);
 
         // Basic list box
         ListBox<String> basic = new ListBox<>();
         basic.setItems("Option 1", "Option 2", "Option 3", "Option 4", "Option 5");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
-        addSection("Basic List Box", basic);
+        playground.addExample("Basic List Box", basic);
 
         // Pre-selected value
         ListBox<String> preSelected = new ListBox<>();
         preSelected.setItems("Apple", "Banana", "Cherry", "Date", "Elderberry");
         preSelected.setValue("Cherry");
-        addSection("Pre-selected Value", preSelected);
+        playground.addExample("Pre-selected Value", preSelected);
 
         // Multi-select list box
         MultiSelectListBox<String> multiSelect = new MultiSelectListBox<>();
         multiSelect.setItems("Java", "JavaScript", "Python", "TypeScript", "Go", "Rust");
         multiSelect.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
-        addSection("Multi-Select List Box", multiSelect);
+        playground.addExample("Multi-Select List Box", multiSelect);
 
         // Pre-selected multi-select
         MultiSelectListBox<String> preSelectedMulti = new MultiSelectListBox<>();
         preSelectedMulti.setItems("Red", "Green", "Blue", "Yellow", "Orange", "Purple");
         preSelectedMulti.select("Red", "Blue");
-        addSection("Pre-selected Multi-Select", preSelectedMulti);
+        playground.addExample("Pre-selected Multi-Select", preSelectedMulti);
 
         // With disabled items
         ListBox<String> withDisabled = new ListBox<>();
         withDisabled.setItems("Available 1", "Unavailable", "Available 2", "Also Unavailable", "Available 3");
         withDisabled.setItemEnabledProvider(item -> !item.contains("Unavailable"));
-        addSection("With Disabled Items", withDisabled);
+        playground.addExample("With Disabled Items", withDisabled);
 
         // Read-only
         ListBox<String> readonly = new ListBox<>();
         readonly.setItems("Item A", "Item B", "Item C");
         readonly.setValue("Item B");
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         ListBox<String> disabled = new ListBox<>();
         disabled.setItems("Disabled 1", "Disabled 2", "Disabled 3");
         disabled.setValue("Disabled 1");
         disabled.setEnabled(false);
-        addSection("Disabled List Box", disabled);
-    }
+        playground.addExample("Disabled List Box", disabled);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

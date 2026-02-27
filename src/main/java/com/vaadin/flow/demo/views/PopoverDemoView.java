@@ -18,7 +18,6 @@ package com.vaadin.flow.demo.views;
 import java.util.List;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
@@ -48,13 +47,12 @@ public class PopoverDemoView extends VerticalLayout {
         add(new Paragraph("Popover displays floating content anchored to a trigger element."));
 
         // Interactive playground
-        add(new H3("Playground"));
         Button playgroundTarget = new Button("Click to open popover");
         Popover playgroundPopover = new Popover();
         playgroundPopover.setTarget(playgroundTarget);
         playgroundPopover.add(new Paragraph("Popover content"));
         add(playgroundPopover);
-        add(new Playground<>(playgroundTarget)
+        Playground<Button> playground = new Playground<>(playgroundTarget)
                 .withCheckbox("Modal", false,
                         (btn, val) -> playgroundPopover
                                 .setModal(val))
@@ -92,7 +90,7 @@ public class PopoverDemoView extends VerticalLayout {
                                     .setPosition(
                                             PopoverPosition.TOP_END);
                             }
-                        }));
+                        });
 
         // Basic popover
         Button basicTarget = new Button("Click me");
@@ -100,7 +98,7 @@ public class PopoverDemoView extends VerticalLayout {
         basicPopover.setTarget(basicTarget);
         basicPopover.add(new Paragraph("This is a basic popover with text content."));
         add(basicPopover);
-        addSection("Basic Popover", basicTarget);
+        playground.addExample("Basic Popover", basicTarget);
 
         // Popover positions
         Button topBtn = new Button("Top");
@@ -132,7 +130,7 @@ public class PopoverDemoView extends VerticalLayout {
         add(endPopover);
 
         HorizontalLayout positionButtons = new HorizontalLayout(topBtn, bottomBtn, startBtn, endBtn);
-        addSection("Position Variants", positionButtons);
+        playground.addExample("Position Variants", positionButtons);
 
         // Rich content popover
         Button richTarget = new Button("User Profile");
@@ -147,7 +145,7 @@ public class PopoverDemoView extends VerticalLayout {
         richContent.add(new Button("View Profile"));
         richPopover.add(richContent);
         add(richPopover);
-        addSection("Rich Content", richTarget);
+        playground.addExample("Rich Content", richTarget);
 
         // Form in popover
         Button formTarget = new Button("Quick Add");
@@ -165,7 +163,7 @@ public class PopoverDemoView extends VerticalLayout {
         formContent.add(nameField, descField, saveBtn);
         formPopover.add(formContent);
         add(formPopover);
-        addSection("Form in Popover", formTarget);
+        playground.addExample("Form in Popover", formTarget);
 
         // Modal popover
         Button modalTarget = new Button("Modal Popover");
@@ -175,7 +173,7 @@ public class PopoverDemoView extends VerticalLayout {
         modalPopover.add(new Paragraph("This popover is modal - click outside doesn't close it."));
         modalPopover.add(new Button("Close", e -> modalPopover.close()));
         add(modalPopover);
-        addSection("Modal Popover", modalTarget);
+        playground.addExample("Modal Popover", modalTarget);
 
         // Non-closable
         Button stayOpenTarget = new Button("Stays Open");
@@ -185,7 +183,7 @@ public class PopoverDemoView extends VerticalLayout {
         stayOpenPopover.add(new Paragraph("Won't close when clicking outside."));
         stayOpenPopover.add(new Button("Close manually", e -> stayOpenPopover.close()));
         add(stayOpenPopover);
-        addSection("Disable Close on Outside Click", stayOpenTarget);
+        playground.addExample("Disable Close on Outside Click", stayOpenTarget);
 
         // With width
         Button widthTarget = new Button("Wide Popover");
@@ -194,17 +192,8 @@ public class PopoverDemoView extends VerticalLayout {
         widthPopover.setWidth("400px");
         widthPopover.add(new Paragraph("This popover has a fixed width of 400px, allowing for more content to be displayed comfortably."));
         add(widthPopover);
-        addSection("Custom Width", widthTarget);
-    }
+        playground.addExample("Custom Width", widthTarget);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

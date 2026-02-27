@@ -18,10 +18,7 @@ package com.vaadin.flow.demo.views;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Locale;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -49,8 +46,7 @@ public class TimePickerDemoView extends VerticalLayout {
         add(new Paragraph("The TimePicker allows users to select a time value."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new TimePicker("Time"))
+        Playground<TimePicker> playground = new Playground<>(new TimePicker("Time"))
                 .withCheckbox("Enabled", true, TimePicker::setEnabled)
                 .withCheckbox("Read-only", false,
                         TimePicker::setReadOnly)
@@ -70,90 +66,81 @@ public class TimePickerDemoView extends VerticalLayout {
                                 tp.addThemeVariants(
                                         TimePickerVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic time picker
         TimePicker basic = new TimePicker("Meeting Time");
         basic.setPlaceholder("Pick a time");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
-        addSection("Basic Time Picker", basic);
+        playground.addExample("Basic Time Picker", basic);
 
         // Pre-selected value
         TimePicker preSelected = new TimePicker("Current time");
         preSelected.setValue(LocalTime.now());
-        addSection("Pre-selected Value", preSelected);
+        playground.addExample("Pre-selected Value", preSelected);
 
         // With clear button
         TimePicker clearable = new TimePicker("Clearable");
         clearable.setValue(LocalTime.of(14, 30));
         clearable.setClearButtonVisible(true);
-        addSection("With Clear Button", clearable);
+        playground.addExample("With Clear Button", clearable);
 
         // Custom step
         TimePicker step15 = new TimePicker("15-minute intervals");
         step15.setStep(Duration.ofMinutes(15));
-        addSection("15-Minute Step", step15);
+        playground.addExample("15-Minute Step", step15);
 
         TimePicker step30 = new TimePicker("30-minute intervals");
         step30.setStep(Duration.ofMinutes(30));
-        addSection("30-Minute Step", step30);
+        playground.addExample("30-Minute Step", step30);
 
         // Min and max time
         TimePicker minMax = new TimePicker("Business hours");
         minMax.setMin(LocalTime.of(9, 0));
         minMax.setMax(LocalTime.of(17, 0));
         minMax.setHelperText("Select a time between 9 AM and 5 PM");
-        addSection("Min/Max Time Range", minMax);
+        playground.addExample("Min/Max Time Range", minMax);
 
         // With helper text
         TimePicker withHelper = new TimePicker("Appointment time");
         withHelper.setHelperText("Select your preferred time");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Required
         TimePicker required = new TimePicker("Required time");
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Field", required);
+        playground.addExample("Required Field", required);
 
         // Small variant
         TimePicker small = new TimePicker("Small variant");
         small.addThemeVariants(TimePickerVariant.LUMO_SMALL);
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // Auto-open disabled
         TimePicker noAutoOpen = new TimePicker("Auto-open disabled");
         noAutoOpen.setAutoOpen(false);
         noAutoOpen.setHelperText("Dropdown won't open on focus");
-        addSection("Auto-open Disabled", noAutoOpen);
+        playground.addExample("Auto-open Disabled", noAutoOpen);
 
         // Read-only
         TimePicker readonly = new TimePicker("Read-only");
         readonly.setValue(LocalTime.of(10, 30));
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         TimePicker disabled = new TimePicker("Disabled");
         disabled.setValue(LocalTime.of(12, 0));
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
+        playground.addExample("Disabled", disabled);
 
         // Invalid state
         TimePicker invalid = new TimePicker("Invalid");
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please select a valid time");
-        addSection("Invalid State", invalid);
-    }
+        playground.addExample("Invalid State", invalid);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

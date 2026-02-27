@@ -18,7 +18,6 @@ package com.vaadin.flow.demo.views;
 import java.util.List;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -49,10 +48,9 @@ public class IconsDemoView extends VerticalLayout {
         add(new Paragraph("Vaadin provides a comprehensive set of icons."));
 
         // Interactive playground
-        add(new H3("Playground"));
         Icon playgroundIcon = VaadinIcon.STAR.create();
         playgroundIcon.setSize("48px");
-        add(new Playground<>(playgroundIcon)
+        Playground<Icon> playground = new Playground<>(playgroundIcon)
                 .withSlider("Size (px)", 16, 96, 48,
                         (icon, val) -> icon.setSize(val + "px"))
                 .withSelect("Color", "Default",
@@ -70,7 +68,7 @@ public class IconsDemoView extends VerticalLayout {
                             case "Warning" -> icon.setColor("orange");
                             case "Purple" -> icon.setColor("#9c27b0");
                             }
-                        }));
+                        });
 
         // Basic icons
         HorizontalLayout basic = new HorizontalLayout();
@@ -83,7 +81,7 @@ public class IconsDemoView extends VerticalLayout {
             VaadinIcon.ENVELOPE.create(),
             VaadinIcon.BELL.create()
         );
-        addSection("Basic Icons", basic);
+        playground.addExample("Basic Icons", basic);
 
         // Icon sizes
         HorizontalLayout sizes = new HorizontalLayout();
@@ -103,7 +101,7 @@ public class IconsDemoView extends VerticalLayout {
         xlarge.setSize("48px");
 
         sizes.add(small, medium, large, xlarge);
-        addSection("Icon Sizes", sizes);
+        playground.addExample("Icon Sizes", sizes);
 
         // Icon colors
         HorizontalLayout colors = new HorizontalLayout();
@@ -126,7 +124,7 @@ public class IconsDemoView extends VerticalLayout {
         custom.setColor("#9c27b0");
 
         colors.add(primary, success, error, warning, custom);
-        addSection("Icon Colors", colors);
+        playground.addExample("Icon Colors", colors);
 
         // Common UI icons
         FlexLayout uiIcons = new FlexLayout();
@@ -144,7 +142,7 @@ public class IconsDemoView extends VerticalLayout {
             Div iconContainer = createIconWithLabel(icon);
             uiIcons.add(iconContainer);
         }
-        addSection("Common UI Icons", uiIcons);
+        playground.addExample("Common UI Icons", uiIcons);
 
         // Navigation icons
         FlexLayout navIcons = new FlexLayout();
@@ -161,7 +159,7 @@ public class IconsDemoView extends VerticalLayout {
             Div iconContainer = createIconWithLabel(icon);
             navIcons.add(iconContainer);
         }
-        addSection("Navigation Icons", navIcons);
+        playground.addExample("Navigation Icons", navIcons);
 
         // Communication icons
         FlexLayout commIcons = new FlexLayout();
@@ -177,7 +175,7 @@ public class IconsDemoView extends VerticalLayout {
             Div iconContainer = createIconWithLabel(icon);
             commIcons.add(iconContainer);
         }
-        addSection("Communication Icons", commIcons);
+        playground.addExample("Communication Icons", commIcons);
 
         // Status icons
         FlexLayout statusIcons = new FlexLayout();
@@ -194,7 +192,9 @@ public class IconsDemoView extends VerticalLayout {
             Div iconContainer = createIconWithLabel(icon);
             statusIcons.add(iconContainer);
         }
-        addSection("Status Icons", statusIcons);
+        playground.addExample("Status Icons", statusIcons);
+
+        add(playground);
     }
 
     private Div createIconWithLabel(VaadinIcon icon) {
@@ -214,14 +214,4 @@ public class IconsDemoView extends VerticalLayout {
         return container;
     }
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
-    }
 }

@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import java.util.List;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -45,8 +43,7 @@ public class TextAreaDemoView extends VerticalLayout {
         add(new Paragraph("The TextArea component is used for multi-line text input."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new TextArea("Description"))
+        Playground<TextArea> playground = new Playground<>(new TextArea("Description"))
                 .withCheckbox("Enabled", true, TextArea::setEnabled)
                 .withCheckbox("Read-only", false, TextArea::setReadOnly)
                 .withCheckbox("Required", false, (ta, val) -> {
@@ -70,19 +67,19 @@ public class TextAreaDemoView extends VerticalLayout {
                                 ta.addThemeVariants(
                                         TextAreaVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic text area
         TextArea basic = new TextArea("Description");
         basic.setPlaceholder("Enter multiple lines of text here");
         basic.setWidthFull();
-        addSection("Basic Text Area", basic);
+        playground.addExample("Basic Text Area", basic);
 
         // With helper text
         TextArea withHelper = new TextArea("Description");
         withHelper.setHelperText("Provide a detailed description");
         withHelper.setWidthFull();
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Min/Max height
         TextArea autoHeight = new TextArea("Auto-resize Text Area");
@@ -90,7 +87,7 @@ public class TextAreaDemoView extends VerticalLayout {
         autoHeight.setMaxHeight("300px");
         autoHeight.setWidthFull();
         autoHeight.setPlaceholder("This area grows as you type, up to a maximum height");
-        addSection("Auto-resize with Min/Max Height", autoHeight);
+        playground.addExample("Auto-resize with Min/Max Height", autoHeight);
 
         // Character counter
         TextArea charCounter = new TextArea("With Character Limit");
@@ -99,13 +96,13 @@ public class TextAreaDemoView extends VerticalLayout {
         charCounter.setWidthFull();
         charCounter.addValueChangeListener(e ->
             charCounter.setHelperText(e.getValue().length() + "/200 characters"));
-        addSection("Character Counter", charCounter);
+        playground.addExample("Character Counter", charCounter);
 
         // Small variant
         TextArea small = new TextArea("Small Variant");
         small.addThemeVariants(TextAreaVariant.LUMO_SMALL);
         small.setWidthFull();
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // Read-only
         TextArea readonly = new TextArea("Read-only Text Area");
@@ -113,31 +110,22 @@ public class TextAreaDemoView extends VerticalLayout {
             "Multi-line content is displayed here.");
         readonly.setReadOnly(true);
         readonly.setWidthFull();
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled
         TextArea disabled = new TextArea("Disabled Text Area");
         disabled.setValue("This text area is disabled");
         disabled.setEnabled(false);
         disabled.setWidthFull();
-        addSection("Disabled", disabled);
+        playground.addExample("Disabled", disabled);
 
         // Invalid state
         TextArea invalid = new TextArea("Invalid Text Area");
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please enter a valid description");
         invalid.setWidthFull();
-        addSection("Invalid State", invalid);
-    }
+        playground.addExample("Invalid State", invalid);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

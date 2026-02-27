@@ -19,8 +19,6 @@ import java.util.List;
 
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -50,7 +48,6 @@ public class MenuBarDemoView extends VerticalLayout {
         add(new Paragraph("MenuBar provides a horizontal menu with dropdown submenus."));
 
         // Interactive playground
-        add(new H3("Playground"));
         MenuBar playgroundMenu = new MenuBar();
         playgroundMenu.addItem("File",
                 e -> Notification.show("File"));
@@ -58,7 +55,7 @@ public class MenuBarDemoView extends VerticalLayout {
                 e -> Notification.show("Edit"));
         playgroundMenu.addItem("View",
                 e -> Notification.show("View"));
-        add(new Playground<>(playgroundMenu)
+        Playground<MenuBar> playground = new Playground<>(playgroundMenu)
                 .withCheckbox("Enabled", true,
                         MenuBar::setEnabled)
                 .withSelect("Variant", "Default",
@@ -77,7 +74,7 @@ public class MenuBarDemoView extends VerticalLayout {
                             case "Small" -> mb.addThemeVariants(
                                     MenuBarVariant.LUMO_SMALL);
                             }
-                        }));
+                        });
 
         // Basic menu bar
         MenuBar basic = new MenuBar();
@@ -85,7 +82,7 @@ public class MenuBarDemoView extends VerticalLayout {
         basic.addItem("Edit", e -> Notification.show("Edit clicked"));
         basic.addItem("View", e -> Notification.show("View clicked"));
         basic.addItem("Help", e -> Notification.show("Help clicked"));
-        addSection("Basic Menu Bar", basic);
+        playground.addExample("Basic Menu Bar", basic);
 
         // With submenus
         MenuBar withSubmenus = new MenuBar();
@@ -110,7 +107,7 @@ public class MenuBarDemoView extends VerticalLayout {
         viewMenu.addItem("Zoom Out", e -> Notification.show("Zoom Out"));
         viewMenu.addItem("Reset Zoom", e -> Notification.show("Reset Zoom"));
 
-        addSection("With Dropdown Submenus", withSubmenus);
+        playground.addExample("With Dropdown Submenus", withSubmenus);
 
         // With icons
         MenuBar withIcons = new MenuBar();
@@ -129,14 +126,14 @@ public class MenuBarDemoView extends VerticalLayout {
 
         withIcons.addItem(VaadinIcon.COG.create(), e -> Notification.show("Settings"));
 
-        addSection("Icon-only Items", withIcons);
+        playground.addExample("Icon-only Items", withIcons);
 
         // Primary variant
         MenuBar primary = new MenuBar();
         primary.addThemeVariants(MenuBarVariant.LUMO_PRIMARY);
         primary.addItem("Save", e -> Notification.show("Saved!"));
         primary.addItem("Cancel", e -> Notification.show("Cancelled"));
-        addSection("Primary Variant", primary);
+        playground.addExample("Primary Variant", primary);
 
         // Tertiary variant
         MenuBar tertiary = new MenuBar();
@@ -144,7 +141,7 @@ public class MenuBarDemoView extends VerticalLayout {
         tertiary.addItem("Option 1", e -> Notification.show("Option 1"));
         tertiary.addItem("Option 2", e -> Notification.show("Option 2"));
         tertiary.addItem("Option 3", e -> Notification.show("Option 3"));
-        addSection("Tertiary Variant", tertiary);
+        playground.addExample("Tertiary Variant", tertiary);
 
         // Small variant
         MenuBar small = new MenuBar();
@@ -152,7 +149,7 @@ public class MenuBarDemoView extends VerticalLayout {
         small.addItem("Small 1", e -> Notification.show("Small 1"));
         small.addItem("Small 2", e -> Notification.show("Small 2"));
         small.addItem("Small 3", e -> Notification.show("Small 3"));
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // Overflow menu
         MenuBar overflow = new MenuBar();
@@ -161,7 +158,7 @@ public class MenuBarDemoView extends VerticalLayout {
             int index = i;
             overflow.addItem("Item " + i, e -> Notification.show("Item " + index));
         }
-        addSection("With Overflow Menu", overflow);
+        playground.addExample("With Overflow Menu", overflow);
 
         // Nested submenus
         MenuBar nested = new MenuBar();
@@ -178,7 +175,7 @@ public class MenuBarDemoView extends VerticalLayout {
         SubMenu deepSub = deepNested.getSubMenu();
         deepSub.addItem("Level 3 Item", e -> Notification.show("Level 3"));
 
-        addSection("Nested Submenus", nested);
+        playground.addExample("Nested Submenus", nested);
 
         // With checkable items
         MenuBar checkable = new MenuBar();
@@ -194,17 +191,8 @@ public class MenuBarDemoView extends VerticalLayout {
         notifications.setCheckable(true);
         notifications.setChecked(true);
 
-        addSection("Checkable Menu Items", checkable);
-    }
+        playground.addExample("Checkable Menu Items", checkable);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

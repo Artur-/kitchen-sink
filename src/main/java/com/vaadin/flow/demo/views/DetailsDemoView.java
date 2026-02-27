@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.details.DetailsVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -45,8 +43,7 @@ public class DetailsDemoView extends VerticalLayout {
         add(new Paragraph("Details provides an expandable/collapsible content section."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new Details("Click to expand",
+        Playground<Details> playground = new Playground<>(new Details("Click to expand",
                 new Paragraph("This is the expandable content.")))
                 .withCheckbox("Enabled", true, Details::setEnabled)
                 .withCheckbox("Opened", false, Details::setOpened)
@@ -74,25 +71,25 @@ public class DetailsDemoView extends VerticalLayout {
                     }
                 })
                 .withTextField("Summary", "Click to expand",
-                        Details::setSummaryText));
+                        Details::setSummaryText);
 
         // Basic details
         Details basic = new Details("Click to expand",
             new Paragraph("This is the hidden content that appears when expanded."));
-        addSection("Basic Details", basic);
+        playground.addExample("Basic Details", basic);
 
         // Initially opened
         Details opened = new Details("Already Expanded",
             new Paragraph("This details component starts in an opened state."));
         opened.setOpened(true);
-        addSection("Initially Opened", opened);
+        playground.addExample("Initially Opened", opened);
 
         // With rich summary
         Span summary = new Span("Product Details");
         summary.getStyle().set("font-weight", "bold");
         Details richSummary = new Details(summary,
             new Paragraph("Product description, specifications, and other details."));
-        addSection("With Rich Summary", richSummary);
+        playground.addExample("With Rich Summary", richSummary);
 
         // With rich content
         VerticalLayout content = new VerticalLayout();
@@ -103,44 +100,44 @@ public class DetailsDemoView extends VerticalLayout {
         content.setPadding(false);
         content.setSpacing(false);
         Details richContent = new Details("Product Information", content);
-        addSection("With Rich Content", richContent);
+        playground.addExample("With Rich Content", richContent);
 
         // Small variant
         Details small = new Details("Small Variant",
             new Paragraph("This details uses the small theme variant."));
         small.addThemeVariants(DetailsVariant.SMALL);
-        addSection("Small Variant", small);
+        playground.addExample("Small Variant", small);
 
         // Reverse variant
         Details reverse = new Details("Toggle on Right",
             new Paragraph("The toggle icon is on the right side."));
         reverse.addThemeVariants(DetailsVariant.REVERSE);
-        addSection("Reverse Variant (Toggle on Right)", reverse);
+        playground.addExample("Reverse Variant (Toggle on Right)", reverse);
 
         // Filled variant
         Details filled = new Details("Filled Background",
             new Paragraph("This details has a filled background when opened."));
         filled.addThemeVariants(DetailsVariant.FILLED);
-        addSection("Filled Variant", filled);
+        playground.addExample("Filled Variant", filled);
 
         // Combined variants
         Details combined = new Details("Combined Variants",
             new Paragraph("This combines small, reverse, and filled variants."));
         combined.addThemeVariants(DetailsVariant.SMALL, DetailsVariant.REVERSE, DetailsVariant.FILLED);
-        addSection("Combined Variants", combined);
+        playground.addExample("Combined Variants", combined);
 
         // With event listener
         Details withEvent = new Details("Click me",
             new Paragraph("Toggle state is tracked."));
         withEvent.addOpenedChangeListener(event ->
             Notification.show(event.isOpened() ? "Opened" : "Closed"));
-        addSection("With Event Listener", withEvent);
+        playground.addExample("With Event Listener", withEvent);
 
         // Disabled
         Details disabled = new Details("Disabled Details",
             new Paragraph("This content cannot be shown because the details is disabled."));
         disabled.setEnabled(false);
-        addSection("Disabled", disabled);
+        playground.addExample("Disabled", disabled);
 
         // Multiple details (independent)
         VerticalLayout multipleContainer = new VerticalLayout();
@@ -150,17 +147,8 @@ public class DetailsDemoView extends VerticalLayout {
             new Details("Section 2", new Paragraph("Content for section 2")),
             new Details("Section 3", new Paragraph("Content for section 3"))
         );
-        addSection("Multiple Independent Details", multipleContainer);
-    }
+        playground.addExample("Multiple Independent Details", multipleContainer);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import java.util.List;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -46,11 +44,10 @@ public class RadioButtonDemoView extends VerticalLayout {
         add(new Paragraph("Radio buttons allow users to select exactly one option from a group."));
 
         // Interactive playground
-        add(new H3("Playground"));
         RadioButtonGroup<String> playgroundRadio = new RadioButtonGroup<>();
         playgroundRadio.setLabel("Select a size");
         playgroundRadio.setItems("Small", "Medium", "Large");
-        add(new Playground<>(playgroundRadio)
+        Playground<RadioButtonGroup<String>> playground = new Playground<>(playgroundRadio)
                 .withCheckbox("Enabled", true,
                         RadioButtonGroup::setEnabled)
                 .withCheckbox("Read-only", false,
@@ -69,7 +66,7 @@ public class RadioButtonDemoView extends VerticalLayout {
                 .withTextField("Label", "Select a size",
                         RadioButtonGroup::setLabel)
                 .withTextField("Helper text", "",
-                        RadioButtonGroup::setHelperText));
+                        RadioButtonGroup::setHelperText);
 
         // Basic radio group
         RadioButtonGroup<String> basic = new RadioButtonGroup<>();
@@ -77,28 +74,28 @@ public class RadioButtonDemoView extends VerticalLayout {
         basic.setItems("Small", "Medium", "Large");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
-        addSection("Basic Radio Group", basic);
+        playground.addExample("Basic Radio Group", basic);
 
         // Pre-selected value
         RadioButtonGroup<String> preSelected = new RadioButtonGroup<>();
         preSelected.setLabel("Select a color");
         preSelected.setItems("Red", "Green", "Blue");
         preSelected.setValue("Green");
-        addSection("Pre-selected Value", preSelected);
+        playground.addExample("Pre-selected Value", preSelected);
 
         // Vertical orientation
         RadioButtonGroup<String> vertical = new RadioButtonGroup<>();
         vertical.setLabel("Select payment method");
         vertical.setItems("Credit Card", "PayPal", "Bank Transfer", "Cash on Delivery");
         vertical.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
-        addSection("Vertical Orientation", vertical);
+        playground.addExample("Vertical Orientation", vertical);
 
         // With helper text
         RadioButtonGroup<String> withHelper = new RadioButtonGroup<>();
         withHelper.setLabel("Shipping method");
         withHelper.setItems("Standard (5-7 days)", "Express (2-3 days)", "Overnight");
         withHelper.setHelperText("Additional charges may apply for express shipping");
-        addSection("With Helper Text", withHelper);
+        playground.addExample("With Helper Text", withHelper);
 
         // Required
         RadioButtonGroup<String> required = new RadioButtonGroup<>();
@@ -106,14 +103,14 @@ public class RadioButtonDemoView extends VerticalLayout {
         required.setItems("Low", "Normal", "High", "Critical");
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
-        addSection("Required Selection", required);
+        playground.addExample("Required Selection", required);
 
         // Disabled items
         RadioButtonGroup<String> partiallyDisabled = new RadioButtonGroup<>();
         partiallyDisabled.setLabel("Select plan");
         partiallyDisabled.setItems("Free", "Basic", "Premium (sold out)", "Enterprise");
         partiallyDisabled.setItemEnabledProvider(item -> !item.contains("sold out"));
-        addSection("Partially Disabled Items", partiallyDisabled);
+        playground.addExample("Partially Disabled Items", partiallyDisabled);
 
         // Read-only
         RadioButtonGroup<String> readonly = new RadioButtonGroup<>();
@@ -121,7 +118,7 @@ public class RadioButtonDemoView extends VerticalLayout {
         readonly.setItems("Option A", "Option B", "Option C");
         readonly.setValue("Option B");
         readonly.setReadOnly(true);
-        addSection("Read-only", readonly);
+        playground.addExample("Read-only", readonly);
 
         // Disabled group
         RadioButtonGroup<String> disabled = new RadioButtonGroup<>();
@@ -129,7 +126,7 @@ public class RadioButtonDemoView extends VerticalLayout {
         disabled.setItems("Option 1", "Option 2", "Option 3");
         disabled.setValue("Option 1");
         disabled.setEnabled(false);
-        addSection("Disabled Group", disabled);
+        playground.addExample("Disabled Group", disabled);
 
         // Invalid state
         RadioButtonGroup<String> invalid = new RadioButtonGroup<>();
@@ -137,17 +134,8 @@ public class RadioButtonDemoView extends VerticalLayout {
         invalid.setItems("Yes", "No", "Maybe");
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please make a selection");
-        addSection("Invalid State", invalid);
-    }
+        playground.addExample("Invalid State", invalid);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

@@ -21,8 +21,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -49,7 +47,6 @@ public class ConfirmDialogDemoView extends VerticalLayout {
         add(new Paragraph("ConfirmDialog is a specialized dialog for confirmation actions."));
 
         // Interactive playground
-        add(new H3("Playground"));
         AtomicReference<String> header = new AtomicReference<>(
                 "Confirm action");
         AtomicReference<String> message = new AtomicReference<>(
@@ -74,7 +71,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
             dialog.open();
         });
 
-        add(new Playground<>(showBtn)
+        Playground<Button> playground = new Playground<>(showBtn)
                 .withTextField("Header", "Confirm action",
                         (btn, val) -> header.set(val))
                 .withTextField("Message",
@@ -83,7 +80,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 .withCheckbox("Cancelable", false,
                         (btn, val) -> cancelable.set(val))
                 .withCheckbox("Rejectable", false,
-                        (btn, val) -> rejectable.set(val)));
+                        (btn, val) -> rejectable.set(val));
 
         // Basic confirm dialog
         Button basicBtn = new Button("Show Confirmation", e -> {
@@ -95,7 +92,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("Confirmed!"));
             dialog.open();
         });
-        addSection("Basic Confirmation", basicBtn);
+        playground.addExample("Basic Confirmation", basicBtn);
 
         // Confirm and cancel
         Button confirmCancelBtn = new Button("Confirm or Cancel", e -> {
@@ -111,7 +108,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("Cancelled"));
             dialog.open();
         });
-        addSection("With Cancel Button", confirmCancelBtn);
+        playground.addExample("With Cancel Button", confirmCancelBtn);
 
         // Delete confirmation (danger)
         Button deleteBtn = new Button("Delete Item", e -> {
@@ -125,7 +122,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("Item deleted!").addThemeVariants(NotificationVariant.LUMO_ERROR));
             dialog.open();
         });
-        addSection("Delete Confirmation (Danger)", deleteBtn);
+        playground.addExample("Delete Confirmation (Danger)", deleteBtn);
 
         // With reject button
         Button rejectBtn = new Button("Save, Discard, or Cancel", e -> {
@@ -145,7 +142,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("Cancelled"));
             dialog.open();
         });
-        addSection("With Reject Button", rejectBtn);
+        playground.addExample("With Reject Button", rejectBtn);
 
         // Information dialog
         Button infoBtn = new Button("Show Information", e -> {
@@ -155,7 +152,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
             dialog.setConfirmText("OK");
             dialog.open();
         });
-        addSection("Information Dialog", infoBtn);
+        playground.addExample("Information Dialog", infoBtn);
 
         // Warning dialog
         Button warningBtn = new Button("Show Warning", e -> {
@@ -169,7 +166,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("Action completed"));
             dialog.open();
         });
-        addSection("Warning Dialog", warningBtn);
+        playground.addExample("Warning Dialog", warningBtn);
 
         // Logout confirmation
         Button logoutBtn = new Button("Logout", e -> {
@@ -182,7 +179,7 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("Signed out successfully"));
             dialog.open();
         });
-        addSection("Logout Confirmation", logoutBtn);
+        playground.addExample("Logout Confirmation", logoutBtn);
 
         // Bulk action confirmation
         Button bulkBtn = new Button("Delete 5 Selected Items", e -> {
@@ -196,17 +193,8 @@ public class ConfirmDialogDemoView extends VerticalLayout {
                 Notification.show("5 items deleted").addThemeVariants(NotificationVariant.LUMO_ERROR));
             dialog.open();
         });
-        addSection("Bulk Action Confirmation", bulkBtn);
-    }
+        playground.addExample("Bulk Action Confirmation", bulkBtn);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

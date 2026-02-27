@@ -19,8 +19,6 @@ import java.util.List;
 
 import com.vaadin.flow.component.badge.Badge;
 import com.vaadin.flow.component.badge.BadgeVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -48,8 +46,7 @@ public class BadgeDemoView extends VerticalLayout {
         add(new Paragraph("Badges are used to highlight status information or counts."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new Badge("Status"))
+        Playground<Badge> playground = new Playground<>(new Badge("Status"))
                 .withTextField("Text", "Status", Badge::setText)
                 .withCheckbox("Filled", false, (b, val) -> {
                     if (val) {
@@ -77,7 +74,7 @@ public class BadgeDemoView extends VerticalLayout {
                             case "Contrast" -> b.addThemeVariants(
                                     BadgeVariant.CONTRAST);
                             }
-                        }));
+                        });
 
         // Basic badges
         HorizontalLayout basic = new HorizontalLayout();
@@ -90,7 +87,7 @@ public class BadgeDemoView extends VerticalLayout {
             createBadge("Warning", BadgeVariant.WARNING),
             createBadge("Contrast", BadgeVariant.CONTRAST)
         );
-        addSection("Basic Badges", basic);
+        playground.addExample("Basic Badges", basic);
 
         // Filled badges
         HorizontalLayout filled = new HorizontalLayout();
@@ -103,7 +100,7 @@ public class BadgeDemoView extends VerticalLayout {
             createBadge("Filled Warning", BadgeVariant.FILLED, BadgeVariant.WARNING),
             createBadge("Filled Contrast", BadgeVariant.FILLED, BadgeVariant.CONTRAST)
         );
-        addSection("Filled Badges", filled);
+        playground.addExample("Filled Badges", filled);
 
         // With icons
         HorizontalLayout withIcons = new HorizontalLayout();
@@ -117,7 +114,7 @@ public class BadgeDemoView extends VerticalLayout {
         Badge info = new Badge("Info", VaadinIcon.INFO.create());
         info.addThemeVariants(BadgeVariant.CONTRAST);
         withIcons.add(approved, rejected, pending, info);
-        addSection("Badges with Icons", withIcons);
+        playground.addExample("Badges with Icons", withIcons);
 
         // Number badges
         HorizontalLayout numbers = new HorizontalLayout();
@@ -129,7 +126,7 @@ public class BadgeDemoView extends VerticalLayout {
         Badge num3 = new Badge("updates", 99);
         num3.addThemeVariants(BadgeVariant.SUCCESS);
         numbers.add(num1, num2, num3);
-        addSection("Number Badges", numbers);
+        playground.addExample("Number Badges", numbers);
 
         // Number-only badges
         HorizontalLayout numberOnly = new HorizontalLayout();
@@ -142,7 +139,7 @@ public class BadgeDemoView extends VerticalLayout {
         Badge no3 = new Badge("updates", 99);
         no3.addThemeVariants(BadgeVariant.NUMBER_ONLY, BadgeVariant.SUCCESS);
         numberOnly.add(no1, no2, no3);
-        addSection("Number-Only Badges", numberOnly);
+        playground.addExample("Number-Only Badges", numberOnly);
 
         // Dot badges
         HorizontalLayout dots = new HorizontalLayout();
@@ -158,7 +155,7 @@ public class BadgeDemoView extends VerticalLayout {
         Badge dot4 = new Badge();
         dot4.addThemeVariants(BadgeVariant.DOT, BadgeVariant.WARNING);
         dots.add(dot1, dot2, dot3, dot4);
-        addSection("Dot Badges", dots);
+        playground.addExample("Dot Badges", dots);
 
         // Status badges example
         VerticalLayout statusExamples = new VerticalLayout();
@@ -182,23 +179,14 @@ public class BadgeDemoView extends VerticalLayout {
         status3.add(new Span("Order #1236"), cancelled);
 
         statusExamples.add(status1, status2, status3);
-        addSection("Status Badge Examples", statusExamples);
+        playground.addExample("Status Badge Examples", statusExamples);
+
+        add(playground);
     }
 
     private Badge createBadge(String text, BadgeVariant... variants) {
         Badge badge = new Badge(text);
         badge.addThemeVariants(variants);
         return badge;
-    }
-
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
     }
 }

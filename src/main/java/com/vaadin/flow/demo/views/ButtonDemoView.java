@@ -19,14 +19,11 @@ import java.util.List;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
 import com.vaadin.flow.demo.Playground;
@@ -49,8 +46,7 @@ public class ButtonDemoView extends VerticalLayout {
         add(new Paragraph("The Button component is used to trigger actions."));
 
         // Interactive playground
-        add(new H3("Playground"));
-        add(new Playground<>(new Button("Click me",
+        Playground<Button> playground = new Playground<>(new Button("Click me",
                 e -> Notification.show("Clicked!")))
                 .withCheckbox("Enabled", true, Button::setEnabled)
                 .withCheckbox("Disable on click", false,
@@ -96,10 +92,10 @@ public class ButtonDemoView extends VerticalLayout {
                             case "Large" -> btn.addThemeVariants(
                                     ButtonVariant.LUMO_LARGE);
                             }
-                        }));
+                        });
 
         // Basic buttons
-        addSection("Basic Buttons",
+        playground.addExample("Basic Buttons",
             new Button("Default Button", e -> Notification.show("Default clicked")),
             createButton("Primary", ButtonVariant.LUMO_PRIMARY),
             createButton("Tertiary", ButtonVariant.LUMO_TERTIARY),
@@ -107,14 +103,14 @@ public class ButtonDemoView extends VerticalLayout {
         );
 
         // Theme variants
-        addSection("Theme Variants",
+        playground.addExample("Theme Variants",
             createButton("Success", ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS),
             createButton("Error", ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR),
             createButton("Contrast", ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST)
         );
 
         // Size variants
-        addSection("Size Variants",
+        playground.addExample("Size Variants",
             createButton("Small", ButtonVariant.LUMO_SMALL),
             new Button("Medium (default)", e -> Notification.show("Medium clicked")),
             createButton("Large", ButtonVariant.LUMO_LARGE)
@@ -133,7 +129,7 @@ public class ButtonDemoView extends VerticalLayout {
         iconOnly.setAriaLabel("Like");
         iconOnly.addClickListener(e -> Notification.show("Heart clicked"));
 
-        addSection("Buttons with Icons", iconLeft, iconRight, iconOnly);
+        playground.addExample("Buttons with Icons", iconLeft, iconRight, iconOnly);
 
         // Disabled buttons
         Button disabled = new Button("Disabled");
@@ -143,7 +139,7 @@ public class ButtonDemoView extends VerticalLayout {
         disabledPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         disabledPrimary.setEnabled(false);
 
-        addSection("Disabled Buttons", disabled, disabledPrimary);
+        playground.addExample("Disabled Buttons", disabled, disabledPrimary);
 
         // Disable on click
         Button disableOnClick = new Button("Click to disable", e -> {
@@ -161,23 +157,14 @@ public class ButtonDemoView extends VerticalLayout {
         });
         disableOnClick.setDisableOnClick(true);
 
-        addSection("Disable on Click", disableOnClick);
+        playground.addExample("Disable on Click", disableOnClick);
+
+        add(playground);
     }
 
     private Button createButton(String text, ButtonVariant... variants) {
         Button button = new Button(text, e -> Notification.show(text + " clicked"));
         button.addThemeVariants(variants);
         return button;
-    }
-
-    private void addSection(String title, Button... buttons) {
-        Div section = new Div();
-        section.add(new H3(title));
-        HorizontalLayout layout = new HorizontalLayout(buttons);
-        layout.setSpacing(true);
-        layout.setAlignItems(Alignment.CENTER);
-        layout.getStyle().set("flex-wrap", "wrap");
-        section.add(layout);
-        add(section);
     }
 }

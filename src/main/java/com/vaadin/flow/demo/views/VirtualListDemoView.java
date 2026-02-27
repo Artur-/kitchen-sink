@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -49,7 +48,6 @@ public class VirtualListDemoView extends VerticalLayout {
         add(new Paragraph("VirtualList efficiently renders large lists using virtualization."));
 
         // Interactive playground
-        add(new H3("Playground"));
         VirtualList<String> playgroundList = new VirtualList<>();
         playgroundList.setRenderer(new ComponentRenderer<>(item -> {
             Div div = new Div();
@@ -63,9 +61,9 @@ public class VirtualListDemoView extends VerticalLayout {
         playgroundList.setWidthFull();
         playgroundList.addClassNames(LumoUtility.Border.ALL,
                 LumoUtility.BorderRadius.MEDIUM);
-        add(new Playground<>(playgroundList)
+        Playground<VirtualList<String>> playground = new Playground<>(playgroundList)
                 .withSlider("Height (px)", 150, 500, 300,
-                        (vl, val) -> vl.setHeight(val + "px")));
+                        (vl, val) -> vl.setHeight(val + "px"));
 
         // Basic virtual list
         VirtualList<String> basic = new VirtualList<>();
@@ -79,7 +77,7 @@ public class VirtualListDemoView extends VerticalLayout {
         basic.setHeight("300px");
         basic.setWidthFull();
         basic.addClassNames(LumoUtility.Border.ALL, LumoUtility.BorderRadius.MEDIUM);
-        addSection("Basic Virtual List (10,000 items)", basic);
+        playground.addExample("Basic Virtual List (10,000 items)", basic);
 
         // With custom renderer
         VirtualList<Person> customRenderer = new VirtualList<>();
@@ -114,7 +112,9 @@ public class VirtualListDemoView extends VerticalLayout {
         customRenderer.setHeight("350px");
         customRenderer.setWidthFull();
         customRenderer.addClassNames(LumoUtility.Border.ALL, LumoUtility.BorderRadius.MEDIUM);
-        addSection("With Custom Renderer (500 people)", customRenderer);
+        playground.addExample("With Custom Renderer (500 people)", customRenderer);
+
+        add(playground);
     }
 
     private List<String> generateItems(int count) {
@@ -136,15 +136,6 @@ public class VirtualListDemoView extends VerticalLayout {
                 first.toLowerCase() + "." + last.toLowerCase() + i + "@example.com"));
         }
         return people;
-    }
-
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        for (var component : components) {
-            section.add(component);
-        }
-        add(section);
     }
 
     private static class Person {

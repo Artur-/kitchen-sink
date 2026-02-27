@@ -17,8 +17,6 @@ package com.vaadin.flow.demo.views;
 
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.accordion.AccordionPanel;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -45,7 +43,6 @@ public class AccordionDemoView extends VerticalLayout {
         add(new Paragraph("Accordion organizes content into collapsible panels."));
 
         // Interactive playground
-        add(new H3("Playground"));
         Accordion playgroundAccordion = new Accordion();
         playgroundAccordion.add("Section 1",
                 new Paragraph("Content of section 1"));
@@ -54,11 +51,11 @@ public class AccordionDemoView extends VerticalLayout {
         playgroundAccordion.add("Section 3",
                 new Paragraph("Content of section 3"));
         playgroundAccordion.setWidthFull();
-        add(new Playground<>(playgroundAccordion)
+        Playground<Accordion> playground = new Playground<>(playgroundAccordion)
                 .withCheckbox("Enabled", true,
                         (a, val) -> a.getChildren().forEach(
                                 c -> ((AccordionPanel) c)
-                                        .setEnabled(val))));
+                                        .setEnabled(val)));
 
         // Basic accordion
         Accordion basic = new Accordion();
@@ -69,7 +66,7 @@ public class AccordionDemoView extends VerticalLayout {
         basic.add("Shipping Options",
             new Paragraph("Choose your preferred shipping method."));
         basic.setWidthFull();
-        addSection("Basic Accordion", basic);
+        playground.addExample("Basic Accordion", basic);
 
         // Accordion with first panel open
         Accordion firstOpen = new Accordion();
@@ -81,7 +78,7 @@ public class AccordionDemoView extends VerticalLayout {
             new Paragraph("View our competitive pricing plans."));
         firstOpen.open(panel1);
         firstOpen.setWidthFull();
-        addSection("First Panel Open by Default", firstOpen);
+        playground.addExample("First Panel Open by Default", firstOpen);
 
         // Accordion with rich content
         Accordion richContent = new Accordion();
@@ -101,7 +98,7 @@ public class AccordionDemoView extends VerticalLayout {
         richContent.add("Order Information", orderInfo);
 
         richContent.setWidthFull();
-        addSection("Rich Content", richContent);
+        playground.addExample("Rich Content", richContent);
 
         // Accordion with disabled panel
         Accordion withDisabled = new Accordion();
@@ -113,7 +110,7 @@ public class AccordionDemoView extends VerticalLayout {
         withDisabled.add("Another Available Section",
             new Paragraph("This section is also available."));
         withDisabled.setWidthFull();
-        addSection("With Disabled Panel", withDisabled);
+        playground.addExample("With Disabled Panel", withDisabled);
 
         // Accordion with event listener
         Accordion withEvents = new Accordion();
@@ -131,7 +128,7 @@ public class AccordionDemoView extends VerticalLayout {
             }
         });
         withEvents.setWidthFull();
-        addSection("With Event Listener", withEvents, statusLabel);
+        playground.addExample("With Event Listener", withEvents, statusLabel);
 
         // FAQ example
         Accordion faq = new Accordion();
@@ -144,17 +141,8 @@ public class AccordionDemoView extends VerticalLayout {
         faq.add("Do you ship internationally?",
             new Paragraph("Yes, we ship to over 50 countries worldwide."));
         faq.setWidthFull();
-        addSection("FAQ Example", faq);
-    }
+        playground.addExample("FAQ Example", faq);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

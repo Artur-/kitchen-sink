@@ -18,7 +18,6 @@ package com.vaadin.flow.demo.views;
 import java.util.List;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -49,11 +48,10 @@ public class ProgressBarDemoView extends VerticalLayout {
         add(new Paragraph("ProgressBar displays the progress of a task."));
 
         // Interactive playground
-        add(new H3("Playground"));
         ProgressBar playgroundBar = new ProgressBar();
         playgroundBar.setValue(0.5);
         playgroundBar.setWidthFull();
-        add(new Playground<>(playgroundBar)
+        Playground<ProgressBar> playground = new Playground<>(playgroundBar)
                 .withCheckbox("Indeterminate", false,
                         ProgressBar::setIndeterminate)
                 .withSlider("Value (%)", 0, 100, 50,
@@ -74,7 +72,7 @@ public class ProgressBarDemoView extends VerticalLayout {
                             case "Contrast" -> pb.addThemeVariants(
                                     ProgressBarVariant.LUMO_CONTRAST);
                             }
-                        }));
+                        });
 
         // Progress levels
         VerticalLayout levels = new VerticalLayout();
@@ -92,18 +90,18 @@ public class ProgressBarDemoView extends VerticalLayout {
             row.setFlexGrow(1, bar);
             levels.add(row);
         }
-        addSection("Progress Levels", levels);
+        playground.addExample("Progress Levels", levels);
 
         // Indeterminate progress bar
         ProgressBar indeterminate = new ProgressBar();
         indeterminate.setIndeterminate(true);
         indeterminate.setWidthFull();
-        addSection("Indeterminate (Loading)", indeterminate);
+        playground.addExample("Indeterminate (Loading)", indeterminate);
 
         // With custom range
         ProgressBar customRange = new ProgressBar(0, 10, 7);
         customRange.setWidthFull();
-        addSection("Custom Range (7 of 10)", customRange);
+        playground.addExample("Custom Range (7 of 10)", customRange);
 
         // Theme variants
         ProgressBar success = new ProgressBar();
@@ -133,7 +131,7 @@ public class ProgressBarDemoView extends VerticalLayout {
         contrastRow.setWidthFull();
         contrastRow.setFlexGrow(1, contrast);
 
-        addSection("Theme Variants", successRow, errorRow, contrastRow);
+        playground.addExample("Theme Variants", successRow, errorRow, contrastRow);
 
         // Combination examples
         Div downloadExample = new Div();
@@ -143,7 +141,7 @@ public class ProgressBarDemoView extends VerticalLayout {
         downloadProgress.setWidthFull();
         downloadExample.add(downloadProgress);
         downloadExample.add(new Paragraph("65% complete - 3.2 MB of 5 MB"));
-        addSection("Download Progress Example", downloadExample);
+        playground.addExample("Download Progress Example", downloadExample);
 
         Div uploadExample = new Div();
         uploadExample.add(new Paragraph("Uploading images..."));
@@ -153,17 +151,8 @@ public class ProgressBarDemoView extends VerticalLayout {
         uploadProgress.setWidthFull();
         uploadExample.add(uploadProgress);
         uploadExample.add(new Paragraph("2 of 5 files uploaded"));
-        addSection("Upload Progress Example", uploadExample);
-    }
+        playground.addExample("Upload Progress Example", uploadExample);
 
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
+        add(playground);
     }
 }

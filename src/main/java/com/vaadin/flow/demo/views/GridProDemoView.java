@@ -21,8 +21,6 @@ import java.util.List;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.gridpro.GridPro;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -48,7 +46,6 @@ public class GridProDemoView extends VerticalLayout {
         add(new Paragraph("Grid Pro provides inline editing capabilities with cell editors."));
 
         // Interactive playground
-        add(new H3("Playground"));
         GridPro<Product> playgroundGrid = new GridPro<>();
         playgroundGrid.addEditColumn(Product::getName)
                 .text(Product::setName).setHeader("Product Name");
@@ -65,7 +62,7 @@ public class GridProDemoView extends VerticalLayout {
         playgroundGrid.setItems(getSampleProducts());
         playgroundGrid.setHeight("300px");
         playgroundGrid.setWidthFull();
-        add(new Playground<>(playgroundGrid)
+        Playground<GridPro<Product>> playground = new Playground<>(playgroundGrid)
                 .withCheckbox("Enter next row", false,
                         GridPro::setEnterNextRow)
                 .withCheckbox("Single cell edit", false,
@@ -86,7 +83,7 @@ public class GridProDemoView extends VerticalLayout {
                         g.removeThemeVariants(
                                 GridVariant.LUMO_COMPACT);
                     }
-                }));
+                });
 
         // Basic editable grid
         GridPro<Product> basic = new GridPro<>();
@@ -108,7 +105,7 @@ public class GridProDemoView extends VerticalLayout {
         basic.setItems(getSampleProducts());
         basic.setHeight("350px");
         basic.setWidthFull();
-        addSection("Inline Editable Grid", basic);
+        playground.addExample("Inline Editable Grid", basic);
 
         // With edit listener
         GridPro<Product> withListener = new GridPro<>();
@@ -127,7 +124,7 @@ public class GridProDemoView extends VerticalLayout {
         withListener.setItems(getSampleProducts());
         withListener.setHeight("350px");
         withListener.setWidthFull();
-        addSection("With Change Listener", withListener);
+        playground.addExample("With Change Listener", withListener);
 
         // Mixed editable and non-editable columns
         GridPro<Product> mixed = new GridPro<>();
@@ -144,7 +141,7 @@ public class GridProDemoView extends VerticalLayout {
         mixed.setItems(getSampleProducts());
         mixed.setHeight("350px");
         mixed.setWidthFull();
-        addSection("Mixed Editable/Read-only Columns", mixed);
+        playground.addExample("Mixed Editable/Read-only Columns", mixed);
 
         // Enter next row on Enter key
         GridPro<Product> enterNext = new GridPro<>();
@@ -161,7 +158,7 @@ public class GridProDemoView extends VerticalLayout {
         enterNext.setItems(getSampleProducts());
         enterNext.setHeight("350px");
         enterNext.setWidthFull();
-        addSection("Enter Next Row on Enter Key", enterNext);
+        playground.addExample("Enter Next Row on Enter Key", enterNext);
 
         // Single click edit
         GridPro<Product> singleClick = new GridPro<>();
@@ -178,7 +175,9 @@ public class GridProDemoView extends VerticalLayout {
         singleClick.setItems(getSampleProducts());
         singleClick.setHeight("350px");
         singleClick.setWidthFull();
-        addSection("Single Click Edit Mode", singleClick);
+        playground.addExample("Single Click Edit Mode", singleClick);
+
+        add(playground);
     }
 
     private List<Product> getSampleProducts() {
@@ -192,17 +191,6 @@ public class GridProDemoView extends VerticalLayout {
         products.add(new Product(7, "Chocolate", "Food", 4.99, 500, true));
         products.add(new Product(8, "Mouse", "Electronics", 29.99, 200, true));
         return products;
-    }
-
-    private void addSection(String title, com.vaadin.flow.component.Component... components) {
-        Div section = new Div();
-        section.add(new H3(title));
-        VerticalLayout layout = new VerticalLayout(components);
-        layout.setSpacing(true);
-        layout.setPadding(false);
-        layout.setWidthFull();
-        section.add(layout);
-        add(section);
     }
 
     public static class Product {
