@@ -24,7 +24,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
@@ -183,8 +182,7 @@ public class MainLayout extends AppLayout {
         advancedSection.addItem(new SideNavItem("Master Detail", MasterDetailDemoView.class));
         nav.addItem(advancedSection);
 
-        Scroller scroller = new Scroller(nav);
-        scroller.addClassNames(LumoUtility.Padding.SMALL);
-        addToDrawer(scroller);
+        nav.addClassNames(LumoUtility.Padding.SMALL);
+        addToDrawer(nav);
     }
 }
