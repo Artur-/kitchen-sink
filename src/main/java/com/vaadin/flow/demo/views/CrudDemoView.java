@@ -65,7 +65,7 @@ public class CrudDemoView extends VerticalLayout {
         crud.getGrid().removeAllColumns();
         crud.getGrid().addColumn(Employee::getFirstName).setHeader("First Name");
         crud.getGrid().addColumn(Employee::getLastName).setHeader("Last Name");
-        crud.getGrid().addColumn(Employee::getEmail).setHeader("Email");
+        crud.getGrid().addColumn(Employee::getEmail).setHeader("Email").setFlexGrow(1);
         crud.getGrid().addColumn(Employee::getDepartment).setHeader("Department");
 
         // Set up data provider using AbstractBackEndDataProvider with CrudFilter
@@ -112,6 +112,7 @@ public class CrudDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

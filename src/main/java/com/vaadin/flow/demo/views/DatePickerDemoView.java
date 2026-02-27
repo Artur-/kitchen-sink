@@ -46,7 +46,7 @@ public class DatePickerDemoView extends VerticalLayout {
         add(new Paragraph("The DatePicker allows users to select a date from a calendar."));
 
         // Basic date picker
-        DatePicker basic = new DatePicker("Select a date");
+        DatePicker basic = new DatePicker("Birth Date");
         basic.setPlaceholder("Pick a date");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
@@ -127,6 +127,7 @@ public class DatePickerDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

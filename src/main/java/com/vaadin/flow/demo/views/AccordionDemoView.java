@@ -22,7 +22,7 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -103,14 +103,18 @@ public class AccordionDemoView extends VerticalLayout {
         withEvents.add("Section A", new Paragraph("Content of Section A"));
         withEvents.add("Section B", new Paragraph("Content of Section B"));
         withEvents.add("Section C", new Paragraph("Content of Section C"));
+        Span statusLabel = new Span("No section opened");
+        statusLabel.addClassNames(LumoUtility.TextColor.SECONDARY, LumoUtility.FontSize.SMALL);
         withEvents.addOpenedChangeListener(event -> {
             AccordionPanel openedPanel = event.getOpenedPanel().orElse(null);
             if (openedPanel != null) {
-                Notification.show("Opened: " + openedPanel.getSummary().getElement().getText());
+                statusLabel.setText("Currently open: " + openedPanel.getSummary().getElement().getText());
+            } else {
+                statusLabel.setText("All sections collapsed");
             }
         });
         withEvents.setWidthFull();
-        addSection("With Event Listener", withEvents);
+        addSection("With Event Listener", withEvents, statusLabel);
 
         // FAQ example
         Accordion faq = new Accordion();
@@ -132,6 +136,7 @@ public class AccordionDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

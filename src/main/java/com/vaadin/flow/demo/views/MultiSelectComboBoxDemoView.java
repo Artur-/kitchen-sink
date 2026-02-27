@@ -56,6 +56,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         MultiSelectComboBox<String> basic = new MultiSelectComboBox<>("Programming Skills");
         basic.setItems(SKILLS);
         basic.setPlaceholder("Select skills");
+        basic.setWidthFull();
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
         addSection("Basic Multi-Select", basic);
@@ -64,6 +65,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         MultiSelectComboBox<String> preSelected = new MultiSelectComboBox<>("Pre-selected");
         preSelected.setItems(SKILLS);
         preSelected.select("Java", "JavaScript", "TypeScript");
+        preSelected.setWidthFull();
         addSection("Pre-selected Values", preSelected);
 
         // With clear button
@@ -71,12 +73,14 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         clearable.setItems(SKILLS);
         clearable.select("Python", "Go");
         clearable.setClearButtonVisible(true);
+        clearable.setWidthFull();
         addSection("With Clear Button", clearable);
 
         // With helper text
         MultiSelectComboBox<String> withHelper = new MultiSelectComboBox<>("Technical skills");
         withHelper.setItems(SKILLS);
         withHelper.setHelperText("Select all applicable skills");
+        withHelper.setWidthFull();
         addSection("With Helper Text", withHelper);
 
         // Required
@@ -84,6 +88,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         required.setItems(SKILLS);
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
+        required.setWidthFull();
         addSection("Required Field", required);
 
         // Compact mode
@@ -91,12 +96,14 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         compact.setItems(SKILLS);
         compact.select("Java", "JavaScript", "Python", "Go");
         compact.setSelectedItemsOnTop(true);
+        compact.setWidthFull();
         addSection("Selected Items on Top", compact);
 
         // Small variant
         MultiSelectComboBox<String> small = new MultiSelectComboBox<>("Small variant");
         small.setItems(SKILLS);
         small.addThemeVariants(MultiSelectComboBoxVariant.LUMO_SMALL);
+        small.setWidthFull();
         addSection("Small Variant", small);
 
         // Allow custom values
@@ -106,6 +113,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         allowCustom.addCustomValueSetListener(e ->
             Notification.show("Custom value: " + e.getDetail()));
         allowCustom.setHelperText("You can add custom skills");
+        allowCustom.setWidthFull();
         addSection("Allow Custom Values", allowCustom);
 
         // Read-only
@@ -113,6 +121,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         readonly.setItems(SKILLS);
         readonly.select("Java", "Python");
         readonly.setReadOnly(true);
+        readonly.setWidthFull();
         addSection("Read-only", readonly);
 
         // Disabled
@@ -120,6 +129,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         disabled.setItems(SKILLS);
         disabled.select("JavaScript");
         disabled.setEnabled(false);
+        disabled.setWidthFull();
         addSection("Disabled", disabled);
 
         // Invalid state
@@ -127,6 +137,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         invalid.setItems(SKILLS);
         invalid.setInvalid(true);
         invalid.setErrorMessage("Please select at least one skill");
+        invalid.setWidthFull();
         addSection("Invalid State", invalid);
     }
 
@@ -136,6 +147,7 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

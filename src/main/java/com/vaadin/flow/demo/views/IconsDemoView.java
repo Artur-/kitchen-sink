@@ -182,7 +182,8 @@ public class IconsDemoView extends VerticalLayout {
         label.addClassNames(LumoUtility.FontSize.XXSMALL, LumoUtility.TextColor.SECONDARY);
 
         container.add(iconComponent, label);
-        container.setWidth("80px");
+        container.setWidth("70px");
+        container.addClassNames(LumoUtility.TextAlignment.CENTER, LumoUtility.Padding.SMALL);
         return container;
     }
 
@@ -192,6 +193,7 @@ public class IconsDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

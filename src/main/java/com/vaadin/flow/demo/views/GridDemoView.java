@@ -50,75 +50,82 @@ public class GridDemoView extends VerticalLayout {
         Grid<Person> basic = new Grid<>(Person.class, false);
         basic.addColumn(Person::getFirstName).setHeader("First Name");
         basic.addColumn(Person::getLastName).setHeader("Last Name");
-        basic.addColumn(Person::getEmail).setHeader("Email");
+        basic.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         basic.setItems(getSampleData());
         basic.setHeight("300px");
+        basic.setWidthFull();
         addSection("Basic Grid", basic);
 
         // Sortable grid
         Grid<Person> sortable = new Grid<>(Person.class, false);
         sortable.addColumn(Person::getFirstName).setHeader("First Name").setSortable(true);
         sortable.addColumn(Person::getLastName).setHeader("Last Name").setSortable(true);
-        sortable.addColumn(Person::getEmail).setHeader("Email").setSortable(true);
+        sortable.addColumn(Person::getEmail).setHeader("Email").setSortable(true).setFlexGrow(1);
         sortable.addColumn(Person::getAge).setHeader("Age").setSortable(true);
         sortable.setItems(getSampleData());
         sortable.setHeight("300px");
+        sortable.setWidthFull();
         addSection("Sortable Columns", sortable);
 
         // With selection
         Grid<Person> selectable = new Grid<>(Person.class, false);
         selectable.addColumn(Person::getFirstName).setHeader("First Name");
         selectable.addColumn(Person::getLastName).setHeader("Last Name");
-        selectable.addColumn(Person::getEmail).setHeader("Email");
+        selectable.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         selectable.setItems(getSampleData());
         selectable.setSelectionMode(Grid.SelectionMode.SINGLE);
         selectable.addSelectionListener(event ->
             event.getFirstSelectedItem().ifPresent(p ->
                 Notification.show("Selected: " + p.getFirstName() + " " + p.getLastName())));
         selectable.setHeight("300px");
+        selectable.setWidthFull();
         addSection("Single Selection", selectable);
 
         // Multi-select
         Grid<Person> multiSelect = new Grid<>(Person.class, false);
         multiSelect.addColumn(Person::getFirstName).setHeader("First Name");
         multiSelect.addColumn(Person::getLastName).setHeader("Last Name");
-        multiSelect.addColumn(Person::getEmail).setHeader("Email");
+        multiSelect.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         multiSelect.setItems(getSampleData());
         multiSelect.setSelectionMode(Grid.SelectionMode.MULTI);
         multiSelect.addSelectionListener(event ->
             Notification.show("Selected: " + event.getAllSelectedItems().size() + " items"));
         multiSelect.setHeight("300px");
+        multiSelect.setWidthFull();
         addSection("Multi Selection", multiSelect);
 
         // With row stripes
         Grid<Person> striped = new Grid<>(Person.class, false);
         striped.addColumn(Person::getFirstName).setHeader("First Name");
         striped.addColumn(Person::getLastName).setHeader("Last Name");
-        striped.addColumn(Person::getEmail).setHeader("Email");
+        striped.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         striped.addColumn(Person::getAge).setHeader("Age");
         striped.setItems(getSampleData());
         striped.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
         striped.setHeight("300px");
+        striped.setWidthFull();
         addSection("Row Stripes", striped);
 
         // Compact variant
         Grid<Person> compact = new Grid<>(Person.class, false);
         compact.addColumn(Person::getFirstName).setHeader("First Name");
         compact.addColumn(Person::getLastName).setHeader("Last Name");
-        compact.addColumn(Person::getEmail).setHeader("Email");
+        compact.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         compact.setItems(getSampleData());
         compact.addThemeVariants(GridVariant.LUMO_COMPACT);
         compact.setHeight("300px");
+        compact.setWidthFull();
         addSection("Compact Variant", compact);
 
         // No border variant
         Grid<Person> noBorder = new Grid<>(Person.class, false);
         noBorder.addColumn(Person::getFirstName).setHeader("First Name");
         noBorder.addColumn(Person::getLastName).setHeader("Last Name");
-        noBorder.addColumn(Person::getEmail).setHeader("Email");
+        noBorder.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         noBorder.setItems(getSampleData());
         noBorder.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         noBorder.setHeight("300px");
+        noBorder.setWidthFull();
         addSection("No Border Variant", noBorder);
 
         // With column resizing
@@ -130,13 +137,14 @@ public class GridDemoView extends VerticalLayout {
         resizable.setItems(getSampleData());
         resizable.setColumnReorderingAllowed(true);
         resizable.setHeight("300px");
+        resizable.setWidthFull();
         addSection("Resizable and Reorderable Columns", resizable);
 
         // With component column
         Grid<Person> withActions = new Grid<>(Person.class, false);
         withActions.addColumn(Person::getFirstName).setHeader("First Name");
         withActions.addColumn(Person::getLastName).setHeader("Last Name");
-        withActions.addColumn(Person::getEmail).setHeader("Email");
+        withActions.addColumn(Person::getEmail).setHeader("Email").setFlexGrow(1);
         withActions.addComponentColumn(person -> {
             Button editBtn = new Button("Edit", e ->
                 Notification.show("Edit: " + person.getFirstName()));
@@ -144,6 +152,7 @@ public class GridDemoView extends VerticalLayout {
         }).setHeader("Actions");
         withActions.setItems(getSampleData());
         withActions.setHeight("300px");
+        withActions.setWidthFull();
         addSection("With Component Column", withActions);
 
         // Frozen columns
@@ -156,6 +165,7 @@ public class GridDemoView extends VerticalLayout {
         frozen.addColumn(Person::getCountry).setHeader("Country");
         frozen.setItems(getSampleData());
         frozen.setHeight("300px");
+        frozen.setWidthFull();
         addSection("Frozen First Column", frozen);
     }
 
@@ -178,6 +188,7 @@ public class GridDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

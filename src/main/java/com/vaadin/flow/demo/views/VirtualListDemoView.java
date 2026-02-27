@@ -52,12 +52,13 @@ public class VirtualListDemoView extends VerticalLayout {
         basic.setRenderer(new ComponentRenderer<>(item -> {
             Div div = new Div();
             div.setText(item);
-            div.addClassNames(LumoUtility.Padding.MEDIUM, LumoUtility.BorderRadius.MEDIUM);
+            div.addClassNames(LumoUtility.Padding.MEDIUM, LumoUtility.Border.BOTTOM);
             return div;
         }));
         basic.setItems(generateItems(10_000));
         basic.setHeight("300px");
         basic.setWidthFull();
+        basic.addClassNames(LumoUtility.Border.ALL, LumoUtility.BorderRadius.MEDIUM);
         addSection("Basic Virtual List (10,000 items)", basic);
 
         // With custom renderer
@@ -92,6 +93,7 @@ public class VirtualListDemoView extends VerticalLayout {
         customRenderer.setItems(generatePeople(500));
         customRenderer.setHeight("350px");
         customRenderer.setWidthFull();
+        customRenderer.addClassNames(LumoUtility.Border.ALL, LumoUtility.BorderRadius.MEDIUM);
         addSection("With Custom Renderer (500 people)", customRenderer);
     }
 

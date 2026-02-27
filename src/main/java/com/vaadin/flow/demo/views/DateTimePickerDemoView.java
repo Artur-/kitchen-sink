@@ -46,7 +46,7 @@ public class DateTimePickerDemoView extends VerticalLayout {
         add(new Paragraph("The DateTimePicker combines date and time selection."));
 
         // Basic date time picker
-        DateTimePicker basic = new DateTimePicker("Select date and time");
+        DateTimePicker basic = new DateTimePicker("Appointment");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
         addSection("Basic Date Time Picker", basic);
@@ -121,6 +121,7 @@ public class DateTimePickerDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

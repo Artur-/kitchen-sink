@@ -111,9 +111,8 @@ public class LoginDemoView extends VerticalLayout {
             Notification.show("Login attempted"));
         addSection("With Additional Information", withInfo);
 
-        // Login form in error state
+        // Login form with error on bad credentials
         LoginForm errorState = new LoginForm();
-        errorState.setError(true);
         errorState.addLoginListener(e -> {
             if ("admin".equals(e.getUsername()) && "admin".equals(e.getPassword())) {
                 errorState.setError(false);
@@ -131,6 +130,7 @@ public class LoginDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

@@ -47,7 +47,7 @@ public class TimePickerDemoView extends VerticalLayout {
         add(new Paragraph("The TimePicker allows users to select a time value."));
 
         // Basic time picker
-        TimePicker basic = new TimePicker("Select a time");
+        TimePicker basic = new TimePicker("Meeting Time");
         basic.setPlaceholder("Pick a time");
         basic.addValueChangeListener(e ->
             Notification.show("Selected: " + e.getValue()));
@@ -126,6 +126,7 @@ public class TimePickerDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

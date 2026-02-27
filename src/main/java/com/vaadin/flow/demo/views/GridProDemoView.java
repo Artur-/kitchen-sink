@@ -64,6 +64,7 @@ public class GridProDemoView extends VerticalLayout {
             .setHeader("Active");
         basic.setItems(getSampleProducts());
         basic.setHeight("350px");
+        basic.setWidthFull();
         addSection("Inline Editable Grid", basic);
 
         // With edit listener
@@ -82,6 +83,7 @@ public class GridProDemoView extends VerticalLayout {
         });
         withListener.setItems(getSampleProducts());
         withListener.setHeight("350px");
+        withListener.setWidthFull();
         addSection("With Change Listener", withListener);
 
         // Mixed editable and non-editable columns
@@ -98,6 +100,7 @@ public class GridProDemoView extends VerticalLayout {
             .setHeader("Active (Read-only)");
         mixed.setItems(getSampleProducts());
         mixed.setHeight("350px");
+        mixed.setWidthFull();
         addSection("Mixed Editable/Read-only Columns", mixed);
 
         // Enter next row on Enter key
@@ -114,6 +117,7 @@ public class GridProDemoView extends VerticalLayout {
             .setHeader("Stock");
         enterNext.setItems(getSampleProducts());
         enterNext.setHeight("350px");
+        enterNext.setWidthFull();
         addSection("Enter Next Row on Enter Key", enterNext);
 
         // Single click edit
@@ -130,6 +134,7 @@ public class GridProDemoView extends VerticalLayout {
             .setHeader("Price");
         singleClick.setItems(getSampleProducts());
         singleClick.setHeight("350px");
+        singleClick.setWidthFull();
         addSection("Single Click Edit Mode", singleClick);
     }
 
@@ -152,6 +157,7 @@ public class GridProDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

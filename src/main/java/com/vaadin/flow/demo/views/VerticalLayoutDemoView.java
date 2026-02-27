@@ -128,7 +128,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
     private Div createBox(String text) {
         Div box = new Div();
         box.setText(text);
-        box.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.MEDIUM,
+        box.addClassNames(LumoUtility.Background.CONTRAST_10, LumoUtility.Padding.MEDIUM,
                 LumoUtility.BorderRadius.MEDIUM);
         return box;
     }
@@ -139,6 +139,7 @@ public class VerticalLayoutDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

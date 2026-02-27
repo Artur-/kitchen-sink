@@ -47,14 +47,22 @@ public class TabsDemoView extends VerticalLayout {
         add(new H1("Tabs Components"));
         add(new Paragraph("Tabs organize content into separate views."));
 
-        // Basic tabs
-        Tabs basic = new Tabs(
-            new Tab("Dashboard"),
-            new Tab("Orders"),
-            new Tab("Customers"),
-            new Tab("Products")
-        );
-        addSection("Basic Tabs", basic);
+        // Basic tabs with content panel
+        Div basicContent = new Div();
+        basicContent.setText("Dashboard content — overview of key metrics and recent activity.");
+        basicContent.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.MEDIUM,
+                LumoUtility.BorderRadius.MEDIUM);
+
+        Tab dashboardTab = new Tab("Dashboard");
+        Tab ordersTab = new Tab("Orders");
+        Tab customersTab = new Tab("Customers");
+        Tab productsTab = new Tab("Products");
+        Tabs basic = new Tabs(dashboardTab, ordersTab, customersTab, productsTab);
+        basic.addSelectedChangeListener(event -> {
+            String label = event.getSelectedTab().getLabel();
+            basicContent.setText(label + " content — viewing the " + label.toLowerCase() + " section.");
+        });
+        addSection("Basic Tabs", basic, basicContent);
 
         // Tabs with icons
         Tab homeTab = new Tab(VaadinIcon.HOME.create(), new Paragraph("Home"));
@@ -177,6 +185,7 @@ public class TabsDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

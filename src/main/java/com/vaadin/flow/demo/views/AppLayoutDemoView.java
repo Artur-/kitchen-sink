@@ -15,8 +15,6 @@
  */
 package com.vaadin.flow.demo.views;
 
-import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
@@ -43,39 +41,38 @@ public class AppLayoutDemoView extends VerticalLayout {
         add(new Paragraph("AppLayout provides a responsive layout with a header, sidebar drawer, and main content area."));
         add(new Paragraph("Note: This demo app itself uses AppLayout as its main layout. The examples below show the component's features."));
 
-        // AppLayout features explanation
-        Div features = new Div();
-        features.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.LARGE,
-                LumoUtility.BorderRadius.MEDIUM);
+        // Visual mockup of AppLayout anatomy
+        Div mockup = new Div();
+        mockup.addClassNames(LumoUtility.Border.ALL, LumoUtility.BorderRadius.MEDIUM);
+        mockup.setHeight("300px");
+        mockup.getStyle()
+            .set("display", "grid")
+            .set("grid-template-columns", "180px 1fr")
+            .set("grid-template-rows", "48px 1fr");
 
-        H3 featuresTitle = new H3("Key Features");
-        Paragraph featuresList = new Paragraph(
-            "- Navbar: Fixed header area for branding and navigation\n" +
-            "- Drawer: Collapsible sidebar for navigation menus\n" +
-            "- DrawerToggle: Button to open/close the drawer\n" +
-            "- Touch-friendly: Supports touch gestures for drawer\n" +
-            "- Primary/Secondary sections: Organize navbar content"
-        );
-        featuresList.getStyle().set("white-space", "pre-line");
+        // Navbar
+        Div navbar = new Div();
+        navbar.setText("Navbar (header)");
+        navbar.addClassNames(LumoUtility.Background.PRIMARY, LumoUtility.TextColor.PRIMARY_CONTRAST,
+                LumoUtility.Padding.SMALL, LumoUtility.Display.FLEX, LumoUtility.AlignItems.CENTER,
+                LumoUtility.FontWeight.BOLD);
+        navbar.getStyle().set("grid-column", "1 / -1");
 
-        features.add(featuresTitle, featuresList);
-        add(features);
+        // Drawer
+        Div drawer = new Div();
+        drawer.setText("Drawer (sidebar)");
+        drawer.addClassNames(LumoUtility.Background.CONTRAST_10, LumoUtility.Padding.MEDIUM,
+                LumoUtility.FontSize.SMALL, LumoUtility.TextColor.SECONDARY);
 
-        // Drawer modes explanation
-        Div modes = new Div();
-        modes.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.LARGE,
-                LumoUtility.BorderRadius.MEDIUM);
+        // Content area
+        Div content = new Div();
+        content.setText("Content area");
+        content.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.MEDIUM,
+                LumoUtility.Display.FLEX, LumoUtility.AlignItems.CENTER,
+                LumoUtility.JustifyContent.CENTER, LumoUtility.TextColor.SECONDARY);
 
-        H3 modesTitle = new H3("Drawer Modes");
-        Paragraph modesList = new Paragraph(
-            "1. DRAWER: Drawer overlays content (mobile-friendly)\n" +
-            "2. OVERLAY: Drawer slides over content\n" +
-            "- Use setPrimarySection() to configure which side is primary"
-        );
-        modesList.getStyle().set("white-space", "pre-line");
-
-        modes.add(modesTitle, modesList);
-        add(modes);
+        mockup.add(navbar, drawer, content);
+        add(new H3("Layout Anatomy"), mockup);
 
         // Usage example
         Div example = new Div();

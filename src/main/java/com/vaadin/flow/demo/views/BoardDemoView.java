@@ -147,7 +147,6 @@ public class BoardDemoView extends VerticalLayout {
                 LumoUtility.Display.BLOCK, LumoUtility.Margin.Vertical.XSMALL);
 
         Span changeSpan = new Span(change);
-        boolean positive = change.startsWith("+") || change.startsWith("-") && change.contains("-") == false;
         if (change.startsWith("+")) {
             changeSpan.addClassNames(LumoUtility.TextColor.SUCCESS);
         } else if (change.startsWith("-")) {
@@ -165,6 +164,7 @@ public class BoardDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

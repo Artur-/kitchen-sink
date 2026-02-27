@@ -164,29 +164,37 @@ public class MessagesDemoView extends VerticalLayout {
     private List<MessageListItem> createBasicMessages() {
         List<MessageListItem> messages = new ArrayList<>();
 
-        messages.add(new MessageListItem(
+        MessageListItem m1 = new MessageListItem(
             "Hi everyone!",
             Instant.now().minus(10, ChronoUnit.MINUTES),
             "John"
-        ));
+        );
+        m1.setUserColorIndex(0);
+        messages.add(m1);
 
-        messages.add(new MessageListItem(
+        MessageListItem m2 = new MessageListItem(
             "Hey John, how's it going?",
             Instant.now().minus(8, ChronoUnit.MINUTES),
             "Jane"
-        ));
+        );
+        m2.setUserColorIndex(1);
+        messages.add(m2);
 
-        messages.add(new MessageListItem(
+        MessageListItem m3 = new MessageListItem(
             "Pretty good! Just finished the new feature.",
             Instant.now().minus(5, ChronoUnit.MINUTES),
             "John"
-        ));
+        );
+        m3.setUserColorIndex(0);
+        messages.add(m3);
 
-        messages.add(new MessageListItem(
+        MessageListItem m4 = new MessageListItem(
             "That's awesome! Can't wait to try it out.",
             Instant.now().minus(2, ChronoUnit.MINUTES),
             "Jane"
-        ));
+        );
+        m4.setUserColorIndex(1);
+        messages.add(m4);
 
         return messages;
     }
@@ -197,6 +205,7 @@ public class MessagesDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

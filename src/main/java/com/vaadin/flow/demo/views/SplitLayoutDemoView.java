@@ -102,8 +102,8 @@ public class SplitLayoutDemoView extends VerticalLayout {
     private Div createPane(String text) {
         Div pane = new Div();
         pane.setText(text);
-        pane.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.MEDIUM,
-                LumoUtility.Display.FLEX, LumoUtility.AlignItems.CENTER,
+        pane.addClassNames(LumoUtility.Background.CONTRAST_10, LumoUtility.Padding.MEDIUM,
+                LumoUtility.Border.ALL, LumoUtility.Display.FLEX, LumoUtility.AlignItems.CENTER,
                 LumoUtility.JustifyContent.CENTER);
         pane.setSizeFull();
         return pane;
@@ -115,6 +115,7 @@ public class SplitLayoutDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

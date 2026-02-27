@@ -46,7 +46,7 @@ public class PasswordFieldDemoView extends VerticalLayout {
         addSection("Basic Password Field", basic);
 
         // With reveal button
-        PasswordField withReveal = new PasswordField("With Reveal Button");
+        PasswordField withReveal = new PasswordField("Account Password");
         withReveal.setRevealButtonVisible(true);
         withReveal.setHelperText("Click the eye icon to reveal password");
         addSection("With Reveal Button", withReveal);
@@ -97,6 +97,7 @@ public class PasswordFieldDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

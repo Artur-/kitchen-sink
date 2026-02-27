@@ -42,7 +42,7 @@ public class TextAreaDemoView extends VerticalLayout {
         add(new Paragraph("The TextArea component is used for multi-line text input."));
 
         // Basic text area
-        TextArea basic = new TextArea("Basic Text Area");
+        TextArea basic = new TextArea("Description");
         basic.setPlaceholder("Enter multiple lines of text here");
         basic.setWidthFull();
         addSection("Basic Text Area", basic);
@@ -105,6 +105,7 @@ public class TextAreaDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

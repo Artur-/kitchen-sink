@@ -20,6 +20,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.popover.Popover;
 import com.vaadin.flow.component.popover.PopoverPosition;
@@ -80,7 +81,8 @@ public class PopoverDemoView extends VerticalLayout {
         endPopover.add(new Paragraph("Positioned at end"));
         add(endPopover);
 
-        addSection("Position Variants", topBtn, bottomBtn, startBtn, endBtn);
+        HorizontalLayout positionButtons = new HorizontalLayout(topBtn, bottomBtn, startBtn, endBtn);
+        addSection("Position Variants", positionButtons);
 
         // Rich content popover
         Button richTarget = new Button("User Profile");
@@ -151,6 +153,7 @@ public class PopoverDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

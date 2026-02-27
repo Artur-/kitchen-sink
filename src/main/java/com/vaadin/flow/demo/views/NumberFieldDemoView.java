@@ -43,12 +43,12 @@ public class NumberFieldDemoView extends VerticalLayout {
         add(new Paragraph("Number fields are used for numeric input."));
 
         // Basic number field
-        NumberField basic = new NumberField("Basic Number Field");
+        NumberField basic = new NumberField("Amount");
         basic.setPlaceholder("Enter a number");
         addSection("Basic Number Field", basic);
 
         // With step controls
-        NumberField withControls = new NumberField("With Step Controls");
+        NumberField withControls = new NumberField("Quantity");
         withControls.setStepButtonsVisible(true);
         withControls.setStep(0.5);
         withControls.setValue(5.0);
@@ -115,6 +115,7 @@ public class NumberFieldDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

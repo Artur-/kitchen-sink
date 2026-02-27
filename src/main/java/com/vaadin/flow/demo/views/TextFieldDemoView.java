@@ -46,17 +46,17 @@ public class TextFieldDemoView extends VerticalLayout {
         add(new Paragraph("The TextField component is used for single-line text input."));
 
         // Basic text field
-        TextField basic = new TextField("Basic Text Field");
+        TextField basic = new TextField("Full Name");
         basic.setPlaceholder("Enter text here");
         addSection("Basic Text Field", basic);
 
         // With helper text
-        TextField withHelper = new TextField("With Helper Text");
+        TextField withHelper = new TextField("Username");
         withHelper.setHelperText("This is helper text providing additional context");
         addSection("With Helper Text", withHelper);
 
         // Required field
-        TextField required = new TextField("Required Field");
+        TextField required = new TextField("Company Name");
         required.setRequired(true);
         required.setRequiredIndicatorVisible(true);
         addSection("Required Field", required);
@@ -139,6 +139,7 @@ public class TextFieldDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

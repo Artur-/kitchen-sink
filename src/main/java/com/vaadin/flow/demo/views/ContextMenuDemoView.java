@@ -137,8 +137,10 @@ public class ContextMenuDemoView extends VerticalLayout {
     private Div createTarget(String text) {
         Div target = new Div();
         target.setText(text);
-        target.addClassNames(LumoUtility.Background.CONTRAST_5, LumoUtility.Padding.LARGE,
-                LumoUtility.BorderRadius.MEDIUM, LumoUtility.TextAlignment.CENTER);
+        target.addClassNames(LumoUtility.Background.CONTRAST_10, LumoUtility.Padding.LARGE,
+                LumoUtility.BorderRadius.MEDIUM, LumoUtility.Border.ALL,
+                LumoUtility.TextAlignment.CENTER);
+        target.getStyle().set("cursor", "context-menu");
         target.setWidthFull();
         return target;
     }
@@ -149,6 +151,7 @@ public class ContextMenuDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }

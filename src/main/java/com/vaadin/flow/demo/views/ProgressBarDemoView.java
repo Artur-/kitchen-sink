@@ -20,9 +20,12 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.progressbar.ProgressBarVariant;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.demo.MainLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -49,9 +52,14 @@ public class ProgressBarDemoView extends VerticalLayout {
         for (double[] level : new double[][]{{0, 0}, {0.25, 25}, {0.5, 50}, {0.75, 75}, {1.0, 100}}) {
             ProgressBar bar = new ProgressBar();
             bar.setValue(level[0]);
-            bar.setWidthFull();
             Span label = new Span((int) level[1] + "%");
-            levels.add(label, bar);
+            label.setMinWidth("40px");
+            HorizontalLayout row = new HorizontalLayout(label, bar);
+            row.setAlignItems(FlexComponent.Alignment.CENTER);
+            row.addClassName(LumoUtility.Gap.MEDIUM);
+            row.setWidthFull();
+            row.setFlexGrow(1, bar);
+            levels.add(row);
         }
         addSection("Progress Levels", levels);
 
@@ -66,26 +74,35 @@ public class ProgressBarDemoView extends VerticalLayout {
         customRange.setWidthFull();
         addSection("Custom Range (7 of 10)", customRange);
 
-        // Theme variants - Success
+        // Theme variants
         ProgressBar success = new ProgressBar();
         success.setValue(0.8);
         success.addThemeVariants(ProgressBarVariant.LUMO_SUCCESS);
-        success.setWidthFull();
-        addSection("Success Variant", success);
+        HorizontalLayout successRow = new HorizontalLayout(new Span("Success"), success);
+        successRow.setAlignItems(FlexComponent.Alignment.CENTER);
+        successRow.addClassName(LumoUtility.Gap.MEDIUM);
+        successRow.setWidthFull();
+        successRow.setFlexGrow(1, success);
 
-        // Theme variants - Error
         ProgressBar error = new ProgressBar();
         error.setValue(0.3);
         error.addThemeVariants(ProgressBarVariant.LUMO_ERROR);
-        error.setWidthFull();
-        addSection("Error Variant", error);
+        HorizontalLayout errorRow = new HorizontalLayout(new Span("Error"), error);
+        errorRow.setAlignItems(FlexComponent.Alignment.CENTER);
+        errorRow.addClassName(LumoUtility.Gap.MEDIUM);
+        errorRow.setWidthFull();
+        errorRow.setFlexGrow(1, error);
 
-        // Theme variants - Contrast
         ProgressBar contrast = new ProgressBar();
         contrast.setValue(0.6);
         contrast.addThemeVariants(ProgressBarVariant.LUMO_CONTRAST);
-        contrast.setWidthFull();
-        addSection("Contrast Variant", contrast);
+        HorizontalLayout contrastRow = new HorizontalLayout(new Span("Contrast"), contrast);
+        contrastRow.setAlignItems(FlexComponent.Alignment.CENTER);
+        contrastRow.addClassName(LumoUtility.Gap.MEDIUM);
+        contrastRow.setWidthFull();
+        contrastRow.setFlexGrow(1, contrast);
+
+        addSection("Theme Variants", successRow, errorRow, contrastRow);
 
         // Combination examples
         Div downloadExample = new Div();
@@ -114,6 +131,7 @@ public class ProgressBarDemoView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(components);
         layout.setSpacing(true);
         layout.setPadding(false);
+        layout.setWidthFull();
         section.add(layout);
         add(section);
     }
