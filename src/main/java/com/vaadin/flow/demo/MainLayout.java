@@ -117,6 +117,7 @@ public class MainLayout extends AppLayout {
         inputSection.addItem(new SideNavItem("Date Time Picker", DateTimePickerDemoView.class));
         inputSection.addItem(new SideNavItem("Upload", UploadDemoView.class));
         inputSection.addItem(new SideNavItem("Slider", SliderDemoView.class));
+        inputSection.addItem(new SideNavItem("Range Slider", RangeSliderDemoView.class));
         nav.addItem(inputSection);
 
         // Layout Components
