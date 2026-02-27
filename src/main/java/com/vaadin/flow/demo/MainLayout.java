@@ -87,7 +87,8 @@ public class MainLayout extends AppLayout {
         header.getStyle().set("display", "flex")
                 .set("align-items", "center")
                 .set("gap", "var(--lumo-space-m)")
-                .set("padding", "var(--lumo-space-m)");
+                .set("padding", "var(--lumo-space-m)")
+                .set("width", "100%");
 
         addToNavbar(header);
     }
