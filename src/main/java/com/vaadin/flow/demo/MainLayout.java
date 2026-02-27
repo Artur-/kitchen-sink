@@ -32,7 +32,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.theme.aura.Aura;
 import com.vaadin.flow.theme.lumo.Lumo;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 
 /**
  * Main layout for the Kitchen Sink Demo application.
@@ -66,7 +65,8 @@ public class MainLayout extends AppLayout {
 
     private void createHeader() {
         H1 title = new H1("Vaadin Kitchen Sink");
-        title.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
+        title.getStyle().set("font-size", "var(--lumo-font-size-l)")
+                .set("margin", "0");
 
         Select<String> themeSelect = new Select<>();
         themeSelect.setItems("Aura", "Lumo");
@@ -84,9 +84,10 @@ public class MainLayout extends AppLayout {
 
         Header header = new Header(new DrawerToggle(), title, spacer,
                 themeSelect);
-        header.addClassNames(LumoUtility.AlignItems.CENTER,
-                LumoUtility.Display.FLEX, LumoUtility.Gap.MEDIUM,
-                LumoUtility.Padding.MEDIUM);
+        header.getStyle().set("display", "flex")
+                .set("align-items", "center")
+                .set("gap", "var(--lumo-space-m)")
+                .set("padding", "var(--lumo-space-m)");
 
         addToNavbar(header);
     }
@@ -182,7 +183,7 @@ public class MainLayout extends AppLayout {
         advancedSection.addItem(new SideNavItem("Master Detail", MasterDetailDemoView.class));
         nav.addItem(advancedSection);
 
-        nav.addClassNames(LumoUtility.Padding.SMALL);
+        nav.getStyle().set("padding", "var(--lumo-space-s)");
         addToDrawer(nav);
     }
 }
