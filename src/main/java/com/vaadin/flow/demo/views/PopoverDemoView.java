@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
@@ -26,6 +28,7 @@ import com.vaadin.flow.component.popover.Popover;
 import com.vaadin.flow.component.popover.PopoverPosition;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -43,6 +46,53 @@ public class PopoverDemoView extends VerticalLayout {
 
         add(new H1("Popover Component"));
         add(new Paragraph("Popover displays floating content anchored to a trigger element."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Button playgroundTarget = new Button("Click to open popover");
+        Popover playgroundPopover = new Popover();
+        playgroundPopover.setTarget(playgroundTarget);
+        playgroundPopover.add(new Paragraph("Popover content"));
+        add(playgroundPopover);
+        add(new Playground<>(playgroundTarget)
+                .withCheckbox("Modal", false,
+                        (btn, val) -> playgroundPopover
+                                .setModal(val))
+                .withCheckbox("With arrow", false,
+                        (btn, val) -> playgroundPopover
+                                .setAriaLabel(val ? "arrow" : null))
+                .withSelect("Position", "Bottom",
+                        List.of("Bottom", "Top", "Start", "End",
+                                "Bottom start", "Bottom end",
+                                "Top start", "Top end"),
+                        (btn, pos) -> {
+                            switch (pos) {
+                            case "Bottom" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.BOTTOM);
+                            case "Top" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.TOP);
+                            case "Start" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.START);
+                            case "End" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.END);
+                            case "Bottom start" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.BOTTOM_START);
+                            case "Bottom end" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.BOTTOM_END);
+                            case "Top start" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.TOP_START);
+                            case "Top end" -> playgroundPopover
+                                    .setPosition(
+                                            PopoverPosition.TOP_END);
+                            }
+                        }));
 
         // Basic popover
         Button basicTarget = new Button("Click me");

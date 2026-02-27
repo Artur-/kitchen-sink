@@ -27,8 +27,10 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -47,6 +49,16 @@ public class MessagesDemoView extends VerticalLayout {
 
         add(new H1("Messages Components"));
         add(new Paragraph("Messages components provide chat/messaging interfaces."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        MessageInput playgroundInput = new MessageInput();
+        playgroundInput.setWidthFull();
+        playgroundInput.addSubmitListener(e ->
+                Notification.show("Sent: " + e.getValue()));
+        add(new Playground<>(playgroundInput)
+                .withCheckbox("Enabled", true,
+                        MessageInput::setEnabled));
 
         // Basic message list
         MessageList basicList = new MessageList();

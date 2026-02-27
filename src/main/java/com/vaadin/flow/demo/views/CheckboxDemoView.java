@@ -25,6 +25,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +45,15 @@ public class CheckboxDemoView extends VerticalLayout {
 
         add(new H1("Checkbox Components"));
         add(new Paragraph("Checkboxes allow users to select one or more options."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new Checkbox("I agree"))
+                .withCheckbox("Enabled", true, Checkbox::setEnabled)
+                .withCheckbox("Read-only", false, Checkbox::setReadOnly)
+                .withCheckbox("Indeterminate", false,
+                        Checkbox::setIndeterminate)
+                .withTextField("Label", "I agree", Checkbox::setLabel));
 
         // Basic checkbox
         Checkbox basic = new Checkbox("I agree to the terms and conditions");

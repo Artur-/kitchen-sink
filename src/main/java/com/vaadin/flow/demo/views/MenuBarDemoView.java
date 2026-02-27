@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.html.Div;
@@ -28,6 +30,7 @@ import com.vaadin.flow.component.menubar.MenuBarVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -45,6 +48,36 @@ public class MenuBarDemoView extends VerticalLayout {
 
         add(new H1("Menu Bar Component"));
         add(new Paragraph("MenuBar provides a horizontal menu with dropdown submenus."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        MenuBar playgroundMenu = new MenuBar();
+        playgroundMenu.addItem("File",
+                e -> Notification.show("File"));
+        playgroundMenu.addItem("Edit",
+                e -> Notification.show("Edit"));
+        playgroundMenu.addItem("View",
+                e -> Notification.show("View"));
+        add(new Playground<>(playgroundMenu)
+                .withCheckbox("Enabled", true,
+                        MenuBar::setEnabled)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Primary", "Tertiary",
+                                "Small"),
+                        (mb, variant) -> {
+                            mb.removeThemeVariants(
+                                    MenuBarVariant.LUMO_PRIMARY,
+                                    MenuBarVariant.LUMO_TERTIARY,
+                                    MenuBarVariant.LUMO_SMALL);
+                            switch (variant) {
+                            case "Primary" -> mb.addThemeVariants(
+                                    MenuBarVariant.LUMO_PRIMARY);
+                            case "Tertiary" -> mb.addThemeVariants(
+                                    MenuBarVariant.LUMO_TERTIARY);
+                            case "Small" -> mb.addThemeVariants(
+                                    MenuBarVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic menu bar
         MenuBar basic = new MenuBar();

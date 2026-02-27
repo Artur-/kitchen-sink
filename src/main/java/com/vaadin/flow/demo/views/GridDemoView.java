@@ -28,6 +28,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -45,6 +46,62 @@ public class GridDemoView extends VerticalLayout {
 
         add(new H1("Grid Component"));
         add(new Paragraph("Grid displays tabular data with sorting, filtering, and selection capabilities."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Grid<Person> playgroundGrid = new Grid<>(Person.class, false);
+        playgroundGrid.addColumn(Person::getFirstName)
+                .setHeader("First Name").setSortable(true);
+        playgroundGrid.addColumn(Person::getLastName)
+                .setHeader("Last Name").setSortable(true);
+        playgroundGrid.addColumn(Person::getEmail)
+                .setHeader("Email").setFlexGrow(1);
+        playgroundGrid.addColumn(Person::getAge)
+                .setHeader("Age").setSortable(true);
+        playgroundGrid.setItems(getSampleData());
+        playgroundGrid.setHeight("300px");
+        playgroundGrid.setWidthFull();
+        add(new Playground<>(playgroundGrid)
+                .withCheckbox("Row stripes", false, (g, val) -> {
+                    if (val) {
+                        g.addThemeVariants(
+                                GridVariant.LUMO_ROW_STRIPES);
+                    } else {
+                        g.removeThemeVariants(
+                                GridVariant.LUMO_ROW_STRIPES);
+                    }
+                })
+                .withCheckbox("Compact", false, (g, val) -> {
+                    if (val) {
+                        g.addThemeVariants(GridVariant.LUMO_COMPACT);
+                    } else {
+                        g.removeThemeVariants(
+                                GridVariant.LUMO_COMPACT);
+                    }
+                })
+                .withCheckbox("No border", false, (g, val) -> {
+                    if (val) {
+                        g.addThemeVariants(
+                                GridVariant.LUMO_NO_BORDER);
+                    } else {
+                        g.removeThemeVariants(
+                                GridVariant.LUMO_NO_BORDER);
+                    }
+                })
+                .withCheckbox("Column reordering", false,
+                        Grid::setColumnReorderingAllowed)
+                .withSelect("Selection mode", "None",
+                        List.of("None", "Single", "Multi"),
+                        (g, mode) -> {
+                            switch (mode) {
+                            case "None" -> g.setSelectionMode(
+                                    Grid.SelectionMode.NONE);
+                            case "Single" -> g.setSelectionMode(
+                                    Grid.SelectionMode.SINGLE);
+                            case "Multi" -> g.setSelectionMode(
+                                    Grid.SelectionMode.MULTI);
+                            }
+                        }));
 
         // Basic grid
         Grid<Person> basic = new Grid<>(Person.class, false);

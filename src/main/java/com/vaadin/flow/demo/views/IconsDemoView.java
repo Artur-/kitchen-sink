@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -26,6 +28,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -44,6 +47,30 @@ public class IconsDemoView extends VerticalLayout {
 
         add(new H1("Icons Component"));
         add(new Paragraph("Vaadin provides a comprehensive set of icons."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Icon playgroundIcon = VaadinIcon.STAR.create();
+        playgroundIcon.setSize("48px");
+        add(new Playground<>(playgroundIcon)
+                .withSlider("Size (px)", 16, 96, 48,
+                        (icon, val) -> icon.setSize(val + "px"))
+                .withSelect("Color", "Default",
+                        List.of("Default", "Primary", "Success",
+                                "Error", "Warning", "Purple"),
+                        (icon, color) -> {
+                            switch (color) {
+                            case "Default" -> icon.setColor(null);
+                            case "Primary" -> icon.setColor(
+                                    "var(--lumo-primary-color)");
+                            case "Success" -> icon.setColor(
+                                    "var(--lumo-success-color)");
+                            case "Error" -> icon.setColor(
+                                    "var(--lumo-error-color)");
+                            case "Warning" -> icon.setColor("orange");
+                            case "Purple" -> icon.setColor("#9c27b0");
+                            }
+                        }));
 
         // Basic icons
         HorizontalLayout basic = new HorizontalLayout();

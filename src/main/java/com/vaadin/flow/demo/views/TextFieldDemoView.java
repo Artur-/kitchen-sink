@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -27,6 +29,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +47,36 @@ public class TextFieldDemoView extends VerticalLayout {
 
         add(new H1("Text Field Component"));
         add(new Paragraph("The TextField component is used for single-line text input."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new TextField("Label"))
+                .withCheckbox("Enabled", true, TextField::setEnabled)
+                .withCheckbox("Read-only", false, TextField::setReadOnly)
+                .withCheckbox("Required", false, (tf, val) -> {
+                    tf.setRequired(val);
+                    tf.setRequiredIndicatorVisible(val);
+                })
+                .withCheckbox("Clear button", false,
+                        TextField::setClearButtonVisible)
+                .withTextField("Label", "Label", TextField::setLabel)
+                .withTextField("Placeholder", "",
+                        TextField::setPlaceholder)
+                .withTextField("Helper text", "",
+                        TextField::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small", "Align right"),
+                        (tf, variant) -> {
+                            tf.removeThemeVariants(
+                                    TextFieldVariant.LUMO_SMALL,
+                                    TextFieldVariant.LUMO_ALIGN_RIGHT);
+                            switch (variant) {
+                            case "Small" -> tf.addThemeVariants(
+                                    TextFieldVariant.LUMO_SMALL);
+                            case "Align right" -> tf.addThemeVariants(
+                                    TextFieldVariant.LUMO_ALIGN_RIGHT);
+                            }
+                        }));
 
         // Basic text field
         TextField basic = new TextField("Full Name");

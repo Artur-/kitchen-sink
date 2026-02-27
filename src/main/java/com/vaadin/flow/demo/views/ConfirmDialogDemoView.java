@@ -15,7 +15,11 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -25,6 +29,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -42,6 +47,43 @@ public class ConfirmDialogDemoView extends VerticalLayout {
 
         add(new H1("Confirm Dialog Component"));
         add(new Paragraph("ConfirmDialog is a specialized dialog for confirmation actions."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        AtomicReference<String> header = new AtomicReference<>(
+                "Confirm action");
+        AtomicReference<String> message = new AtomicReference<>(
+                "Are you sure you want to proceed?");
+        AtomicBoolean cancelable = new AtomicBoolean(false);
+        AtomicBoolean rejectable = new AtomicBoolean(false);
+
+        Button showBtn = new Button("Show Confirm Dialog");
+        showBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        showBtn.addClickListener(e -> {
+            ConfirmDialog dialog = new ConfirmDialog();
+            dialog.setHeader(header.get());
+            dialog.setText(message.get());
+            dialog.setConfirmText("Confirm");
+            dialog.setCancelable(cancelable.get());
+            dialog.setRejectable(rejectable.get());
+            if (rejectable.get()) {
+                dialog.setRejectText("Discard");
+            }
+            dialog.addConfirmListener(ev ->
+                    Notification.show("Confirmed!"));
+            dialog.open();
+        });
+
+        add(new Playground<>(showBtn)
+                .withTextField("Header", "Confirm action",
+                        (btn, val) -> header.set(val))
+                .withTextField("Message",
+                        "Are you sure you want to proceed?",
+                        (btn, val) -> message.set(val))
+                .withCheckbox("Cancelable", false,
+                        (btn, val) -> cancelable.set(val))
+                .withCheckbox("Rejectable", false,
+                        (btn, val) -> rejectable.set(val)));
 
         // Basic confirm dialog
         Button basicBtn = new Button("Show Confirmation", e -> {

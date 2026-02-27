@@ -15,6 +15,10 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -30,6 +34,7 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -47,6 +52,72 @@ public class NotificationDemoView extends VerticalLayout {
 
         add(new H1("Notification Component"));
         add(new Paragraph("Notifications display brief messages to the user."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        AtomicReference<String> notifMessage = new AtomicReference<>(
+                "Hello from playground!");
+        AtomicReference<Position> notifPosition = new AtomicReference<>(
+                Position.BOTTOM_START);
+        AtomicReference<NotificationVariant> notifVariant = new AtomicReference<>(
+                null);
+        AtomicInteger notifDuration = new AtomicInteger(3000);
+
+        Button showBtn = new Button("Show Notification",
+                VaadinIcon.BELL.create());
+        showBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        showBtn.addClickListener(e -> {
+            Notification n = Notification.show(notifMessage.get(),
+                    notifDuration.get(), notifPosition.get());
+            if (notifVariant.get() != null) {
+                n.addThemeVariants(notifVariant.get());
+            }
+        });
+
+        Playground<Button> notifPlayground = new Playground<>(showBtn)
+                .withTextField("Message", "Hello from playground!",
+                        (btn, val) -> notifMessage.set(val))
+                .withSelect("Position", "Bottom start",
+                        List.of("Top start", "Top center", "Top end",
+                                "Middle", "Bottom start",
+                                "Bottom center", "Bottom end"),
+                        (btn, val) -> {
+                            switch (val) {
+                            case "Top start" ->
+                                notifPosition.set(Position.TOP_START);
+                            case "Top center" ->
+                                notifPosition.set(Position.TOP_CENTER);
+                            case "Top end" ->
+                                notifPosition.set(Position.TOP_END);
+                            case "Middle" ->
+                                notifPosition.set(Position.MIDDLE);
+                            case "Bottom start" ->
+                                notifPosition.set(Position.BOTTOM_START);
+                            case "Bottom center" ->
+                                notifPosition.set(Position.BOTTOM_CENTER);
+                            case "Bottom end" ->
+                                notifPosition.set(Position.BOTTOM_END);
+                            }
+                        })
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Success", "Error",
+                                "Contrast", "Primary"),
+                        (btn, val) -> {
+                            switch (val) {
+                            case "Default" -> notifVariant.set(null);
+                            case "Success" -> notifVariant.set(
+                                    NotificationVariant.LUMO_SUCCESS);
+                            case "Error" -> notifVariant.set(
+                                    NotificationVariant.LUMO_ERROR);
+                            case "Contrast" -> notifVariant.set(
+                                    NotificationVariant.LUMO_CONTRAST);
+                            case "Primary" -> notifVariant.set(
+                                    NotificationVariant.LUMO_PRIMARY);
+                            }
+                        })
+                .withSlider("Duration (ms)", 1000, 10000, 3000,
+                        (btn, val) -> notifDuration.set(val));
+        add(notifPlayground);
 
         // Basic notification
         Button basicBtn = new Button("Show Basic Notification", e ->

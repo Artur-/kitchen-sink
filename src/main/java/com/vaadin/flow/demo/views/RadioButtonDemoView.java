@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -24,6 +26,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -41,6 +44,32 @@ public class RadioButtonDemoView extends VerticalLayout {
 
         add(new H1("Radio Button Group Component"));
         add(new Paragraph("Radio buttons allow users to select exactly one option from a group."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        RadioButtonGroup<String> playgroundRadio = new RadioButtonGroup<>();
+        playgroundRadio.setLabel("Select a size");
+        playgroundRadio.setItems("Small", "Medium", "Large");
+        add(new Playground<>(playgroundRadio)
+                .withCheckbox("Enabled", true,
+                        RadioButtonGroup::setEnabled)
+                .withCheckbox("Read-only", false,
+                        RadioButtonGroup::setReadOnly)
+                .withCheckbox("Required", false, (rb, val) ->
+                        rb.setRequiredIndicatorVisible(val))
+                .withCheckbox("Vertical", false, (rb, val) -> {
+                    if (val) {
+                        rb.addThemeVariants(
+                                RadioGroupVariant.LUMO_VERTICAL);
+                    } else {
+                        rb.removeThemeVariants(
+                                RadioGroupVariant.LUMO_VERTICAL);
+                    }
+                })
+                .withTextField("Label", "Select a size",
+                        RadioButtonGroup::setLabel)
+                .withTextField("Helper text", "",
+                        RadioButtonGroup::setHelperText));
 
         // Basic radio group
         RadioButtonGroup<String> basic = new RadioButtonGroup<>();

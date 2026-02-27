@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.badge.Badge;
 import com.vaadin.flow.component.badge.BadgeVariant;
 import com.vaadin.flow.component.html.Div;
@@ -26,6 +28,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -43,6 +46,38 @@ public class BadgeDemoView extends VerticalLayout {
 
         add(new H1("Badge Component"));
         add(new Paragraph("Badges are used to highlight status information or counts."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new Badge("Status"))
+                .withTextField("Text", "Status", Badge::setText)
+                .withCheckbox("Filled", false, (b, val) -> {
+                    if (val) {
+                        b.addThemeVariants(BadgeVariant.FILLED);
+                    } else {
+                        b.removeThemeVariants(BadgeVariant.FILLED);
+                    }
+                })
+                .withSelect("Color", "Default",
+                        List.of("Default", "Success", "Error",
+                                "Warning", "Contrast"),
+                        (b, color) -> {
+                            b.removeThemeVariants(
+                                    BadgeVariant.SUCCESS,
+                                    BadgeVariant.ERROR,
+                                    BadgeVariant.WARNING,
+                                    BadgeVariant.CONTRAST);
+                            switch (color) {
+                            case "Success" -> b.addThemeVariants(
+                                    BadgeVariant.SUCCESS);
+                            case "Error" -> b.addThemeVariants(
+                                    BadgeVariant.ERROR);
+                            case "Warning" -> b.addThemeVariants(
+                                    BadgeVariant.WARNING);
+                            case "Contrast" -> b.addThemeVariants(
+                                    BadgeVariant.CONTRAST);
+                            }
+                        }));
 
         // Basic badges
         HorizontalLayout basic = new HorizontalLayout();

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.gridpro.GridPro;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -27,6 +28,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +46,47 @@ public class GridProDemoView extends VerticalLayout {
 
         add(new H1("Grid Pro Component"));
         add(new Paragraph("Grid Pro provides inline editing capabilities with cell editors."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        GridPro<Product> playgroundGrid = new GridPro<>();
+        playgroundGrid.addEditColumn(Product::getName)
+                .text(Product::setName).setHeader("Product Name");
+        playgroundGrid.addEditColumn(Product::getCategory)
+                .select(Product::setCategory, "Electronics",
+                        "Clothing", "Food", "Books", "Other")
+                .setHeader("Category");
+        playgroundGrid.addEditColumn(Product::getPrice)
+                .text((item, value) -> item
+                        .setPrice(Double.parseDouble(value)))
+                .setHeader("Price");
+        playgroundGrid.addEditColumn(Product::isActive)
+                .checkbox(Product::setActive).setHeader("Active");
+        playgroundGrid.setItems(getSampleProducts());
+        playgroundGrid.setHeight("300px");
+        playgroundGrid.setWidthFull();
+        add(new Playground<>(playgroundGrid)
+                .withCheckbox("Enter next row", false,
+                        GridPro::setEnterNextRow)
+                .withCheckbox("Single cell edit", false,
+                        GridPro::setSingleCellEdit)
+                .withCheckbox("Row stripes", false, (g, val) -> {
+                    if (val) {
+                        g.addThemeVariants(
+                                GridVariant.LUMO_ROW_STRIPES);
+                    } else {
+                        g.removeThemeVariants(
+                                GridVariant.LUMO_ROW_STRIPES);
+                    }
+                })
+                .withCheckbox("Compact", false, (g, val) -> {
+                    if (val) {
+                        g.addThemeVariants(GridVariant.LUMO_COMPACT);
+                    } else {
+                        g.removeThemeVariants(
+                                GridVariant.LUMO_COMPACT);
+                    }
+                }));
 
         // Basic editable grid
         GridPro<Product> basic = new GridPro<>();

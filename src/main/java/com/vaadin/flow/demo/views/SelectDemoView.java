@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -24,6 +26,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.select.SelectVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -41,6 +44,34 @@ public class SelectDemoView extends VerticalLayout {
 
         add(new H1("Select Component"));
         add(new Paragraph("The Select component provides a dropdown list for selecting a single value."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Select<String> playgroundSelect = new Select<>();
+        playgroundSelect.setLabel("Country");
+        playgroundSelect.setItems("United States", "Canada",
+                "United Kingdom", "Germany", "France");
+        playgroundSelect.setPlaceholder("Select a country");
+        add(new Playground<>(playgroundSelect)
+                .withCheckbox("Enabled", true, Select::setEnabled)
+                .withCheckbox("Read-only", false, Select::setReadOnly)
+                .withCheckbox("Required", false, (s, val) ->
+                        s.setRequiredIndicatorVisible(val))
+                .withTextField("Label", "Country", Select::setLabel)
+                .withTextField("Placeholder", "Select a country",
+                        Select::setPlaceholder)
+                .withTextField("Helper text", "",
+                        Select::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (s, variant) -> {
+                            s.removeThemeVariants(
+                                    SelectVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                s.addThemeVariants(
+                                        SelectVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic select
         Select<String> basic = new Select<>();

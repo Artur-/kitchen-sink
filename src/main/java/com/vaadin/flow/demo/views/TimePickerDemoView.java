@@ -17,6 +17,7 @@ package com.vaadin.flow.demo.views;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Locale;
 
 import com.vaadin.flow.component.html.Div;
@@ -28,6 +29,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.component.timepicker.TimePickerVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -45,6 +47,30 @@ public class TimePickerDemoView extends VerticalLayout {
 
         add(new H1("Time Picker Component"));
         add(new Paragraph("The TimePicker allows users to select a time value."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new TimePicker("Time"))
+                .withCheckbox("Enabled", true, TimePicker::setEnabled)
+                .withCheckbox("Read-only", false,
+                        TimePicker::setReadOnly)
+                .withCheckbox("Required", false, (tp, val) ->
+                        tp.setRequiredIndicatorVisible(val))
+                .withCheckbox("Clear button", false,
+                        TimePicker::setClearButtonVisible)
+                .withTextField("Label", "Time", TimePicker::setLabel)
+                .withTextField("Helper text", "",
+                        TimePicker::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (tp, variant) -> {
+                            tp.removeThemeVariants(
+                                    TimePickerVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                tp.addThemeVariants(
+                                        TimePickerVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic time picker
         TimePicker basic = new TimePicker("Meeting Time");

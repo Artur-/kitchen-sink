@@ -15,6 +15,9 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -28,6 +31,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -45,6 +49,47 @@ public class DialogDemoView extends VerticalLayout {
 
         add(new H1("Dialog Component"));
         add(new Paragraph("Dialog displays modal content overlaying the main view."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        AtomicBoolean modal = new AtomicBoolean(true);
+        AtomicBoolean draggable = new AtomicBoolean(false);
+        AtomicBoolean resizable = new AtomicBoolean(false);
+        AtomicBoolean closeOnEsc = new AtomicBoolean(true);
+        AtomicBoolean closeOnOutside = new AtomicBoolean(false);
+        AtomicReference<String> title = new AtomicReference<>(
+                "Dialog Title");
+
+        Button openBtn = new Button("Open Dialog");
+        openBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        openBtn.addClickListener(e -> {
+            Dialog dialog = new Dialog();
+            dialog.setHeaderTitle(title.get());
+            dialog.setModal(modal.get());
+            dialog.setDraggable(draggable.get());
+            dialog.setResizable(resizable.get());
+            dialog.setCloseOnEsc(closeOnEsc.get());
+            dialog.setCloseOnOutsideClick(closeOnOutside.get());
+            dialog.add(new Paragraph(
+                    "This is a configurable dialog."));
+            dialog.getFooter().add(
+                    new Button("Close", ev -> dialog.close()));
+            dialog.open();
+        });
+
+        add(new Playground<>(openBtn)
+                .withTextField("Header title", "Dialog Title",
+                        (btn, val) -> title.set(val))
+                .withCheckbox("Modal", true,
+                        (btn, val) -> modal.set(val))
+                .withCheckbox("Draggable", false,
+                        (btn, val) -> draggable.set(val))
+                .withCheckbox("Resizable", false,
+                        (btn, val) -> resizable.set(val))
+                .withCheckbox("Close on Esc", true,
+                        (btn, val) -> closeOnEsc.set(val))
+                .withCheckbox("Close on outside click", false,
+                        (btn, val) -> closeOnOutside.set(val)));
 
         // Basic dialog
         Button basicBtn = new Button("Open Basic Dialog", e -> {

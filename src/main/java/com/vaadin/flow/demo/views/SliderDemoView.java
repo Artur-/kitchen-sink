@@ -24,6 +24,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.slider.Slider;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -41,6 +42,20 @@ public class SliderDemoView extends VerticalLayout {
 
         add(new H1("Slider Component"));
         add(new Paragraph("The Slider allows users to select a value within a range."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Slider playgroundSlider = new Slider("Volume");
+        playgroundSlider.setMin(0);
+        playgroundSlider.setMax(100);
+        playgroundSlider.setValue(50.0);
+        playgroundSlider.setWidthFull();
+        add(new Playground<>(playgroundSlider)
+                .withCheckbox("Enabled", true, Slider::setEnabled)
+                .withCheckbox("Read-only", false,
+                        Slider::setReadOnly)
+                .withTextField("Label", "Volume",
+                        Slider::setLabel));
 
         // Basic slider
         Slider basic = new Slider("Volume");

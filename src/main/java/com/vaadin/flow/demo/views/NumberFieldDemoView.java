@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -23,7 +25,9 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -41,6 +45,29 @@ public class NumberFieldDemoView extends VerticalLayout {
 
         add(new H1("Number Field Components"));
         add(new Paragraph("Number fields are used for numeric input."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new NumberField("Amount"))
+                .withCheckbox("Enabled", true, NumberField::setEnabled)
+                .withCheckbox("Read-only", false, NumberField::setReadOnly)
+                .withCheckbox("Step buttons", false,
+                        NumberField::setStepButtonsVisible)
+                .withCheckbox("Clear button", false,
+                        NumberField::setClearButtonVisible)
+                .withTextField("Label", "Amount", NumberField::setLabel)
+                .withTextField("Helper text", "",
+                        NumberField::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (nf, variant) -> {
+                            nf.removeThemeVariants(
+                                    TextFieldVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                nf.addThemeVariants(
+                                        TextFieldVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic number field
         NumberField basic = new NumberField("Amount");

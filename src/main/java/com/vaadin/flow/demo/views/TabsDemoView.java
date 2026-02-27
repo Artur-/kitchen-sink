@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -28,6 +30,7 @@ import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -46,6 +49,49 @@ public class TabsDemoView extends VerticalLayout {
 
         add(new H1("Tabs Components"));
         add(new Paragraph("Tabs organize content into separate views."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Tabs playgroundTabs = new Tabs(
+                new Tab("Tab 1"), new Tab("Tab 2"),
+                new Tab("Tab 3"), new Tab("Tab 4"));
+        add(new Playground<>(playgroundTabs)
+                .withSelect("Orientation", "Horizontal",
+                        List.of("Horizontal", "Vertical"),
+                        (tabs, val) -> tabs.setOrientation(
+                                "Vertical".equals(val)
+                                        ? Tabs.Orientation.VERTICAL
+                                        : Tabs.Orientation.HORIZONTAL))
+                .withCheckbox("Small", false, (tabs, val) -> {
+                    if (val) {
+                        tabs.addThemeVariants(
+                                TabsVariant.LUMO_SMALL);
+                    } else {
+                        tabs.removeThemeVariants(
+                                TabsVariant.LUMO_SMALL);
+                    }
+                })
+                .withCheckbox("Centered", false, (tabs, val) -> {
+                    if (val) {
+                        tabs.addThemeVariants(
+                                TabsVariant.LUMO_CENTERED);
+                    } else {
+                        tabs.removeThemeVariants(
+                                TabsVariant.LUMO_CENTERED);
+                    }
+                })
+                .withCheckbox("Equal width", false,
+                        (tabs, val) -> {
+                            if (val) {
+                                tabs.addThemeVariants(
+                                        TabsVariant.LUMO_EQUAL_WIDTH_TABS);
+                                tabs.setWidthFull();
+                            } else {
+                                tabs.removeThemeVariants(
+                                        TabsVariant.LUMO_EQUAL_WIDTH_TABS);
+                                tabs.setWidth(null);
+                            }
+                        }));
 
         // Basic tabs with content panel
         Div basicContent = new Div();

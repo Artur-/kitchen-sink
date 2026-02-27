@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.avatar.AvatarGroup;
 import com.vaadin.flow.component.avatar.AvatarGroupVariant;
@@ -26,6 +28,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -43,6 +46,35 @@ public class AvatarDemoView extends VerticalLayout {
 
         add(new H1("Avatar Component"));
         add(new Paragraph("Avatar displays user profile images or initials."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new Avatar("John Doe"))
+                .withTextField("Name", "John Doe", Avatar::setName)
+                .withTextField("Abbreviation", "",
+                        Avatar::setAbbreviation)
+                .withSlider("Color index", 0, 6, 0,
+                        Avatar::setColorIndex)
+                .withSelect("Size", "Medium",
+                        List.of("XSmall", "Small", "Medium",
+                                "Large", "XLarge"),
+                        (a, size) -> {
+                            a.removeThemeVariants(
+                                    AvatarVariant.LUMO_XSMALL,
+                                    AvatarVariant.LUMO_SMALL,
+                                    AvatarVariant.LUMO_LARGE,
+                                    AvatarVariant.LUMO_XLARGE);
+                            switch (size) {
+                            case "XSmall" -> a.addThemeVariants(
+                                    AvatarVariant.LUMO_XSMALL);
+                            case "Small" -> a.addThemeVariants(
+                                    AvatarVariant.LUMO_SMALL);
+                            case "Large" -> a.addThemeVariants(
+                                    AvatarVariant.LUMO_LARGE);
+                            case "XLarge" -> a.addThemeVariants(
+                                    AvatarVariant.LUMO_XLARGE);
+                            }
+                        }));
 
         // Basic avatar with name
         Avatar basic = new Avatar("John Doe");

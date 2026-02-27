@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -23,6 +25,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextAreaVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -40,6 +43,34 @@ public class TextAreaDemoView extends VerticalLayout {
 
         add(new H1("Text Area Component"));
         add(new Paragraph("The TextArea component is used for multi-line text input."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new TextArea("Description"))
+                .withCheckbox("Enabled", true, TextArea::setEnabled)
+                .withCheckbox("Read-only", false, TextArea::setReadOnly)
+                .withCheckbox("Required", false, (ta, val) -> {
+                    ta.setRequired(val);
+                    ta.setRequiredIndicatorVisible(val);
+                })
+                .withCheckbox("Clear button", false,
+                        TextArea::setClearButtonVisible)
+                .withTextField("Label", "Description",
+                        TextArea::setLabel)
+                .withTextField("Placeholder", "",
+                        TextArea::setPlaceholder)
+                .withTextField("Helper text", "",
+                        TextArea::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (ta, variant) -> {
+                            ta.removeThemeVariants(
+                                    TextAreaVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                ta.addThemeVariants(
+                                        TextAreaVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic text area
         TextArea basic = new TextArea("Description");

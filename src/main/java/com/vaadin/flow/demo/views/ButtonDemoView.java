@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -27,6 +29,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +47,56 @@ public class ButtonDemoView extends VerticalLayout {
 
         add(new H1("Button Component"));
         add(new Paragraph("The Button component is used to trigger actions."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new Button("Click me",
+                e -> Notification.show("Clicked!")))
+                .withCheckbox("Enabled", true, Button::setEnabled)
+                .withCheckbox("Disable on click", false,
+                        Button::setDisableOnClick)
+                .withCheckbox("Icon after text", false,
+                        Button::setIconAfterText)
+                .withTextField("Text", "Click me", Button::setText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Primary", "Tertiary",
+                                "Success", "Error", "Contrast"),
+                        (btn, variant) -> {
+                            btn.removeThemeVariants(
+                                    ButtonVariant.LUMO_PRIMARY,
+                                    ButtonVariant.LUMO_TERTIARY,
+                                    ButtonVariant.LUMO_SUCCESS,
+                                    ButtonVariant.LUMO_ERROR,
+                                    ButtonVariant.LUMO_CONTRAST);
+                            switch (variant) {
+                            case "Primary" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_PRIMARY);
+                            case "Tertiary" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_TERTIARY);
+                            case "Success" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_PRIMARY,
+                                    ButtonVariant.LUMO_SUCCESS);
+                            case "Error" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_PRIMARY,
+                                    ButtonVariant.LUMO_ERROR);
+                            case "Contrast" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_PRIMARY,
+                                    ButtonVariant.LUMO_CONTRAST);
+                            }
+                        })
+                .withSelect("Size", "Medium",
+                        List.of("Small", "Medium", "Large"),
+                        (btn, size) -> {
+                            btn.removeThemeVariants(
+                                    ButtonVariant.LUMO_SMALL,
+                                    ButtonVariant.LUMO_LARGE);
+                            switch (size) {
+                            case "Small" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_SMALL);
+                            case "Large" -> btn.addThemeVariants(
+                                    ButtonVariant.LUMO_LARGE);
+                            }
+                        }));
 
         // Basic buttons
         addSection("Basic Buttons",

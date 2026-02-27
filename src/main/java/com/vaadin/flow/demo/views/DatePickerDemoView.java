@@ -16,6 +16,7 @@
 package com.vaadin.flow.demo.views;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -27,6 +28,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +46,30 @@ public class DatePickerDemoView extends VerticalLayout {
 
         add(new H1("Date Picker Component"));
         add(new Paragraph("The DatePicker allows users to select a date from a calendar."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new DatePicker("Date"))
+                .withCheckbox("Enabled", true, DatePicker::setEnabled)
+                .withCheckbox("Read-only", false,
+                        DatePicker::setReadOnly)
+                .withCheckbox("Required", false, (dp, val) ->
+                        dp.setRequiredIndicatorVisible(val))
+                .withCheckbox("Clear button", false,
+                        DatePicker::setClearButtonVisible)
+                .withTextField("Label", "Date", DatePicker::setLabel)
+                .withTextField("Helper text", "",
+                        DatePicker::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (dp, variant) -> {
+                            dp.removeThemeVariants(
+                                    DatePickerVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                dp.addThemeVariants(
+                                        DatePickerVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic date picker
         DatePicker basic = new DatePicker("Birth Date");

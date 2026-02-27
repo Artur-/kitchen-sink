@@ -28,6 +28,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.virtuallist.VirtualList;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -46,6 +47,25 @@ public class VirtualListDemoView extends VerticalLayout {
 
         add(new H1("Virtual List Component"));
         add(new Paragraph("VirtualList efficiently renders large lists using virtualization."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        VirtualList<String> playgroundList = new VirtualList<>();
+        playgroundList.setRenderer(new ComponentRenderer<>(item -> {
+            Div div = new Div();
+            div.setText(item);
+            div.addClassNames(LumoUtility.Padding.MEDIUM,
+                    LumoUtility.Border.BOTTOM);
+            return div;
+        }));
+        playgroundList.setItems(generateItems(1000));
+        playgroundList.setHeight("300px");
+        playgroundList.setWidthFull();
+        playgroundList.addClassNames(LumoUtility.Border.ALL,
+                LumoUtility.BorderRadius.MEDIUM);
+        add(new Playground<>(playgroundList)
+                .withSlider("Height (px)", 150, 500, 300,
+                        (vl, val) -> vl.setHeight(val + "px")));
 
         // Basic virtual list
         VirtualList<String> basic = new VirtualList<>();

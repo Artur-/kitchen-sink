@@ -15,13 +15,17 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -39,6 +43,36 @@ public class PasswordFieldDemoView extends VerticalLayout {
 
         add(new H1("Password Field Component"));
         add(new Paragraph("The PasswordField is used for password input with masking."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new PasswordField("Password"))
+                .withCheckbox("Enabled", true,
+                        PasswordField::setEnabled)
+                .withCheckbox("Read-only", false,
+                        PasswordField::setReadOnly)
+                .withCheckbox("Required", false, (pf, val) -> {
+                    pf.setRequired(val);
+                    pf.setRequiredIndicatorVisible(val);
+                })
+                .withCheckbox("Reveal button", true,
+                        PasswordField::setRevealButtonVisible)
+                .withCheckbox("Clear button", false,
+                        PasswordField::setClearButtonVisible)
+                .withTextField("Label", "Password",
+                        PasswordField::setLabel)
+                .withTextField("Helper text", "",
+                        PasswordField::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (pf, variant) -> {
+                            pf.removeThemeVariants(
+                                    TextFieldVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                pf.addThemeVariants(
+                                        TextFieldVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic password field
         PasswordField basic = new PasswordField("Password");

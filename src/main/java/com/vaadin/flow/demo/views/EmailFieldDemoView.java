@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -23,7 +25,9 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -41,6 +45,35 @@ public class EmailFieldDemoView extends VerticalLayout {
 
         add(new H1("Email Field Component"));
         add(new Paragraph("The EmailField provides built-in email validation."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new EmailField("Email Address"))
+                .withCheckbox("Enabled", true, EmailField::setEnabled)
+                .withCheckbox("Read-only", false,
+                        EmailField::setReadOnly)
+                .withCheckbox("Required", false, (ef, val) -> {
+                    ef.setRequired(val);
+                    ef.setRequiredIndicatorVisible(val);
+                })
+                .withCheckbox("Clear button", false,
+                        EmailField::setClearButtonVisible)
+                .withTextField("Label", "Email Address",
+                        EmailField::setLabel)
+                .withTextField("Placeholder", "",
+                        EmailField::setPlaceholder)
+                .withTextField("Helper text", "",
+                        EmailField::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (ef, variant) -> {
+                            ef.removeThemeVariants(
+                                    TextFieldVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                ef.addThemeVariants(
+                                        TextFieldVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic email field
         EmailField basic = new EmailField("Email Address");

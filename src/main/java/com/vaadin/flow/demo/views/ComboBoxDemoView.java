@@ -24,6 +24,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -49,6 +50,35 @@ public class ComboBoxDemoView extends VerticalLayout {
 
         add(new H1("Combo Box Component"));
         add(new Paragraph("The ComboBox allows filtering and selecting from a list of options."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        ComboBox<String> playgroundCombo = new ComboBox<>("Country");
+        playgroundCombo.setItems(COUNTRIES);
+        playgroundCombo.setPlaceholder("Select or search");
+        add(new Playground<>(playgroundCombo)
+                .withCheckbox("Enabled", true, ComboBox::setEnabled)
+                .withCheckbox("Read-only", false, ComboBox::setReadOnly)
+                .withCheckbox("Required", false, (cb, val) -> {
+                    cb.setRequired(val);
+                    cb.setRequiredIndicatorVisible(val);
+                })
+                .withCheckbox("Clear button", false,
+                        ComboBox::setClearButtonVisible)
+                .withCheckbox("Allow custom value", false,
+                        ComboBox::setAllowCustomValue)
+                .withTextField("Placeholder", "Select or search",
+                        ComboBox::setPlaceholder)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (cb, variant) -> {
+                            cb.removeThemeVariants(
+                                    ComboBoxVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                cb.addThemeVariants(
+                                        ComboBoxVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic combo box
         ComboBox<String> basic = new ComboBox<>("Country");

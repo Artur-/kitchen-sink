@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.demo.views;
 
+import java.util.List;
+
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H1;
@@ -27,6 +29,7 @@ import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.progressbar.ProgressBarVariant;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +47,34 @@ public class ProgressBarDemoView extends VerticalLayout {
 
         add(new H1("Progress Bar Component"));
         add(new Paragraph("ProgressBar displays the progress of a task."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        ProgressBar playgroundBar = new ProgressBar();
+        playgroundBar.setValue(0.5);
+        playgroundBar.setWidthFull();
+        add(new Playground<>(playgroundBar)
+                .withCheckbox("Indeterminate", false,
+                        ProgressBar::setIndeterminate)
+                .withSlider("Value (%)", 0, 100, 50,
+                        (pb, val) -> pb.setValue(val / 100.0))
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Success", "Error",
+                                "Contrast"),
+                        (pb, variant) -> {
+                            pb.removeThemeVariants(
+                                    ProgressBarVariant.LUMO_SUCCESS,
+                                    ProgressBarVariant.LUMO_ERROR,
+                                    ProgressBarVariant.LUMO_CONTRAST);
+                            switch (variant) {
+                            case "Success" -> pb.addThemeVariants(
+                                    ProgressBarVariant.LUMO_SUCCESS);
+                            case "Error" -> pb.addThemeVariants(
+                                    ProgressBarVariant.LUMO_ERROR);
+                            case "Contrast" -> pb.addThemeVariants(
+                                    ProgressBarVariant.LUMO_CONTRAST);
+                            }
+                        }));
 
         // Progress levels
         VerticalLayout levels = new VerticalLayout();

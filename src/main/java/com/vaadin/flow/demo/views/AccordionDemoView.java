@@ -25,6 +25,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -42,6 +43,22 @@ public class AccordionDemoView extends VerticalLayout {
 
         add(new H1("Accordion Component"));
         add(new Paragraph("Accordion organizes content into collapsible panels."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        Accordion playgroundAccordion = new Accordion();
+        playgroundAccordion.add("Section 1",
+                new Paragraph("Content of section 1"));
+        playgroundAccordion.add("Section 2",
+                new Paragraph("Content of section 2"));
+        playgroundAccordion.add("Section 3",
+                new Paragraph("Content of section 3"));
+        playgroundAccordion.setWidthFull();
+        add(new Playground<>(playgroundAccordion)
+                .withCheckbox("Enabled", true,
+                        (a, val) -> a.getChildren().forEach(
+                                c -> ((AccordionPanel) c)
+                                        .setEnabled(val))));
 
         // Basic accordion
         Accordion basic = new Accordion();

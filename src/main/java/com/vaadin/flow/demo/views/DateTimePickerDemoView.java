@@ -17,6 +17,7 @@ package com.vaadin.flow.demo.views;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePickerVariant;
@@ -27,6 +28,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -44,6 +46,30 @@ public class DateTimePickerDemoView extends VerticalLayout {
 
         add(new H1("Date Time Picker Component"));
         add(new Paragraph("The DateTimePicker combines date and time selection."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new DateTimePicker("Date & Time"))
+                .withCheckbox("Enabled", true,
+                        DateTimePicker::setEnabled)
+                .withCheckbox("Read-only", false,
+                        DateTimePicker::setReadOnly)
+                .withCheckbox("Required", false, (dtp, val) ->
+                        dtp.setRequiredIndicatorVisible(val))
+                .withTextField("Label", "Date & Time",
+                        DateTimePicker::setLabel)
+                .withTextField("Helper text", "",
+                        DateTimePicker::setHelperText)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (dtp, variant) -> {
+                            dtp.removeThemeVariants(
+                                    DateTimePickerVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                dtp.addThemeVariants(
+                                        DateTimePickerVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic date time picker
         DateTimePicker basic = new DateTimePicker("Appointment");

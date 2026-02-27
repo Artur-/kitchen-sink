@@ -25,6 +25,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -42,6 +43,38 @@ public class DetailsDemoView extends VerticalLayout {
 
         add(new H1("Details Component"));
         add(new Paragraph("Details provides an expandable/collapsible content section."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        add(new Playground<>(new Details("Click to expand",
+                new Paragraph("This is the expandable content.")))
+                .withCheckbox("Enabled", true, Details::setEnabled)
+                .withCheckbox("Opened", false, Details::setOpened)
+                .withCheckbox("Small", false, (d, val) -> {
+                    if (val) {
+                        d.addThemeVariants(DetailsVariant.SMALL);
+                    } else {
+                        d.removeThemeVariants(DetailsVariant.SMALL);
+                    }
+                })
+                .withCheckbox("Reverse", false, (d, val) -> {
+                    if (val) {
+                        d.addThemeVariants(DetailsVariant.REVERSE);
+                    } else {
+                        d.removeThemeVariants(
+                                DetailsVariant.REVERSE);
+                    }
+                })
+                .withCheckbox("Filled", false, (d, val) -> {
+                    if (val) {
+                        d.addThemeVariants(DetailsVariant.FILLED);
+                    } else {
+                        d.removeThemeVariants(
+                                DetailsVariant.FILLED);
+                    }
+                })
+                .withTextField("Summary", "Click to expand",
+                        Details::setSummaryText));
 
         // Basic details
         Details basic = new Details("Click to expand",

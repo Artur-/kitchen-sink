@@ -24,6 +24,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -50,7 +51,39 @@ public class MultiSelectComboBoxDemoView extends VerticalLayout {
         setMaxWidth("900px");
 
         add(new H1("Multi-Select Combo Box Component"));
-        add(new Paragraph("The MultiSelectComboBox allows selecting multiple options from a filterable list."));
+        add(new Paragraph("MultiSelectComboBox allows selecting multiple values from a filterable list."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        MultiSelectComboBox<String> playgroundMscb = new MultiSelectComboBox<>(
+                "Skills");
+        playgroundMscb.setItems(SKILLS);
+        playgroundMscb.setPlaceholder("Select skills");
+        add(new Playground<>(playgroundMscb)
+                .withCheckbox("Enabled", true,
+                        MultiSelectComboBox::setEnabled)
+                .withCheckbox("Read-only", false,
+                        MultiSelectComboBox::setReadOnly)
+                .withCheckbox("Required", false, (cb, val) -> {
+                    cb.setRequired(val);
+                    cb.setRequiredIndicatorVisible(val);
+                })
+                .withCheckbox("Clear button", false,
+                        MultiSelectComboBox::setClearButtonVisible)
+                .withTextField("Label", "Skills",
+                        MultiSelectComboBox::setLabel)
+                .withTextField("Placeholder", "Select skills",
+                        MultiSelectComboBox::setPlaceholder)
+                .withSelect("Variant", "Default",
+                        List.of("Default", "Small"),
+                        (cb, variant) -> {
+                            cb.removeThemeVariants(
+                                    MultiSelectComboBoxVariant.LUMO_SMALL);
+                            if ("Small".equals(variant)) {
+                                cb.addThemeVariants(
+                                        MultiSelectComboBoxVariant.LUMO_SMALL);
+                            }
+                        }));
 
         // Basic multi-select
         MultiSelectComboBox<String> basic = new MultiSelectComboBox<>("Programming Skills");

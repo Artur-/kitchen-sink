@@ -24,6 +24,7 @@ import com.vaadin.flow.component.listbox.MultiSelectListBox;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.MainLayout;
+import com.vaadin.flow.demo.Playground;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -41,6 +42,17 @@ public class ListBoxDemoView extends VerticalLayout {
 
         add(new H1("List Box Component"));
         add(new Paragraph("ListBox displays a list of selectable items."));
+
+        // Interactive playground
+        add(new H3("Playground"));
+        ListBox<String> playgroundList = new ListBox<>();
+        playgroundList.setItems("Option 1", "Option 2", "Option 3",
+                "Option 4", "Option 5");
+        add(new Playground<>(playgroundList)
+                .withCheckbox("Enabled", true,
+                        ListBox::setEnabled)
+                .withCheckbox("Read-only", false,
+                        ListBox::setReadOnly));
 
         // Basic list box
         ListBox<String> basic = new ListBox<>();
