@@ -3,7 +3,6 @@
   "license": "UNLICENSED",
   "type": "module",
   "dependencies": {
-    "@rollup/rollup-linux-arm64-gnu": "^4.59.0",
     "@vaadin/aura": "25.1.0-alpha9",
     "@vaadin/board": "25.1.0-alpha9",
     "@vaadin/charts": "25.1.0-alpha9",
@@ -82,7 +81,7 @@
       "vite-plugin-checker": "0.12.0",
       "workbox-build": "7.4.0"
     },
-    "hash": "360b46836f4e83159790f361a3d8035aa84bd25178f6de4b9aa8f57a9d2d1479"
+    "hash": "fbd513f68de8f7f609c5fec66b4539cb24e77261c9cab2750b36257a005300a4"
   },
   "overrides": {
     "@vaadin/common-frontend": "$@vaadin/common-frontend",
@@ -163,7 +162,6 @@
     "@vaadin/upload": "25.1.0-alpha9",
     "@vaadin/router": "2.0.1",
     "@vaadin/vertical-layout": "25.1.0-alpha9",
-    "@vaadin/virtual-list": "25.1.0-alpha9",
-    "@rollup/rollup-linux-arm64-gnu": "$@rollup/rollup-linux-arm64-gnu"
+    "@vaadin/virtual-list": "25.1.0-alpha9"
   }
 }
